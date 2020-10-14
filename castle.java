@@ -1,4 +1,4 @@
-public class GameMaster
+public class App
 {
 	public static void main(String[] args)
 	{
