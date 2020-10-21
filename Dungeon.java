@@ -11,7 +11,7 @@ public class Dungeon {
     ArrayList<Room> layout;
     Room cur;
     ArrayList<Room> alt;
-
+    Room[][] MapLayout = new Room[3][3];
 
     public Dungeon()
     {
@@ -27,31 +27,59 @@ public class Dungeon {
         //could add randomization later if there is time?
         if (select == 0)
         {
-        Room Entrance = new Room("The Entrance to dodol's castle", "Entrance");
+        Room Entrance = new Room("The Entrance to Dodol's Castle", "Entrance");
         layout.add(Entrance);
-        Room Exit = new Room("The Exit to dodol's castle", "Exit");
+        Room Exit = new Room("The Exit to Dodol's Castle", "Exit");
         this.layout.add(Exit);
-        Room ROOM1 = new Room("RANDOM ROOM1", "ROOM1");
-        this.layout.add(ROOM1);
-        Room ROOM2 = new Room("RANDOM ROOM2", "ROOM2");
-        this.layout.add(ROOM2);
-        Room ROOM3 = new Room("RANDOM ROOM3", "ROOM3");
-        this.layout.add(ROOM3);
+        Room Kitchen = new Room("The Kitchen of Dodol's Castle", "Kitchen");
+        this.layout.add(Kitchen);
+        Room Bathroom = new Room("The castles bathroom", "Bathroom");
+        this.layout.add(Bathroom);
+        Room The_Great_Hall = new Room("The Great Hall of Dodol's Castle", "Great Hall");
+        this.layout.add(The_Great_Hall);
+        Room StoreRoom = new Room("The StoreRoom of Dodol's Castle", "StoreRoom");
+        this.layout.add(StoreRoom);
+        Room Bed_Chambers = new Room("The Bed Chambers of Dodol's Castle", "Bed Chambers");
+        this.layout.add(Bed_Chambers);
+        Room Kings_Quarters = new Room("The Kings Quarters of Dodol's Castle", "Kings Quarters");
+        this.layout.add(Kings_Quarters);
+        Room The_Throne_Room = new Room("The Throne Room of Dodol's Castle", "Throne Room");
+        this.layout.add(The_Throne_Room);
         this.currentEntrance = Entrance;
         this.Escape = Exit;
         Collections.shuffle(layout);
-
-        for (int i = 0; i < layout.size();i++) 
-        { 		      
-            System.out.println(layout.get(i)); 		
-        }
-        System.out.println("Done"); 		
-
-        
+        print();        
 
         }
 
     }
+    public void print()
+    {
+        int m =0;
+            for (int i = 0; i < 3; i++) 
+            { 	
+                for (int y = 0; y < 3; y++) 
+                { 
+                    if(MapLayout[i][y]==null)
+                    {
+                       MapLayout[i][y] = layout.get(m);
+                       m++;
+                    }
+                }	 
+            }
+            System.out.println("------------------------------------------------------"); 
+            for (int i = 0; i < 3; i++) 
+            { 	
+                for (int y = 0; y < 3; y++) 
+                { 		 
+                   System.out.print(MapLayout[i][y]); 
+                }	 
+                System.out.println("");
+                System.out.println("------------------------------------------------------"); 
+
+            }
+    }
+    
 
     public Room getEntrance()
     {

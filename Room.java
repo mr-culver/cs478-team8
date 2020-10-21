@@ -16,7 +16,7 @@ public class Room {
     }
     @Override
     public String toString() {
-         return ("Location :"+this.getShortDescription());
+         return (this.getShortDescription() + "    |   ");
     }
 
     public String getDescription()
