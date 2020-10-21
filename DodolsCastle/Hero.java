@@ -12,8 +12,7 @@ public class Hero {
     {
         this.currentRoom = start;
         this.status = 30; //start with some initial hp value
-        this.history.add("The hero has entered the castle.");
-        //maybe add beginning actions here like movement and pickup?
+        this.history = new ArrayList<String>();
     }
 
     public Room getRoom()
@@ -21,9 +20,24 @@ public class Hero {
         return this.currentRoom;
     }
 
-    public void moveRoom()
+    public void moveRoom(Room inputRoom)
     {
-        //move to another room
+        this.currentRoom = inputRoom;
+    }
+
+    public String getPossibleMoves()
+    {
+        String possibleMoves = "You can move through a door to the ";
+        if(currentRoom.doors[0] != null)
+            possibleMoves += "North ";
+        if(currentRoom.doors[1] != null)
+            possibleMoves += "East ";
+        if(currentRoom.doors[2] != null)
+            possibleMoves += "South ";
+        if(currentRoom.doors[3] != null)
+            possibleMoves += "West ";
+
+        return possibleMoves;
     }
 
     public void updateStatus(int[] range)
