@@ -172,7 +172,7 @@ public class Dungeon {
             else
                 System.out.println();
         }
-        System.out.println("---------------------");
+        System.out.println("---------------------\n");
     }
 
     public Room getEntrance()

@@ -21,10 +21,10 @@ public class App
     public static void actionHandler(Hero player)
     {
         // print room description
-        System.out.print(player.currentRoom.description + "\n");
+        System.out.print("\n\n" + player.currentRoom.description + "\n\n");
 
         // get available actions from player.actions & player.currentRoom.actions
-        // possible implementation:
+        //#region possible implementation:
         /*
         List<Action> availableActions = new List<Action>();
 		availableActions.AddAll(protagonist.GetCurrentRoom().getActions());
@@ -59,22 +59,25 @@ public class App
 			}
 		}
         */
+        //#endregion
 
         // present options to player (actions first for clarity)
         // show available rooms to move to
         System.out.print(player.getPossibleMoves() + "\n");
 
-        // get player input
-        System.out.print("--------------------\n" +
-        "Input the action you wish to take\n" + "> ");
+        // get player input -- needs LOTS OF improvement
+        System.out.print("______________________________________\n" +
+        "Input the action you wish to take\n\n" + "> ");
         InputStreamReader input = new InputStreamReader(System.in);
         char r = 'z'; 
         // not sure where to put things in regards to the try-catch block
         try
         {
             boolean invalid = true;
-            while(invalid)
+            while(invalid) 
             {
+                // attempt at ensuring input was good before moving on
+                // doesnt work properly
                 r = (char)input.read();
                 if(r == 'n' || r == 'e' || r == 's' || r == 'w')
                 {
@@ -109,7 +112,7 @@ public class App
         {
             player.currentRoom = player.currentRoom.doors[3];
         }
-        // more foreach to check with each action after looking for moves once implemented
+        // foreach loops to check with each action after looking for moves once implemented
 
         if(player.status > 0)
         {
