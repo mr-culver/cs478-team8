@@ -117,53 +117,6 @@ public class App
             }
         }
 
-
-        /* InputStreamReader input = new InputStreamReader(System.in);
-        char r = 'z'; 
-        // not sure where to put things in regards to the try-catch block
-        try
-        {
-            boolean invalid = true;
-            while(invalid) 
-            {
-                // attempt at ensuring input was good before moving on
-                // doesnt work properly
-                r = (char)input.read();
-                if(r == 'n' || r == 'e' || r == 's' || r == 'w')
-                {
-                    invalid = false;
-                } 
-                else
-                {
-                    System.out.println("Please enter a valid action\n> ");
-                }
-            }
-                       
-        }
-        catch(IOException e)
-        {
-            System.out.println(e.getMessage());
-        } */
-
-        // handle input, only looks for cardinal directions for moves right now
-        /* if(r == 'n')
-        {
-            player.currentRoom = player.currentRoom.doors[0];
-        } 
-        else if(r == 'e')
-        {
-            player.currentRoom = player.currentRoom.doors[1];
-        }
-        else if(r == 's')
-        {
-            player.currentRoom = player.currentRoom.doors[2];  
-        }
-        else if(r == 'w')
-        {
-            player.currentRoom = player.currentRoom.doors[3];
-        } */
-        // foreach loops to check with each action after looking for moves once implemented
-
         if(player.status > 0)
         {
             actionHandler(console, player);
