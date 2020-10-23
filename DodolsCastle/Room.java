@@ -16,6 +16,7 @@ public class Room {
         this.description = inputDescription;
         this.name = inputName;
         this.doors = new Room[4];
+        this.actions = new ArrayList<Action>();
     }
 
     public String getDescription()

@@ -13,6 +13,7 @@ public class Hero {
         this.currentRoom = start;
         this.status = 30; //start with some initial hp value
         this.history = new ArrayList<String>();
+        this.actions = new ArrayList<Action>();
     }
 
     public Room getRoom()
@@ -25,19 +26,19 @@ public class Hero {
         this.currentRoom = inputRoom;
     }
 
-    public String getPossibleMoves()
+    public ArrayList<String> getAvailableMoves()
     {
-        String possibleMoves = "You can move through a door to the ";
+        ArrayList<String> availableMoves = new ArrayList<String>();
         if(currentRoom.doors[0] != null)
-            possibleMoves += "North ";
+            availableMoves.add("north");
         if(currentRoom.doors[1] != null)
-            possibleMoves += "East ";
+            availableMoves.add("east");
         if(currentRoom.doors[2] != null)
-            possibleMoves += "South ";
+            availableMoves.add("south") ;
         if(currentRoom.doors[3] != null)
-            possibleMoves += "West ";
+            availableMoves.add("west");
 
-        return possibleMoves;
+        return availableMoves;
     }
 
     public void updateStatus(int[] range)
