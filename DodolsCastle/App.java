@@ -11,17 +11,26 @@ public class App
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
         Hero player = new Hero(dodolsCastle.currentEntrance);
-        dodolsCastle.printDungeon(); // for testing
-        // starup message stuff
+        dodolsCastle.printDungeon(console); // for testing
+        welcomeMessage(console);
         actionHandler(console, player);
 
+    }
+
+    public static void welcomeMessage(Console console)
+    {
+        // big work in progress
+        console.printf("\n________________________\n\n+++| Dodol's Castle |+++\n________________________\n");
+        console.printf("Welcome to the text-based adventure game, Dodol's Castle!\n");
+        console.printf("Version info and stuff goes here (>'.')>\n");
+        console.printf("\n\nStory intro placeholder -- puts you walking into the common room unexpectedly from your house\n");
     }
 
     public static void actionHandler(Console console, Hero player)
     {
         // print room description
         //System.out.print("\n\n" + player.currentRoom.description + "\n\n");
-        console.printf("\n\n" + player.currentRoom.description + "\n\n");
+        console.printf("\n\n" + player.currentRoom.description + "\n");
 
         // get available actions from player.actions & player.currentRoom.actions
         //possible implementation:
@@ -44,17 +53,17 @@ public class App
 
                 for(Action checkAction : availableActions)
                 {
-                    for(int posReqId : action.requirementsPos)
+                    for(Action posReq : action.requirementsPos)
                     {
-                        if(checkAction.id == posReqId)
+                        if(checkAction == posReq)
                         {
                             needsMet = true; // doesnt account for more than one need right now
                         }
                     }
 
-                    for(int negReqId : action.requirementsNeg)
+                    for(Action negReq : action.requirementsNeg)
                     {
-                        if(checkAction.id == negReqId)
+                        if(checkAction == negReq)
                         {
                             restraintPresent = true;
                         }
@@ -69,38 +78,35 @@ public class App
         }
             
         // present options to player (actions first for clarity) -- maybe unneeded?
-        // show available rooms to move to -- doors will be part of room description maybe?
-        //console.printf(player.getPossibleMoves() + "\n");
 
         // get player input -- needs lots of improvement
-        console.printf("________________________________________________\n" +
-        "Input the action you wish to take\n\n");
+        console.printf("________________________________________________\n");
         
         Boolean invalid = true;
         while(invalid)
         {
             String in = console.readLine("> ");
-            if(in.equalsIgnoreCase("north") && player.currentRoom.doors[0] != null)
+            if(in.contains("north") && player.currentRoom.doors[0] != null)
             {
-                console.printf("Moved north");
+                console.printf("You moved north.");
                 player.currentRoom = player.currentRoom.doors[0];
                 invalid = false;
             }
-            else if(in.equalsIgnoreCase("east") && player.currentRoom.doors[1] != null)
+            else if(in.contains("east") && player.currentRoom.doors[1] != null)
             {
-                console.printf("Moved east");
+                console.printf("You moved east");
                 player.currentRoom = player.currentRoom.doors[1];
                 invalid = false;
             }
-            else if(in.equalsIgnoreCase("south") && player.currentRoom.doors[2] != null)
+            else if(in.contains("south") && player.currentRoom.doors[2] != null)
             {
-                console.printf("Moved south");
+                console.printf("You moved south");
                 player.currentRoom = player.currentRoom.doors[2];
                 invalid = false;
             }
-            else if(in.equalsIgnoreCase("west") && player.currentRoom.doors[3] != null)
+            else if(in.contains("west") && player.currentRoom.doors[3] != null)
             {
-                console.printf("Moved west");
+                console.printf("You moved west");
                 player.currentRoom = player.currentRoom.doors[3];
                 invalid = false;
             }
@@ -108,7 +114,14 @@ public class App
             {
                 for(Action action : availableActions)
                 {
-                    // check stuff
+                    for(String nameCheck : action.name)
+                    {
+                        if(in.contains(nameCheck))
+                        {
+                            action.runAction(console, player);
+                            invalid = false;
+                        }
+                    }
                 }
             }
             if(invalid)
