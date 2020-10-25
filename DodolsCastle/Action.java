@@ -5,7 +5,7 @@ import java.io.*;
 
 public class Action 
 {
-    ArrayList<String> name; // name and alternates/abbreviations
+    String name; // name and alternates/abbreviations
     String description; // the description that will show with the action is run
     String modifiedDescription; // stores a description that can be inserted into rooms
     int heroStatusModifier; //delta for the affect on hero. Could be positive or negative
@@ -16,7 +16,20 @@ public class Action
     ArrayList<Action> requirementsPos; // looked at by actionChecker()
     ArrayList<Action> requirementsNeg; // ^^
 
-    public Action(ArrayList<String> inputName, String inputDescription)
+    public Action()
+    {
+        this.name = null;
+        this.description = null;
+        this.heroStatusModifier = 0;
+        heroActionsAdd = new ArrayList<Action>();
+        heroActionsSub = new ArrayList<Action>();
+        roomActionsAdd = new ArrayList<Action>();
+        roomActionsSub = new ArrayList<Action>();
+        requirementsPos = new ArrayList<Action>();
+        requirementsNeg = new ArrayList<Action>();
+    }
+
+    public Action(String inputName, String inputDescription)
     {
         this.name = inputName;
         this.description = inputDescription;
@@ -60,6 +73,7 @@ public class Action
             {   
                 player.currentRoom.actions.remove(a);
             }
-		}
+        }
+        player.status += heroStatusModifier;
     }
 }

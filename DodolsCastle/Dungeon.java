@@ -1,7 +1,6 @@
 package DodolsCastle;
 
 import java.io.*;
-import java.util.*;
 
 public class Dungeon {
     Room currentEntrance;
@@ -11,7 +10,7 @@ public class Dungeon {
     public Dungeon()
     {
         this.layout = new Room[4][4];
-        //this.currentEntrance = layout[0][0];
+        //this.currentEntrance = this.layout[0][1];
     }
 
     public void selectLayout(int select)
@@ -40,20 +39,8 @@ public class Dungeon {
         "in the north-east corner of the room -- various levers and whirring mechanisms that you have never seen the like of before. " +
         "A suit of old armor stands slightly hunched near the levers.\nThere are doors to the west, south, and east.";
         this.layout[0][1] = new Room("Common Room", crDescription);
-        this.currentEntrance = this.layout[0][1];
-        // >> bookshelves
-        ArrayList<String> actionNames = new ArrayList<String>();
-        actionNames.add("examine bookshelves");
-        actionNames.add("x bookshelves");
-        String actionDescription = "You examine the bookshelves - placeholder";
-        this.layout[0][1].actions.add(new Action(actionNames, actionDescription));
-        // >> table
-        actionNames = new ArrayList<String>();
-        actionNames.add("examine table");
-        actionNames.add("x table");
-        actionDescription = "You examine the table - placeholder";
-        this.layout[0][1].actions.add(new Action(actionNames, actionDescription));
-        //this.layout[0][1].actions.get(1).roomActionsAdd.add(book on table);
+        this.currentEntrance = this.layout[0][1]; // set head pointer for the entrance
+        
         // > Arboretum [0,2]
         String arboretumDescription = "Super huge arboretum that seems to be outdoors, some doctor who/narnia wizardry stuff" + 
         "\nThere are doors to the east and west.";
@@ -122,6 +109,7 @@ public class Dungeon {
         // door back to your bathroom and home? If you leave without returning dodol's hat different ending
         this.layout[3][3] = null;
 
+
         // After the basic rooms are created, they need to be linked together through their
         //  Room[] "doors", this probably should be done through a method but they can also be linked manually
         // 0 = North | 1 = East | 2 = South | 3 = West | Like a clock
@@ -162,7 +150,91 @@ public class Dungeon {
         this.layout[3][2].doors[3] = this.layout[3][1];
         // > Blank [3,3]
 
-        // Room actions should also be added here once we start with that functionality
+
+        // actions are now created and stuff
+        
+
+        // >> bookshelves -> common room
+        Action coBookshelves = new Action();
+        coBookshelves.name = "examine bookshelves";
+        coBookshelves.description = "You examine the bookshelves - placeholder";
+        this.layout[0][1].actions.add(coBookshelves);
+        // >> ex table -> common room
+        Action coTable = new Action();
+        coTable.name = "examine table";
+        coTable.description = "You examine the table, there is a  - placeholder";
+        // >>> take potion
+        Action takePotion = new Action();
+        takePotion.name = "take potion";
+        takePotion.description = "You pick the potion up, ";
+        takePotion.roomActionsSub.add(takePotion);
+        
+        // >>>> drink potion
+        Action drinkPotion = new Action();
+        drinkPotion.name = "drink potion";
+        drinkPotion.description = "You drink the potion, stuff happens - placeholder";
+        drinkPotion.heroStatusModifier = 20;
+        drinkPotion.heroActionsSub.add(drinkPotion);
+        takePotion.heroActionsAdd.add(drinkPotion);
+        coTable.roomActionsAdd.add(takePotion);
+        this.layout[0][1].actions.add(coTable);
+
+        // >> machinery -> common room
+        Action coMachinery = new Action();
+        coMachinery.name = "examine machinery";
+        coMachinery.description = "You examine the arcane machinery in the corner - placeholder";
+        this.layout[0][1].actions.add(coMachinery);
+
+        // >> ex armor -> common room
+        Action coArmor = new Action();
+        coArmor.name = "examine armor";
+        coArmor.description = "You examine the suit of armor in the corner, it appears to be held up without any supports - placeholder";
+        this.layout[0][1].actions.add(coArmor);
+
+        // >> wear old hat
+        Action wOldHat = new Action();
+        wOldHat.name = "wear old hat";
+        wOldHat.description = "You attempt to wear the old hat but it doesnt seem to fit on your head.";
+
+        // >> examine old hat -> cat room
+        Action caXOldHat = new Action();
+        caXOldHat.name = "examine hat";
+        caXOldHat.description = "You examine the old hat on the desk, yadda yadda - placeholder";
+        this.layout[2][2].actions.add(caXOldHat);
+
+        // >> take old hat -> cat room
+        Action caTOldHat = new Action();
+        caTOldHat.name = "take hat";
+        caTOldHat.description = "You take the old hat";
+        caTOldHat.heroActionsAdd.add(wOldHat);
+        caTOldHat.roomActionsSub.add(caTOldHat);
+        caTOldHat.roomActionsSub.add(caXOldHat);
+        //caTOldHat.modifiedDescription = ""; // description without hat
+        this.layout[2][2].actions.add(caTOldHat);
+
+        // >> go home -> common room
+        Action goHome = new Action();
+        goHome.name = "go home";
+        goHome.description = "You step through your bathroom door back into your house... - placeholder";
+
+        // >> place old hat -> common room
+        Action coPlaceOldHat = new Action();
+        coPlaceOldHat.name = "place old hat";
+        coPlaceOldHat.description = "You place the old worn hat on the suit of armor... your bathroom door appears - placeholder";
+        coPlaceOldHat.heroActionsSub.add(wOldHat);
+        coPlaceOldHat.requirementsPos.add(wOldHat);
+        coPlaceOldHat.roomActionsAdd.add(goHome);
+        //coPlaceOldHat.modifiedDescription = ""; // adds hat to armor in description, as well as new door home
+        this.layout[0][1].actions.add(coPlaceOldHat);
+
+        // >> pull lever -> common room
+        Action coLever = new Action();
+        coLever.name = "pull lever";
+        coLever.description = "You pull the lever, maybe stuff happens, maybe it doesnt - placeholder";
+        // id like this to have several other nested lever pulls with different descriptions to give the illusion of stuff happening
+        // not planned to actually have any affect on the game other than being a red herring and described in hints about dodol
+        this.layout[0][1].actions.add(coLever);
+
     }
 
     public void printDungeon(Console console)

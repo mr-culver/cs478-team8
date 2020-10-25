@@ -7,14 +7,16 @@ public class App
 {
     public static void main( String[] args )
     {
+        Boolean testPrinting = true; // allows test print blocks to execute for dev testing
         Console console = System.console();
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
         Hero player = new Hero(dodolsCastle.currentEntrance);
-        dodolsCastle.printDungeon(console); // for testing
+        if(testPrinting)
+            dodolsCastle.printDungeon(console);
         welcomeMessage(console);
-        actionHandler(console, player);
-
+        actionHandler(console, player, testPrinting);
+        // end game display stuff - credits and whatnot
     }
 
     public static void welcomeMessage(Console console)
@@ -26,41 +28,67 @@ public class App
         console.printf("\n\nStory intro placeholder -- puts you walking into the common room unexpectedly from your house\n");
     }
 
-    public static void actionHandler(Console console, Hero player)
+    public static void actionHandler(Console console, Hero player, Boolean testPrinting)
     {
         // print room description
-        //System.out.print("\n\n" + player.currentRoom.description + "\n\n");
-        console.printf("\n\n" + player.currentRoom.description + "\n");
+        console.printf("\n\n" + "+ " + player.currentRoom.name + " +\n" + player.currentRoom.description + "\n");
 
         // get available actions from player.actions & player.currentRoom.actions
-        //possible implementation:
         ArrayList<Action> availableActions = new ArrayList<Action>();
+        ArrayList<Action> prunedList = new ArrayList<Action>();
         if(!player.actions.isEmpty())
         {
             availableActions.addAll(player.actions);
+            if(testPrinting)
+            {
+                console.printf("[Dev] Found actions in hero: \n");
+                for (Action action : player.actions) 
+                {
+                    console.printf("\t- " + action.name + "\n");
+                }
+            }       
         }
         if(!player.currentRoom.actions.isEmpty())
         {
             availableActions.addAll(player.currentRoom.actions);
-        }
-        
+            if(testPrinting)
+            {
+                console.printf("[Dev] Found actions in room: \n");
+                for (Action action : player.currentRoom.actions) 
+                {
+                    console.printf("\t- " + action.name + "\n");
+                }
+            }
+            
+
+        }     
         if(!availableActions.isEmpty())
         {
+
             for(Action action : availableActions)
             {
+                if(testPrinting)
+                    console.printf("[Dev] Checking action: " + action.name + "\n");
                 Boolean needsMet = false;
                 Boolean restraintPresent = false;
 
                 for(Action checkAction : availableActions)
                 {
-                    for(Action posReq : action.requirementsPos)
+                    if(action.requirementsPos.isEmpty())
                     {
-                        if(checkAction == posReq)
-                        {
-                            needsMet = true; // doesnt account for more than one need right now
-                        }
+                        needsMet = true;
                     }
+                    else
+                    {
+                        for(Action posReq : action.requirementsPos)
+                        {
+                            if(checkAction == posReq)
+                            {
+                                needsMet = true; // doesnt account for more than one need right now
+                            }
+                        }
 
+                    }
                     for(Action negReq : action.requirementsNeg)
                     {
                         if(checkAction == negReq)
@@ -72,17 +100,25 @@ public class App
 
                 if(!needsMet || restraintPresent)
 			    {
-				    availableActions.remove(action);
-			    }
+                    //availableActions.remove(action);
+                    if(testPrinting)
+                        console.printf("[Dev] Pruned action: " + action.name + "\n");
+                }
+                else
+                {
+                    prunedList.add(action);
+                    if(testPrinting)
+                        console.printf("[Dev] Accepted action: " + action.name + "\n");
+                }
 		    }
         }
-            
-        // present options to player (actions first for clarity) -- maybe unneeded?
+        availableActions = prunedList;
 
         // get player input -- needs lots of improvement
         console.printf("________________________________________________\n");
         
         Boolean invalid = true;
+        Boolean gameOver = false;
         while(invalid)
         {
             String in = console.readLine("> ");
@@ -110,18 +146,26 @@ public class App
                 player.currentRoom = player.currentRoom.doors[3];
                 invalid = false;
             }
+            else if(in.contains("status"))
+            {
+                console.printf(player.getStatusDescription(testPrinting) + "\n");
+                invalid = false;
+            }
             else if(invalid)
             {
                 for(Action action : availableActions)
                 {
-                    for(String nameCheck : action.name)
+                    if(in.contains(action.name))
                     {
-                        if(in.contains(nameCheck))
+                        action.runAction(console, player);
+                        invalid = false;
+                        if(in.contains("go home"))
                         {
-                            action.runAction(console, player);
-                            invalid = false;
+                            console.printf("\n");
+                            gameOver = true;
                         }
                     }
+                    
                 }
             }
             if(invalid)
@@ -130,13 +174,13 @@ public class App
             }
         }
 
-        if(player.status > 0)
+        if(player.status > 0 && !gameOver)
         {
-            actionHandler(console, player);
+            actionHandler(console, player, testPrinting);
         }
         else
         {
-            System.out.println("Game Over");
+            System.out.println("+++| Game Over |+++");
         } 
 
     }

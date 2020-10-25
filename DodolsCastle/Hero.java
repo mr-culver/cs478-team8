@@ -14,6 +14,7 @@ public class Hero {
         this.status = 30; //start with some initial hp value
         this.history = new ArrayList<String>();
         this.actions = new ArrayList<Action>();
+        this.actions.addAll(getStarterHeroActions());
     }
 
     public Room getRoom()
@@ -40,29 +41,47 @@ public class Hero {
 
         return availableMoves;
     }
-
-    public void updateStatus(int[] range)
+    
+    public String getStatusDescription(Boolean testPrinting)
     {
-        //do some calculation on hero status
+        String desc = "";
+        if(testPrinting)
+            desc = "[Dev] Status = " + status + "\n";
+        if(status >= 50)
+        {
+            desc += "You feel absolutely fantastic.";
+        }
+        else if(status >= 30)
+        {
+            desc += "You're feeling pretty well";
+        }
+        else if(status >= 15)
+        {
+            desc += "You arent feeling very well";
+        }
+        else if(status >= 1)
+        {
+            desc += "You feel very poorly";
+        }
+        else
+        {
+            desc += "You are incapacitated.";
+        }
+        return desc;
     }
 
-    public ArrayList<Action> geActions()
+    public ArrayList<Action> getStarterHeroActions()
     {
-        return this.actions;
-    }
+        ArrayList<Action> starterActions = new ArrayList<Action>();
+        
+        // > Hero actions
+        // >> Punch self - for testing
+        Action punchSelf = new Action();
+        punchSelf.name = "punch self";
+        punchSelf.description = "You punch yourself in the face. Ouch!";
+        punchSelf.heroStatusModifier = -10;
+        starterActions.add(punchSelf);
 
-    public ArrayList<Action> getActions()
-    {
-        return this.actions;
-    }
-
-    public void addAction(Action x)
-    {
-        //add an action to the list
-    }
-
-    public void removeAction(Action x)
-    {
-        //remove an action from the list
+        return starterActions;
     }
 }
