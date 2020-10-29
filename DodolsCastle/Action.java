@@ -74,6 +74,39 @@ public class Action
                 player.currentRoom.actions.remove(a);
             }
         }
+
+        if (this.name == "check log")
+        {
+            console.printf("-------------------- Log Book --------------------\n\n");
+            for (String x : player.history)
+            {
+                console.printf(x + "\n");
+            }
+            console.printf("\n--------------------------------------------------\n");
+        }
+
         player.status += heroStatusModifier;
+
+        if (heroStatusModifier != 0)
+        {
+            if (heroStatusModifier < 0)
+            {
+                String effect = Integer.toString(heroStatusModifier);
+                player.addHistory("You took " + heroStatusModifier + " damage from " + this.name +"!", effect);    
+            }
+
+            else
+            {
+                String effect = Integer.toString(heroStatusModifier);
+                player.addHistory("You healed " + heroStatusModifier + " of health from " + this.name + ".", effect);
+            }
+            
+        }
+
+        else
+        {
+            String effect = this.name;
+            player.addHistory(this.description, effect);
+        }
     }
 }

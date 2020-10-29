@@ -6,12 +6,14 @@ public class Hero {
     Room currentRoom;
     ArrayList<Action> actions;
     int status;
+    int turnCounter;
     ArrayList<String> history;
 
     public Hero(Room start)
     {
         this.currentRoom = start;
         this.status = 30; //start with some initial hp value
+        this.turnCounter = 0; 
         this.history = new ArrayList<String>();
         this.actions = new ArrayList<Action>();
         this.actions.addAll(getStarterHeroActions());
@@ -25,6 +27,41 @@ public class Hero {
     public void moveRoom(Room inputRoom)
     {
         this.currentRoom = inputRoom;
+    }
+
+    public void addHistory(String event, String effect)
+    {
+        this.turnCounter++;
+
+        if (effect == "north")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[0].name + " | Turn: " + this.turnCounter);
+        }
+
+        else if (effect == "east")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[1].name + " | Turn: " + this.turnCounter);
+        }
+
+        else if (effect == "south")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[2].name + " | Turn: " + this.turnCounter);
+        }
+
+        else if (effect == "west")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[3].name + " | Turn: " + this.turnCounter);
+        }
+
+        else
+        {
+            history.add(event + " | Turn: " + this.turnCounter);
+        }
+    }
+
+    public ArrayList<String> getHistory()
+    {
+        return this.history;
     }
 
     public ArrayList<String> getAvailableMoves()
@@ -81,6 +118,12 @@ public class Hero {
         punchSelf.description = "You punch yourself in the face. Ouch!";
         punchSelf.heroStatusModifier = -10;
         starterActions.add(punchSelf);
+
+        Action checkHistory  = new Action();
+        checkHistory.name = "check log";
+        checkHistory.description = "You checked your log book. It states: ";
+        checkHistory.heroStatusModifier = 0;
+        starterActions.add(checkHistory);
 
         return starterActions;
     }

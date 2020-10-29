@@ -22,16 +22,76 @@ public class App
     public static void welcomeMessage(Console console)
     {
         // big work in progress
-        console.printf("\n________________________\n\n+++| Dodol's Castle |+++\n________________________\n");
-        console.printf("Welcome to the text-based adventure game, Dodol's Castle!\n");
-        console.printf("Version info and stuff goes here (>'.')>\n");
-        console.printf("\n\nStory intro placeholder -- puts you walking into the common room unexpectedly from your house\n");
+        formatMessage("________________________+++| Dodol's Castle |+++________________________", console);
+        console.printf("\n\n");
+        formatMessage("Welcome to the text-based adventure game, Dodol's Castle!", console);
+        formatMessage("Version info and stuff goes here (>'.')>", console);
+        console.printf("\n\n");
+        formatMessage("Story intro placeholder -- puts you walking into the common room unexpectedly from your house", console);
+    }
+
+    public static void formatMessage(String message, Console console)
+    {
+        ArrayList<String> messageArray = new ArrayList<String>();
+
+        int prev = 0;
+
+        for (int i = 0; i < message.length(); i++)
+        {
+            char x = message.charAt(i);
+
+            if (x == ' ')
+            {
+
+                if (i - prev >= 60 && i - prev <= 70)
+                {
+                    if (prev == 0)
+                    {
+                        messageArray.add(message.substring(prev, i));
+                        prev = i;  
+                    }
+
+                    else
+                    {
+                        messageArray.add(message.substring(prev + 1, i));
+                        prev = i;
+                    }
+                    
+                }
+            }
+
+            else if (i == message.length() - 1)
+            {
+                if (prev == 0)
+                {
+                    messageArray.add(message.substring(prev, i + 1));
+                    prev = i;  
+                }
+
+                else
+                {
+                    messageArray.add(message.substring(prev + 1, i + 1));
+                    prev = i;
+                }
+            }
+        }
+
+        if (messageArray.size() == 0)
+        {
+            messageArray.add(message.substring(0, message.length()));
+        }
+
+        for (String x : messageArray)
+        {
+            console.printf(x + "\n");
+        }
+        console.printf("\n");
     }
 
     public static void actionHandler(Console console, Hero player, Boolean testPrinting)
     {
         // print room description
-        console.printf("\n\n" + "+ " + player.currentRoom.name + " +\n" + player.currentRoom.description + "\n");
+        formatMessage("\n\n" + "+ " + player.currentRoom.name + " +\n" + player.currentRoom.description + "\n", console);
 
         // get available actions from player.actions & player.currentRoom.actions
         ArrayList<Action> availableActions = new ArrayList<Action>();
@@ -124,31 +184,39 @@ public class App
             String in = console.readLine("> ");
             if(in.contains("north") && player.currentRoom.doors[0] != null)
             {
+                String effect = "north";
                 console.printf("You moved north.");
+                player.addHistory("You moved north", effect);
                 player.currentRoom = player.currentRoom.doors[0];
                 invalid = false;
             }
             else if(in.contains("east") && player.currentRoom.doors[1] != null)
             {
+                String effect = "east";
                 console.printf("You moved east");
+                player.addHistory("You moved east", effect);
                 player.currentRoom = player.currentRoom.doors[1];
                 invalid = false;
             }
             else if(in.contains("south") && player.currentRoom.doors[2] != null)
             {
+                String effect = "south";
                 console.printf("You moved south");
+                player.addHistory("You moved south", effect);
                 player.currentRoom = player.currentRoom.doors[2];
                 invalid = false;
             }
             else if(in.contains("west") && player.currentRoom.doors[3] != null)
             {
+                String effect = "west";
                 console.printf("You moved west");
+                player.addHistory("You moved west", effect);
                 player.currentRoom = player.currentRoom.doors[3];
                 invalid = false;
             }
             else if(in.contains("status"))
             {
-                console.printf(player.getStatusDescription(testPrinting) + "\n");
+                formatMessage(player.getStatusDescription(testPrinting) + "\n", console);
                 invalid = false;
             }
             else if(invalid)
@@ -182,6 +250,5 @@ public class App
         {
             System.out.println("+++| Game Over |+++");
         } 
-
     }
 }
