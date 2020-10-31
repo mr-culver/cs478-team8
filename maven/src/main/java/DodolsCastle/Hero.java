@@ -24,11 +24,6 @@ public class Hero {
         return this.currentRoom;
     }
 
-    public void moveRoom(Room inputRoom)
-    {
-        this.currentRoom = inputRoom;
-    }
-
     public void addHistory(String event, String effect)
     {
         this.turnCounter++;
@@ -126,5 +121,13 @@ public class Hero {
         starterActions.add(checkHistory);
 
         return starterActions;
+    }
+
+    public void moveRoom(int direction)
+    {
+        if(direction >= 0 && direction <= 4)
+        {
+            currentRoom = currentRoom.doors[direction];
+        }
     }
 }

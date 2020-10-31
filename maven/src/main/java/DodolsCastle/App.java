@@ -23,7 +23,7 @@ public class App
     {
         // big work in progress
         formatMessage("________________________+++| Dodol's Castle |+++________________________", console);
-        console.printf("\n\n");
+        //console.printf("\n\n");
         formatMessage("Welcome to the text-based adventure game, Dodol's Castle!", console);
         formatMessage("Version info and stuff goes here (>'.')>", console);
         console.printf("\n\n");
