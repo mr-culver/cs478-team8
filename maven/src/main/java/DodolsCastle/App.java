@@ -95,6 +95,167 @@ public class App
         formatMessage(player.currentRoom.description + "\n", console);
 
         // get available actions from player.actions & player.currentRoom.actions
+        ArrayList<Action> availableActions = getAvailableActions(player.currentRoom, player, testPrinting, console);
+
+        // player input & action selection logic
+        console.printf("--------------------------------------------------\n");
+        
+        Boolean invalid = true;
+        Boolean gameOver = false;
+        while(invalid)
+        {
+            String in = console.readLine("> ");
+            // movement handling
+            if(in.contains("north") && player.currentRoom.doors[0] != null)
+            {
+                String effect = "north";
+                console.printf("\nYou moved north.");
+                player.addHistory("You moved north", effect);
+                player.currentRoom = player.currentRoom.doors[0];
+                invalid = false;
+            }
+            else if(in.contains("east") && player.currentRoom.doors[1] != null)
+            {
+                String effect = "east";
+                console.printf("\nYou moved east.");
+                player.addHistory("You moved east", effect);
+                player.currentRoom = player.currentRoom.doors[1];
+                invalid = false;
+            }
+            else if(in.contains("south") && player.currentRoom.doors[2] != null)
+            {
+                String effect = "south";
+                console.printf("\nYou moved south.");
+                player.addHistory("You moved south", effect);
+                player.currentRoom = player.currentRoom.doors[2];
+                invalid = false;
+            }
+            else if(in.contains("west") && player.currentRoom.doors[3] != null)
+            {
+                String effect = "west";
+                console.printf("\nYou moved west.");
+                player.addHistory("You moved west", effect);
+                player.currentRoom = player.currentRoom.doors[3];
+                invalid = false;
+            }
+            // show hero status (health description)
+            else if(in.contains("status"))
+            {
+                formatMessage(player.getStatusDescription(testPrinting) + "\n", console);
+                invalid = false;
+            }
+            // show hero log (past actions, rooms)
+            else if(in.contains("log"))
+            {
+                player.printHistory(console);
+                invalid = false;
+            }
+            // displays helpful info and available actions
+            else if(in.contains("help"))
+            {
+                printHelpInfo(availableActions, console);
+                invalid = false;
+            }
+            // show inventory (player.items)
+            else if (in.contains("inventory"))
+            {
+                player.printInventory(console);
+                invalid = false;
+            }
+            // check input against available actions
+            else if(invalid)
+            {
+                for(Action action : availableActions)
+                {
+                    if(in.contains(action.name))
+                    {
+                        formatMessage(action.description, console);
+                        action.runAction(console, player);
+                        invalid = false;
+                        if(in.contains("go home"))
+                        {
+                            console.printf("\n");
+                            gameOver = true;
+                        }
+                    }                
+                }
+            }
+            // check items for examiniation
+            else if(in.contains("examine"))
+            {
+                String thing = in.substring(8, in.length() - 1);
+                if(!player.currentRoom.items.isEmpty())
+                for (Item i : player.currentRoom.items)
+                {
+                    if(i.name.contains(thing))
+                    {
+                        if(console != null)
+                        {
+                            formatMessage("\nYou examine the " + i.name + ":", console);
+                            formatMessage(i.description, console);
+                        }  
+                        invalid = false;                         
+                    }
+                }
+                if(!player.items.isEmpty())
+                for (Item i : player.items)
+                {
+                    if(i.name.contains(thing))
+                    {
+                        if(console != null)
+                        {
+                            formatMessage("\nYou examine the " + i.name + ":", console);
+                            formatMessage(i.description, console);                        
+                        }
+                        invalid = false;                           
+                    }
+                }
+            }
+            // check items for taking
+            else if(in.contains("take"))
+            {
+                String thing = in.substring(5, in.length() - 1);
+                ArrayList<Item> temp = new ArrayList<Item>();
+                for (Item i : player.currentRoom.items)
+                {
+                    temp.add(i);
+                    if(i.name.contains(thing) && i.canTake)
+                    {
+                        player.items.add(i);
+                        temp.remove(i);
+                        if(!i.heroActionsAdd.isEmpty())
+                        {
+                            for(Action a : i.heroActionsAdd)
+                            {
+                                player.actions.add(a);
+                            }
+                        }
+                        if(console != null)
+                        {
+                            formatMessage("\nYou take the " + i.name + ".", console);
+                        }
+                        invalid = false;                 
+                    }
+                }
+                player.currentRoom.items = temp;
+            }          
+            if(invalid)
+            {
+                console.printf("Please enter a valid action, type 'help' for more info\n");
+            }
+        }
+        if(player.status > 0 && !gameOver)
+        {
+            actionHandler(console, player, testPrinting);
+        }
+        else
+        {
+            console.printf("+++| Game Over |+++");
+        } 
+    }
+
+    public static ArrayList<Action> getAvailableActions(Room curRoom, Hero player, Boolean testPrinting, Console console)
+    {
         if(testPrinting)
             console.printf("[Dev] Gathering available actions...\n");
         ArrayList<Action> availableActions = new ArrayList<Action>();
@@ -178,101 +339,7 @@ public class App
 		    }
         }
         availableActions = prunedList;
-
-        // player input & action selection logic
-        //console.printf("________________________________________________\n");
-        console.printf("--------------------------------------------------\n");
-        
-        Boolean invalid = true;
-        Boolean gameOver = false;
-        while(invalid)
-        {
-            String in = console.readLine("> ");
-            if(in.contains("north") && player.currentRoom.doors[0] != null)
-            {
-                String effect = "north";
-                console.printf("You moved north.");
-                player.addHistory("You moved north", effect);
-                player.currentRoom = player.currentRoom.doors[0];
-                invalid = false;
-            }
-            else if(in.contains("east") && player.currentRoom.doors[1] != null)
-            {
-                String effect = "east";
-                console.printf("You moved east");
-                player.addHistory("You moved east", effect);
-                player.currentRoom = player.currentRoom.doors[1];
-                invalid = false;
-            }
-            else if(in.contains("south") && player.currentRoom.doors[2] != null)
-            {
-                String effect = "south";
-                console.printf("You moved south");
-                player.addHistory("You moved south", effect);
-                player.currentRoom = player.currentRoom.doors[2];
-                invalid = false;
-            }
-            else if(in.contains("west") && player.currentRoom.doors[3] != null)
-            {
-                String effect = "west";
-                console.printf("You moved west");
-                player.addHistory("You moved west", effect);
-                player.currentRoom = player.currentRoom.doors[3];
-                invalid = false;
-            }
-            else if(in.contains("status"))
-            {
-                formatMessage(player.getStatusDescription(testPrinting) + "\n", console);
-                invalid = false;
-            }
-            else if(in.contains("log"))
-            {
-                // might just call a printLog method in hero.java instead?
-                console.printf("You think about what you have done since you got to the castle...\n");
-                console.printf("-------------------- Log Book --------------------\n\n");
-                for (String x : player.history)
-                {
-                    console.printf(x + "\n");
-                }
-                console.printf("\n--------------------------------------------------\n");
-                invalid = false;
-            }
-            else if(in.contains("help"))
-            {
-                printHelpInfo(availableActions, console);
-                invalid = false;
-            }
-            else if(invalid)
-            {
-                for(Action action : availableActions)
-                {
-                    if(in.contains(action.name))
-                    {
-                        action.runAction(console, player);
-                        invalid = false;
-                        if(in.contains("go home"))
-                        {
-                            console.printf("\n");
-                            gameOver = true;
-                        }
-                    }
-                    
-                }
-            }
-            if(invalid)
-            {
-                console.printf("Please enter a valid action, type 'help' for more info\n");
-            }
-        }
-
-        if(player.status > 0 && !gameOver)
-        {
-            actionHandler(console, player, testPrinting);
-        }
-        else
-        {
-            console.printf("+++| Game Over |+++");
-        } 
+        return availableActions;
     }
 
     public static void printHelpInfo(ArrayList<Action> availableActions, Console console)

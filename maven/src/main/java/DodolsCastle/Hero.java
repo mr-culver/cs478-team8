@@ -1,5 +1,6 @@
 package DodolsCastle;
 
+import java.io.Console;
 import java.util.*;
 
 public class Hero {
@@ -8,6 +9,7 @@ public class Hero {
     int status;
     int turnCounter;
     ArrayList<String> history;
+    ArrayList<Item> items;
 
     public Hero(Room start)
     {
@@ -16,12 +18,21 @@ public class Hero {
         this.turnCounter = 0; 
         this.history = new ArrayList<String>();
         this.actions = new ArrayList<Action>();
-        this.actions.addAll(getStarterHeroActions());
+        this.actions.addAll(initStarterHeroActions());
+        this.items = new ArrayList<Item>();
     }
 
     public Room getRoom()
     {
         return this.currentRoom;
+    }
+
+    public void moveRoom(int direction)
+    {
+        if(direction >= 0 && direction <= 4)
+        {
+            currentRoom = currentRoom.doors[direction];
+        }
     }
 
     public void addHistory(String event, String effect)
@@ -59,7 +70,18 @@ public class Hero {
         return this.history;
     }
 
-    public ArrayList<String> getAvailableMoves()
+    public void printHistory(Console console)
+    {
+        console.printf("You think about what you have done since you got to the castle...\n");
+        console.printf("-------------------- Log Book --------------------\n\n");
+        for (String x : history)
+        {
+            console.printf(x + "\n");
+        }
+        console.printf("\n--------------------------------------------------\n");
+    }
+
+    public ArrayList<String> getAvailableMoves() // unused
     {
         ArrayList<String> availableMoves = new ArrayList<String>();
         if(currentRoom.doors[0] != null)
@@ -102,7 +124,24 @@ public class Hero {
         return desc;
     }
 
-    public ArrayList<Action> getStarterHeroActions()
+    public void printInventory(Console console)
+    {
+        if(items.isEmpty())
+        {
+            console.printf("\nYou are not carrying anything.");
+        }
+        else
+        {
+            console.printf("\nYou are carrying:\n");
+            for(Item i : items)
+            {
+                console.printf("\t- " + i.name + "\n");
+            }
+            console.printf("\n");
+        }   
+    }
+
+    public ArrayList<Action> initStarterHeroActions()
     {
         ArrayList<Action> starterActions = new ArrayList<Action>();
         
@@ -117,11 +156,5 @@ public class Hero {
         return starterActions;
     }
 
-    public void moveRoom(int direction)
-    {
-        if(direction >= 0 && direction <= 4)
-        {
-            currentRoom = currentRoom.doors[direction];
-        }
-    }
+    
 }

@@ -29,7 +29,7 @@ public class Dungeon {
         String balconyDescription = "The door opens into a small balcony with a panoramic mountaintop view above the clouds. " +
         "Though the wind howls around you, it seems to be reduced to no more than a gentle breeze here, and feels somewhat warm " +
         "despite the icy landscape all around.  A small wooden table with two chairs sits in the corner, atop it are two goblets " +
-        "and a simple chess set. \nThe only door leads back to the east.";
+        "and a simple chess set. The only door leads back to the east.";
         this.layout[0][0] = new Room("Balcony", balconyDescription);
 
         // > Common Room [0,1]
@@ -38,20 +38,20 @@ public class Dungeon {
         "covered in various books, surrounded by three couches covered with pelts and cushions.  A mass of arcane machinery looms " + 
         "in the north-east corner of the room -- various levers and whirring mechanisms that you have never seen the like of before. " +
         "A suit of old armor stands slightly hunched near the levers." + 
-        "\nThere are doors to the west, south, and east.";
+        "There are doors to the west, south, and east.";
         this.layout[0][1] = new Room("Common Room", crDescription);
         this.currentEntrance = this.layout[0][1]; // set head pointer for the entrance
         
         // > Arboretum [0,2]
         String arboretumDescription = "Super huge arboretum that seems to be outdoors, some doctor who/narnia wizardry stuff" + 
-        "\nThere are doors to the east and west.";
+        "There is a long path running east to west, and you can see a clearing through the thicket to the south.";
         this.layout[0][2] = new Room("Arboretum", arboretumDescription);
 
         // > Laboratory [0,3]
         String laboratoryDescription = "Dodol's old lab, everything is dusty and some stuff is broken, maybe some" +
         " explanation as to who dodol is and a hint that hes the inactive suit of armor in the common room, as well as" +
         " perhaps needing the hat back" + 
-        "\nThe only door leads back to the west.";
+        "The only door leads back to the west.";
         this.layout[0][3] = new Room("Laboratory", laboratoryDescription);
 
         // > Blank [1,0]
@@ -60,12 +60,15 @@ public class Dungeon {
 
         // > Hallway [1,1]
         String northHallDescription = "North hallway portion, connects to the common room and the hall below, have a rug attack or something maybe" + 
-        "\nThere are doors to the north and south.";
+        "There are doors to the north and south.";
         this.layout[1][1] = new Room("North Hall", northHallDescription);
 
-        // > Blank [1,2]
+        // > Clearing with fountain [1,2]
         // south of the arboretum
-        this.layout[1][2] = null;
+        String clearingDescription = "After trudging through the dense forest you enter a small clearing, " + 
+        "a small pond fed by a spring is in the center. " +
+        "You can see the path through the trees back to the north, the rest of the wood is too thick to traverse.";
+        this.layout[1][2] = new Room("Clearing", clearingDescription);
 
         // > Blank [1,3]
         // branch off lab?
@@ -74,18 +77,18 @@ public class Dungeon {
         // > Kitchen [2,0]
         String kitchenDescription = "Large medieval kitchen with unseen servants doing some cleaning and whatnot" +
         " some appliances from our world can be seen as well" + 
-        "\nThe only door leads back to the east.";
+        "The only door leads back to the east.";
         this.layout[2][0] = new Room("Kitchen", kitchenDescription);
 
         // > Hallway [2,1]
         String middleHallDescription = "Middle hall portion, connects to the hall above, kitchen to the west, " +
         " Dawnelle's room to the east, and the south hall to the south." + 
-        "\nThere are doors to the north, south, east, and west.";
+        "There are doors to the north, south, east, and west.";
         this.layout[2][1] = new Room("Middle Hall", middleHallDescription);
 
         // > Bedroom - Dawnelle math cat [2,2]
         String bedroomDawnelleDescription = "Room with a cat on a desk over a book holding a quill, scurries off" + 
-        "\nThe only door leads back to the west.";
+        "The only door leads back to the west.";
         this.layout[2][2] = new Room("Cat's Room", bedroomDawnelleDescription);
 
         // > Blank [2,3]
@@ -93,17 +96,17 @@ public class Dungeon {
 
         // > Bedroom - Aurum [3,0]
         String bedroomAurumDescription = "Wizardy room, maybe a magic defense, hint to hat solution" + 
-        "\nThe only door leads back to the east.";
+        "The only door leads back to the east.";
         this.layout[3][0] = new Room("Aurum's Room", bedroomAurumDescription);
 
         // > Hallway [3,1]
         String southHallDescription = "South hall portion, connects to stuff" + 
-        "\nTHere are doors to the north, west, and east.";
+        "THere are doors to the north, west, and east.";
         this.layout[3][1] = new Room("South Hall", southHallDescription);
 
         // > Bedroom - Jondar [3,2]
         String bedroomJondarDescription = "Cleric's room, devoted to martial training and prayer, sparse, other hint" + 
-        "\nThe only door leads back to the east."; // maybe door home too
+        "The only door leads back to the east."; // maybe door home too
         this.layout[3][2] = new Room("Jondar's Room", bedroomJondarDescription);
 
         // > Blank [3,3]
@@ -122,6 +125,7 @@ public class Dungeon {
         this.layout[0][1].doors[3] = this.layout[0][0];
         // > Arboretum [0,2]
         this.layout[0][2].doors[1] = this.layout[0][3];
+        this.layout[0][2].doors[2] = this.layout[1][2];
         this.layout[0][2].doors[3] = this.layout[0][1];
         // > Laboratory [0,3]
         this.layout[0][3].doors[3] = this.layout[0][2];
@@ -129,7 +133,8 @@ public class Dungeon {
         // > Hallway [1,1]
         this.layout[1][1].doors[0] = this.layout[0][1];
         this.layout[1][1].doors[2] = this.layout[2][1];
-        // > Blank [1,2]
+        // > Clearing [1,2]
+        this.layout[1][2].doors[0] = this.layout[0][2];
         // > Blank [1,3]
         // > Kitchen [2,0]
         this.layout[2][0].doors[1] = this.layout[2][1];
@@ -152,8 +157,7 @@ public class Dungeon {
         // > Blank [3,3]
 
 
-        // actions are now created and stuff
-        
+        // actions are now created and stuff   
 
         // >> bookshelves -> common room
         Action coBookshelves = new Action();
@@ -244,6 +248,38 @@ public class Dungeon {
         // id like this to have several other nested lever pulls with different descriptions to give the illusion of stuff happening
         // not planned to actually have any affect on the game other than being a red herring and described in hints about dodol
         this.layout[0][1].actions.add(coLever);
+
+
+        // item object creation
+        // > pond description -> clearing
+        Item clPool = new Item();
+        clPool.name = "pond";
+        clPool.description = "The pool is crystal clear, rippling slightly from the water fed into it by the spring. " + 
+        "Resting nearby is an empty scabbard, its well worn leather gilded with silver.";
+        this.layout[1][2].items.add(clPool);
+
+        // > sword scabbard -> clearing
+        Item clScabbard = new Item();
+        clScabbard.name = "empty scabbard";
+        clScabbard.description = "The scabbard is empty, its well worn leather gilded with an intricate silver design.";
+        clScabbard.canTake = true;
+        this.layout[1][2].items.add(clScabbard);
+
+        // > new hat -> Aurum's room
+        Item auNewHat = new Item();
+        auNewHat.name = "new hat";
+        auNewHat.description = "An new an expensive wizard hat, with the leather barely broken in and no crooks in its point " +
+        "There is a note attached that you find quite impossible to remove, it reads: 'Aurum, every wizard needs a hat - From Dodol'";
+        auNewHat.canTake = true;
+
+        // >> action for attempting to wear new hat
+        Action wNewHat = new Action();
+        wNewHat.name = "wear new hat";
+        wNewHat.description = "As you attempt to wear the new hat it seems to shrink to avoid being placed on your head.";
+        auNewHat.heroActionsAdd.add(wNewHat);
+
+        // >> finish new hat item
+        this.layout[3][0].items.add(auNewHat);
 
     }
 

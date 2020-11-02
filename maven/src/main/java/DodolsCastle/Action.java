@@ -1,6 +1,6 @@
 package DodolsCastle;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.io.*;
 
 public class Action 
@@ -15,6 +15,7 @@ public class Action
     ArrayList<Action> roomActionsSub; // actions to be removed from the room
     ArrayList<Action> requirementsPos; // looked at by actionChecker()
     ArrayList<Action> requirementsNeg; // ^^
+    ArrayList<Action> itemRequirements; // added to accomodate new item class
 
     public Action()
     {
@@ -27,6 +28,7 @@ public class Action
         roomActionsSub = new ArrayList<Action>();
         requirementsPos = new ArrayList<Action>();
         requirementsNeg = new ArrayList<Action>();
+        itemRequirements = new ArrayList<Action>();
     }
 
     public Action(String inputName, String inputDescription)
@@ -40,12 +42,13 @@ public class Action
         roomActionsSub = new ArrayList<Action>();
         requirementsPos = new ArrayList<Action>();
         requirementsNeg = new ArrayList<Action>();
+        itemRequirements = new ArrayList<Action>();
     }
 
     public void runAction(Console console, Hero player)
     {
         //console.printf(this.name + "\n"); // might not be needed
-        console.printf(this.description + "\n");
+        //console.printf(this.description + "\n");
         if (!heroActionsAdd.isEmpty())
 		{
             for(Action a : this.heroActionsAdd)
@@ -92,7 +95,6 @@ public class Action
             }
             
         }
-
         else
         {
             String effect = this.name;
