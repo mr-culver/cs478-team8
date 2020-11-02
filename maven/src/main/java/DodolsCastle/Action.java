@@ -1,6 +1,6 @@
 package DodolsCastle;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.io.*;
 
 public class Action 
@@ -15,6 +15,8 @@ public class Action
     ArrayList<Action> roomActionsSub; // actions to be removed from the room
     ArrayList<Action> requirementsPos; // looked at by actionChecker()
     ArrayList<Action> requirementsNeg; // ^^
+    ArrayList<Action> itemRequirements; // added to accomodate new item class
+    Item heroItemAdd;
 
     public Action()
     {
@@ -27,6 +29,8 @@ public class Action
         roomActionsSub = new ArrayList<Action>();
         requirementsPos = new ArrayList<Action>();
         requirementsNeg = new ArrayList<Action>();
+        itemRequirements = new ArrayList<Action>();
+        heroItemAdd = null;
     }
 
     public Action(String inputName, String inputDescription)
@@ -40,12 +44,14 @@ public class Action
         roomActionsSub = new ArrayList<Action>();
         requirementsPos = new ArrayList<Action>();
         requirementsNeg = new ArrayList<Action>();
+        itemRequirements = new ArrayList<Action>();
+        heroItemAdd = null;
     }
 
     public void runAction(Console console, Hero player)
     {
         //console.printf(this.name + "\n"); // might not be needed
-        console.printf(this.description + "\n");
+        //console.printf(this.description + "\n");
         if (!heroActionsAdd.isEmpty())
 		{
             for(Action a : this.heroActionsAdd)
@@ -74,15 +80,9 @@ public class Action
                 player.currentRoom.actions.remove(a);
             }
         }
-
-        if (this.name == "check log")
+        if(heroItemAdd != null)
         {
-            console.printf("-------------------- Log Book --------------------\n\n");
-            for (String x : player.history)
-            {
-                console.printf(x + "\n");
-            }
-            console.printf("\n--------------------------------------------------\n");
+            player.items.add(heroItemAdd);
         }
 
         player.status += heroStatusModifier;
@@ -102,7 +102,6 @@ public class Action
             }
             
         }
-
         else
         {
             String effect = this.name;
