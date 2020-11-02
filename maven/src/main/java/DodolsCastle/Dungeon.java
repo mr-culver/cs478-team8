@@ -37,7 +37,8 @@ public class Dungeon {
         "The walls are lined with several tall bookshelves, while the floor is well worn bare flagstone. A table sits near the fire, " +
         "covered in various books, surrounded by three couches covered with pelts and cushions.  A mass of arcane machinery looms " + 
         "in the north-east corner of the room -- various levers and whirring mechanisms that you have never seen the like of before. " +
-        "A suit of old armor stands slightly hunched near the levers.\nThere are doors to the west, south, and east.";
+        "A suit of old armor stands slightly hunched near the levers." + 
+        "\nThere are doors to the west, south, and east.";
         this.layout[0][1] = new Room("Common Room", crDescription);
         this.currentEntrance = this.layout[0][1]; // set head pointer for the entrance
         
@@ -227,6 +228,15 @@ public class Dungeon {
         //coPlaceOldHat.modifiedDescription = ""; // adds hat to armor in description, as well as new door home
         this.layout[0][1].actions.add(coPlaceOldHat);
 
+        // >> examine lever -> common room
+        Action coXLever = new Action();
+        coXLever.name = "examine lever";
+        coXLever.description = "There are many levers attached to the arcane machinery but the one nearest the suit of armor " + 
+        "catches your eye.  It is the only one without a layer of dust and seems to move easily -- you could pull it and see what happens";
+        // id like this to have several other nested lever pulls with different descriptions to give the illusion of stuff happening
+        // not planned to actually have any affect on the game other than being a red herring and described in hints about dodol
+        this.layout[0][1].actions.add(coXLever);
+
         // >> pull lever -> common room
         Action coLever = new Action();
         coLever.name = "pull lever";
@@ -267,7 +277,7 @@ public class Dungeon {
             else
                 console.printf("\n");
         }
-        console.printf("---------------------\n");
+        console.printf("---------------------\n\n");
     }
 
     public Room getEntrance()

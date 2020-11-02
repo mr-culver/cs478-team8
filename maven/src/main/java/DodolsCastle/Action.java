@@ -75,16 +75,6 @@ public class Action
             }
         }
 
-        if (this.name == "check log")
-        {
-            console.printf("-------------------- Log Book --------------------\n\n");
-            for (String x : player.history)
-            {
-                console.printf(x + "\n");
-            }
-            console.printf("\n--------------------------------------------------\n");
-        }
-
         player.status += heroStatusModifier;
 
         if (heroStatusModifier != 0)

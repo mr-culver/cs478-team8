@@ -41,13 +41,19 @@ public class MoveTest
         Hero player = new Hero(dodolsCastle.currentEntrance);
         player.moveRoom(2); // move south
         player.moveRoom(2); // move south
-        player.moveRoom(1); // move east
+        player.moveRoom(0); // move east
         player.actions.add(player.currentRoom.actions.get(1).heroActionsAdd.get(0));
         //player.currentRoom.actions.get(1).runAction(console, player);
         String actual = player.actions.get(2).name;
 
         // Assert
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void runGame()
+    {
+        App.main(null);
     }
     
 }

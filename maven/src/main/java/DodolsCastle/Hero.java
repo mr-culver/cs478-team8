@@ -50,7 +50,7 @@ public class Hero {
 
         else
         {
-            history.add(event + " | Turn: " + this.turnCounter);
+            history.add(effect + " | Turn: " + this.turnCounter);
         }
     }
 
@@ -113,12 +113,6 @@ public class Hero {
         punchSelf.description = "You punch yourself in the face. Ouch!";
         punchSelf.heroStatusModifier = -10;
         starterActions.add(punchSelf);
-
-        Action checkHistory  = new Action();
-        checkHistory.name = "check log";
-        checkHistory.description = "You checked your log book. It states: ";
-        checkHistory.heroStatusModifier = 0;
-        starterActions.add(checkHistory);
 
         return starterActions;
     }
