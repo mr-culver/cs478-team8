@@ -7,7 +7,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        Boolean testPrinting = false; // allows test print blocks to execute for dev testing
+        Boolean testPrinting = true; // allows test print blocks to execute for dev testing
         Console console = System.console();
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
@@ -181,7 +181,7 @@ public class App
                 }
             }
             // check items for examiniation
-            else if(in.contains("examine"))
+            /* else if(in.contains("examine"))
             {
                 String thing = in.substring(8, in.length() - 1);
                 if(!player.currentRoom.items.isEmpty())
@@ -210,9 +210,9 @@ public class App
                         invalid = false;                           
                     }
                 }
-            }
+            } */
             // check items for taking
-            else if(in.contains("take"))
+            /* else if(in.contains("take"))
             {
                 String thing = in.substring(5, in.length() - 1);
                 ArrayList<Item> temp = new ArrayList<Item>();
@@ -238,7 +238,7 @@ public class App
                     }
                 }
                 player.currentRoom.items = temp;
-            }          
+            }   */        
             if(invalid)
             {
                 console.printf("Please enter a valid action, type 'help' for more info\n");

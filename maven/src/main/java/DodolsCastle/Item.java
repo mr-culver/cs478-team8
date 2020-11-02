@@ -13,8 +13,11 @@ public class Item
     {
         this.name = null;
         this.description = null;
-        this.canTake = false;
+        this.canTake = false; // unneeded
         heroActionsAdd = new ArrayList<Action>();
+        // bool wearable
+        // bool worn
+        // string wear description
     }
     
     public Item(String inputName, String inputDescription, Boolean canTake)

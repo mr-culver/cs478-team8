@@ -37,7 +37,7 @@ public class Dungeon {
         "The walls are lined with several tall bookshelves, while the floor is well worn bare flagstone. A table sits near the fire, " +
         "covered in various books, surrounded by three couches covered with pelts and cushions.  A mass of arcane machinery looms " + 
         "in the north-east corner of the room -- various levers and whirring mechanisms that you have never seen the like of before. " +
-        "A suit of old armor stands slightly hunched near the levers." + 
+        "A suit of old armor stands slightly hunched near the levers. " + 
         "There are doors to the west, south, and east.";
         this.layout[0][1] = new Room("Common Room", crDescription);
         this.currentEntrance = this.layout[0][1]; // set head pointer for the entrance
@@ -50,7 +50,7 @@ public class Dungeon {
         // > Laboratory [0,3]
         String laboratoryDescription = "Dodol's old lab, everything is dusty and some stuff is broken, maybe some" +
         " explanation as to who dodol is and a hint that hes the inactive suit of armor in the common room, as well as" +
-        " perhaps needing the hat back" + 
+        " perhaps needing the hat back " + 
         "The only door leads back to the west.";
         this.layout[0][3] = new Room("Laboratory", laboratoryDescription);
 
@@ -59,7 +59,9 @@ public class Dungeon {
         this.layout[1][0] = null;
 
         // > Hallway [1,1]
-        String northHallDescription = "North hallway portion, connects to the common room and the hall below, have a rug attack or something maybe" + 
+        String northHallDescription = "A long hallway stretches north to south with doors on either side. The way is lit by " +
+        "torches hanging from sconces in the walls, a locked and shuttered window is in the middle, through it you look down on a bustling " +
+        "medieval town on a river. " +  
         "There are doors to the north and south.";
         this.layout[1][1] = new Room("North Hall", northHallDescription);
 
@@ -76,18 +78,18 @@ public class Dungeon {
 
         // > Kitchen [2,0]
         String kitchenDescription = "Large medieval kitchen with unseen servants doing some cleaning and whatnot" +
-        " some appliances from our world can be seen as well" + 
+        " some appliances from our world can be seen as well " + 
         "The only door leads back to the east.";
         this.layout[2][0] = new Room("Kitchen", kitchenDescription);
 
         // > Hallway [2,1]
         String middleHallDescription = "Middle hall portion, connects to the hall above, kitchen to the west, " +
-        " Dawnelle's room to the east, and the south hall to the south." + 
+        " Dawnelle's room to the east, and the south hall to the south. " + 
         "There are doors to the north, south, east, and west.";
         this.layout[2][1] = new Room("Middle Hall", middleHallDescription);
 
         // > Bedroom - Dawnelle math cat [2,2]
-        String bedroomDawnelleDescription = "Room with a cat on a desk over a book holding a quill, scurries off" + 
+        String bedroomDawnelleDescription = "Room with a cat on a desk over a book holding a quill, scurries off " + 
         "The only door leads back to the west.";
         this.layout[2][2] = new Room("Cat's Room", bedroomDawnelleDescription);
 
@@ -95,17 +97,17 @@ public class Dungeon {
         this.layout[2][3] = null;
 
         // > Bedroom - Aurum [3,0]
-        String bedroomAurumDescription = "Wizardy room, maybe a magic defense, hint to hat solution" + 
+        String bedroomAurumDescription = "Wizardy room, maybe a magic defense, hint to hat solution " + 
         "The only door leads back to the east.";
         this.layout[3][0] = new Room("Aurum's Room", bedroomAurumDescription);
 
         // > Hallway [3,1]
-        String southHallDescription = "South hall portion, connects to stuff" + 
+        String southHallDescription = "South hall portion, connects to stuff " + 
         "THere are doors to the north, west, and east.";
         this.layout[3][1] = new Room("South Hall", southHallDescription);
 
         // > Bedroom - Jondar [3,2]
-        String bedroomJondarDescription = "Cleric's room, devoted to martial training and prayer, sparse, other hint" + 
+        String bedroomJondarDescription = "Cleric's room, devoted to martial training and prayer, sparse, other hint " + 
         "The only door leads back to the east."; // maybe door home too
         this.layout[3][2] = new Room("Jondar's Room", bedroomJondarDescription);
 
@@ -167,17 +169,20 @@ public class Dungeon {
         // >> ex table -> common room
         Action coTable = new Action();
         coTable.name = "examine table";
-        coTable.description = "You examine the table, there is a  - placeholder";
+        coTable.description = "You examine the table, among the old books scattered around you see a small red potion.";
         // >>> take potion
         Action takePotion = new Action();
         takePotion.name = "take potion";
-        takePotion.description = "You pick the potion up, ";
+        takePotion.description = "You pick the potion up, its contents fizz slightly.";
         takePotion.roomActionsSub.add(takePotion);
+        //TODO: taking the potion needs to change the table description and add potion item to be added
+        //takePotion.roomActionsSub.add(coTable); 
+        //takePotion.roomActionsAdd.add(coTableNP);
         
         // >>>> drink potion
         Action drinkPotion = new Action();
         drinkPotion.name = "drink potion";
-        drinkPotion.description = "You drink the potion, stuff happens - placeholder";
+        drinkPotion.description = "You drink the potion, bubbly warmth spreads throughout your body, you feel extremely refreshed.";
         drinkPotion.heroStatusModifier = 20;
         drinkPotion.heroActionsSub.add(drinkPotion);
         takePotion.heroActionsAdd.add(drinkPotion);
@@ -251,35 +256,67 @@ public class Dungeon {
 
 
         // item object creation
-        // > pond description -> clearing
-        Item clPool = new Item();
-        clPool.name = "pond";
-        clPool.description = "The pool is crystal clear, rippling slightly from the water fed into it by the spring. " + 
+        // > examine pond -> clearing
+        Action clXPond = new Action();
+        clXPond.name = "examine pond";
+        clXPond.description = "The small pond is crystal clear, rippling slightly from the water fed into it by the spring. " + 
         "Resting nearby is an empty scabbard, its well worn leather gilded with silver.";
-        this.layout[1][2].items.add(clPool);
+        this.layout[1][2].actions.add(clXPond);
 
-        // > sword scabbard -> clearing
+        Action clXPondNS = new Action();
+        clXPondNS.name = "examine pond";
+        clXPondNS.description = "The small pond is crystal clear, rippling slightly from the water fed into it by the spring.";
+
+        // > examine sword scabbard -> clearing
+        Action clXScabbard = new Action();
+        clXScabbard.name = "examine empty scabbard";
+        clXScabbard.description = "The scabbard is empty, its well worn leather gilded with an intricate silver design.";
+        this.layout[1][2].actions.add(clXScabbard);
+
+        // > take sword scabbard -> clearing
+        Action clTScabbard = new Action();
+        clTScabbard.name = "take empty scabbard";
+        clTScabbard.description = "You take the empty scabbard from the ground";
+
         Item clScabbard = new Item();
         clScabbard.name = "empty scabbard";
-        clScabbard.description = "The scabbard is empty, its well worn leather gilded with an intricate silver design.";
-        clScabbard.canTake = true;
-        this.layout[1][2].items.add(clScabbard);
+        clScabbard.description = "The scabbard is empty, its well worn leather gilded with an intricate silver design.  It is warm to the touch";
+        clTScabbard.roomActionsSub.add(clXScabbard);
+        clTScabbard.roomActionsSub.add(clTScabbard);
+        clTScabbard.roomActionsSub.add(clXPond);
+        clTScabbard.roomActionsAdd.add(clXPondNS);
+        clTScabbard.heroItemAdd = clScabbard;
+        this.layout[1][2].actions.add(clTScabbard);
 
-        // > new hat -> Aurum's room
+        // > examine new hat -> Aurum's room
+        Action auXNewHat = new Action();
+        auXNewHat.name = "examine new hat";
+        auXNewHat.description = "It is a new an expensive wizard hat, with the leather barely broken in and no crooks in its point " +
+        "There is a note attached that you find quite impossible to remove, it reads: 'Aurum, every wizard needs a hat - From Dodol'";
+        this.layout[3][0].actions.add(auXNewHat);
+
+        // > take new hat -> Aurum's room
+        Action auTNewHat = new Action();
+        auTNewHat.name = "take new hat";
+        auTNewHat.description = "You take the new hat from the desk.";
+        //auTNewHat.roomActionsSub.add(auXDesk);
+        //auTNewHat.roomActionsAdd.add(auXDeskNH);
+        auTNewHat.roomActionsSub.add(auTNewHat);
+        auTNewHat.roomActionsSub.add(auXNewHat);
+
         Item auNewHat = new Item();
         auNewHat.name = "new hat";
-        auNewHat.description = "An new an expensive wizard hat, with the leather barely broken in and no crooks in its point " +
+        auNewHat.description = "It is a new an expensive wizard hat, with the leather barely broken in and no crooks in its point " +
         "There is a note attached that you find quite impossible to remove, it reads: 'Aurum, every wizard needs a hat - From Dodol'";
-        auNewHat.canTake = true;
 
-        // >> action for attempting to wear new hat
         Action wNewHat = new Action();
         wNewHat.name = "wear new hat";
         wNewHat.description = "As you attempt to wear the new hat it seems to shrink to avoid being placed on your head.";
-        auNewHat.heroActionsAdd.add(wNewHat);
 
-        // >> finish new hat item
-        this.layout[3][0].items.add(auNewHat);
+        auNewHat.heroActionsAdd.add(wNewHat);
+        auTNewHat.heroItemAdd = auNewHat;
+
+        this.layout[3][0].actions.add(auTNewHat);
 
     }
 
