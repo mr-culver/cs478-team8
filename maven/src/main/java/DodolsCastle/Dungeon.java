@@ -43,8 +43,8 @@ public class Dungeon {
         this.currentEntrance = this.layout[0][1]; // set head pointer for the entrance
         
         // > Arboretum [0,2]
-        String arboretumDescription = "Super huge arboretum that seems to be outdoors, some doctor who/narnia wizardry stuff" + 
-        "There is a long path running east to west, and you can see a clearing through the thicket to the south.";
+        String arboretumDescription = "You are in a dense, lush forest. It feels as though it is a spring morning, birds sing in the distance. " + 
+        "There is a long dirt path running east to west, and you can see a clearing through the thicket to the south.";
         this.layout[0][2] = new Room("Arboretum", arboretumDescription);
 
         // > Laboratory [0,3]
@@ -170,24 +170,35 @@ public class Dungeon {
         Action coTable = new Action();
         coTable.name = "examine table";
         coTable.description = "You examine the table, among the old books scattered around you see a small red potion.";
-        // >>> take potion
-        Action takePotion = new Action();
-        takePotion.name = "take potion";
-        takePotion.description = "You pick the potion up, its contents fizz slightly.";
-        takePotion.roomActionsSub.add(takePotion);
-        //TODO: taking the potion needs to change the table description and add potion item to be added
-        //takePotion.roomActionsSub.add(coTable); 
-        //takePotion.roomActionsAdd.add(coTableNP);
-        
-        // >>>> drink potion
+
+        // >>> ex table no potion -> common room
+        Action coTableNP = new Action();
+        coTableNP.name = "examine table";
+        coTableNP.description = "You examine the table, there are old books you cant read the titles of scattered about the surface.";
+
+        // >>> drink potion
         Action drinkPotion = new Action();
         drinkPotion.name = "drink potion";
         drinkPotion.description = "You drink the potion, bubbly warmth spreads throughout your body, you feel extremely refreshed.";
         drinkPotion.heroStatusModifier = 20;
-        drinkPotion.heroActionsSub.add(drinkPotion);
-        takePotion.heroActionsAdd.add(drinkPotion);
+
+        // >>> potion item
+        Item potion = new Item();
+        potion.name = "potion";
+        potion.description = "A small red phial filled with a viscous red liquid that bubbles slightly.";
+        drinkPotion.heroItemSub = potion;
+        potion.heroActionsAdd.add(drinkPotion);
+
+        // >> take potion
+        Action takePotion = new Action();
+        takePotion.name = "take potion";
+        takePotion.description = "You pick the potion up, its contents fizz slightly.";
+        takePotion.roomActionsSub.add(takePotion);
+        takePotion.roomActionsSub.add(coTable); 
+        takePotion.roomActionsAdd.add(coTableNP);
+        takePotion.heroItemAdd = potion;
         coTable.roomActionsAdd.add(takePotion);
-        this.layout[0][1].actions.add(coTable);
+        this.layout[0][1].actions.add(coTable); 
 
         // >> machinery -> common room
         Action coMachinery = new Action();
@@ -249,7 +260,7 @@ public class Dungeon {
         // >> pull lever -> common room
         Action coLever = new Action();
         coLever.name = "pull lever";
-        coLever.description = "You pull the lever, maybe stuff happens, maybe it doesnt - placeholder";
+        coLever.description = "You pull the lever, it has no effect that you can discern.";
         // id like this to have several other nested lever pulls with different descriptions to give the illusion of stuff happening
         // not planned to actually have any affect on the game other than being a red herring and described in hints about dodol
         this.layout[0][1].actions.add(coLever);

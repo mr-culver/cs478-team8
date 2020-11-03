@@ -17,6 +17,7 @@ public class Action
     ArrayList<Action> requirementsNeg; // ^^
     ArrayList<Action> itemRequirements; // added to accomodate new item class
     Item heroItemAdd;
+    Item heroItemSub;
 
     public Action()
     {
@@ -31,6 +32,7 @@ public class Action
         requirementsNeg = new ArrayList<Action>();
         itemRequirements = new ArrayList<Action>();
         heroItemAdd = null;
+        heroItemSub = null;
     }
 
     public Action(String inputName, String inputDescription)
@@ -46,6 +48,7 @@ public class Action
         requirementsNeg = new ArrayList<Action>();
         itemRequirements = new ArrayList<Action>();
         heroItemAdd = null;
+        heroItemSub = null;
     }
 
     public void runAction(Console console, Hero player)
@@ -83,6 +86,20 @@ public class Action
         if(heroItemAdd != null)
         {
             player.items.add(heroItemAdd);
+            if(!heroItemAdd.heroActionsAdd.isEmpty())
+            for(Action a : this.heroItemAdd.heroActionsAdd)
+            {   
+                player.actions.add(a);
+            }
+        }
+        if(heroItemSub != null)
+        {
+            player.items.remove(heroItemSub);
+            if(!heroItemSub.heroActionsAdd.isEmpty())
+            for(Action a : this.heroItemSub.heroActionsAdd)
+            {   
+                player.actions.remove(a);
+            }
         }
 
         player.status += heroStatusModifier;

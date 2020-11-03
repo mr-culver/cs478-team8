@@ -7,7 +7,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        Boolean testPrinting = true; // allows test print blocks to execute for dev testing
+        Boolean testPrinting = false; // allows test print blocks to execute for dev testing
         Console console = System.console();
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
@@ -162,6 +162,15 @@ public class App
                 player.printInventory(console);
                 invalid = false;
             }
+            // toggle developer test printing
+            else if (in.contains("dev"))
+            {
+                console.printf("[Dev] Toggling test printing...\n");          
+                if(testPrinting) testPrinting = false;
+                else testPrinting = true;
+                console.printf("[Dev] > Test Printing = " + testPrinting);
+                invalid = false;
+            }
             // check input against available actions
             else if(invalid)
             {
@@ -179,8 +188,8 @@ public class App
                         }
                     }                
                 }
-            }
-            // check items for examiniation
+            }         
+            // check items for examiniation -- dead code now but might be used later
             /* else if(in.contains("examine"))
             {
                 String thing = in.substring(8, in.length() - 1);
@@ -283,14 +292,11 @@ public class App
                     console.printf("\t- " + action.name + "\n");
                 }
             }
-            
-
         }
         if(testPrinting)
             console.printf("[Dev] Checking action requirements...\n");     
         if(!availableActions.isEmpty())
         {
-
             for(Action action : availableActions)
             {
                 if(testPrinting)
@@ -313,7 +319,6 @@ public class App
                                 needsMet = true; // doesnt account for more than one need right now
                             }
                         }
-
                     }
                     for(Action negReq : action.requirementsNeg)
                     {
@@ -344,7 +349,13 @@ public class App
 
     public static void printHelpInfo(ArrayList<Action> availableActions, Console console)
     {
-        console.printf("Insert useful help info here\n");
+        formatMessage("Insert useful help info here, common action keywords and stuff", console);
+        formatMessage("Listing actions available to you:", console);
+        for(Action a : availableActions)
+        {
+            console.printf("\t- " + a.name + "\n");
+        }
+        console.printf("\n");
         // print available actions
     }
 }
