@@ -7,7 +7,7 @@ import java.util.*;
 {
     public static void main( String[] args )
     {
-<span class="nc" id="L10">        Boolean testPrinting = true; // allows test print blocks to execute for dev testing</span>
+<span class="nc" id="L10">        Boolean testPrinting = false; // allows test print blocks to execute for dev testing</span>
 <span class="nc" id="L11">        Console console = System.console();</span>
 <span class="nc" id="L12">        Dungeon dodolsCastle = new Dungeon();</span>
 <span class="nc" id="L13">        dodolsCastle.initializeLayout();</span>
@@ -22,8 +22,8 @@ import java.util.*;
     public static void welcomeMessage(Console console)
     {
         // big work in progress
-<span class="nc" id="L25">        formatMessage(&quot;________________________+++| Dodol's Castle |+++________________________&quot;, console);</span>
-<span class="nc" id="L26">        console.printf(&quot;\n\n&quot;);</span>
+<span class="nc" id="L25">        formatMessage(&quot;----------+++| Dodol's Castle |+++----------&quot;, console);</span>
+        //console.printf(&quot;\n\n&quot;);
 <span class="nc" id="L27">        formatMessage(&quot;Welcome to the text-based adventure game, Dodol's Castle!&quot;, console);</span>
 <span class="nc" id="L28">        formatMessage(&quot;Version info and stuff goes here (&gt;'.')&gt;&quot;, console);</span>
 <span class="nc" id="L29">        console.printf(&quot;\n\n&quot;);</span>
@@ -43,7 +43,7 @@ import java.util.*;
 <span class="nc bnc" id="L43" title="All 2 branches missed.">            if (x == ' ')</span>
             {
 
-<span class="nc bnc" id="L46" title="All 4 branches missed.">                if (i - prev &gt;= 60 &amp;&amp; i - prev &lt;= 70)</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">                if (i - prev &gt;= 90 &amp;&amp; i - prev &lt;= 100)</span>
                 {
 <span class="nc bnc" id="L48" title="All 2 branches missed.">                    if (prev == 0)</span>
                     {
@@ -85,171 +85,278 @@ import java.util.*;
         {
 <span class="nc" id="L86">            console.printf(x + &quot;\n&quot;);</span>
 <span class="nc" id="L87">        }</span>
-<span class="nc" id="L88">        console.printf(&quot;\n&quot;);</span>
+        //console.printf(&quot;\n&quot;);
 <span class="nc" id="L89">    }</span>
 
     public static void actionHandler(Console console, Hero player, Boolean testPrinting)
     {
-        // print room description
-<span class="nc" id="L94">        formatMessage(&quot;\n\n&quot; + &quot;+ &quot; + player.currentRoom.name + &quot; +\n&quot; + player.currentRoom.description + &quot;\n&quot;, console);</span>
+        // print room name &amp; description        
+<span class="nc" id="L94">        formatMessage(&quot;\n\n&quot; + &quot;+ &quot; + player.currentRoom.name + &quot; +&quot;, console);</span>
+<span class="nc" id="L95">        formatMessage(player.currentRoom.description + &quot;\n&quot;, console);</span>
 
         // get available actions from player.actions &amp; player.currentRoom.actions
-<span class="nc" id="L97">        ArrayList&lt;Action&gt; availableActions = new ArrayList&lt;Action&gt;();</span>
-<span class="nc" id="L98">        ArrayList&lt;Action&gt; prunedList = new ArrayList&lt;Action&gt;();</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        if(!player.actions.isEmpty())</span>
-        {
-<span class="nc" id="L101">            availableActions.addAll(player.actions);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">            if(testPrinting)</span>
-            {
-<span class="nc" id="L104">                console.printf(&quot;[Dev] Found actions in hero: \n&quot;);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">                for (Action action : player.actions) </span>
-                {
-<span class="nc" id="L107">                    console.printf(&quot;\t- &quot; + action.name + &quot;\n&quot;);</span>
-<span class="nc" id="L108">                }</span>
-            }       
-        }
-<span class="nc bnc" id="L111" title="All 2 branches missed.">        if(!player.currentRoom.actions.isEmpty())</span>
-        {
-<span class="nc" id="L113">            availableActions.addAll(player.currentRoom.actions);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">            if(testPrinting)</span>
-            {
-<span class="nc" id="L116">                console.printf(&quot;[Dev] Found actions in room: \n&quot;);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">                for (Action action : player.currentRoom.actions) </span>
-                {
-<span class="nc" id="L119">                    console.printf(&quot;\t- &quot; + action.name + &quot;\n&quot;);</span>
-<span class="nc" id="L120">                }</span>
-            }
-            
+<span class="nc" id="L98">        ArrayList&lt;Action&gt; availableActions = getAvailableActions(player.currentRoom, player, testPrinting, console);</span>
 
-        }     
-<span class="nc bnc" id="L125" title="All 2 branches missed.">        if(!availableActions.isEmpty())</span>
-        {
-
-<span class="nc bnc" id="L128" title="All 2 branches missed.">            for(Action action : availableActions)</span>
-            {
-<span class="nc bnc" id="L130" title="All 2 branches missed.">                if(testPrinting)</span>
-<span class="nc" id="L131">                    console.printf(&quot;[Dev] Checking action: &quot; + action.name + &quot;\n&quot;);</span>
-<span class="nc" id="L132">                Boolean needsMet = false;</span>
-<span class="nc" id="L133">                Boolean restraintPresent = false;</span>
-
-<span class="nc bnc" id="L135" title="All 2 branches missed.">                for(Action checkAction : availableActions)</span>
-                {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">                    if(action.requirementsPos.isEmpty())</span>
-                    {
-<span class="nc" id="L139">                        needsMet = true;</span>
-                    }
-                    else
-                    {
-<span class="nc bnc" id="L143" title="All 2 branches missed.">                        for(Action posReq : action.requirementsPos)</span>
-                        {
-<span class="nc bnc" id="L145" title="All 2 branches missed.">                            if(checkAction == posReq)</span>
-                            {
-<span class="nc" id="L147">                                needsMet = true; // doesnt account for more than one need right now</span>
-                            }
-<span class="nc" id="L149">                        }</span>
-
-                    }
-<span class="nc bnc" id="L152" title="All 2 branches missed.">                    for(Action negReq : action.requirementsNeg)</span>
-                    {
-<span class="nc bnc" id="L154" title="All 2 branches missed.">                        if(checkAction == negReq)</span>
-                        {
-<span class="nc" id="L156">                            restraintPresent = true;</span>
-                        }
-<span class="nc" id="L158">                    }</span>
-<span class="nc" id="L159">                }</span>
-
-<span class="nc bnc" id="L161" title="All 4 branches missed.">                if(!needsMet || restraintPresent)</span>
-			    {
-                    //availableActions.remove(action);
-<span class="nc bnc" id="L164" title="All 2 branches missed.">                    if(testPrinting)</span>
-<span class="nc" id="L165">                        console.printf(&quot;[Dev] Pruned action: &quot; + action.name + &quot;\n&quot;);</span>
-                }
-                else
-                {
-<span class="nc" id="L169">                    prunedList.add(action);</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">                    if(testPrinting)</span>
-<span class="nc" id="L171">                        console.printf(&quot;[Dev] Accepted action: &quot; + action.name + &quot;\n&quot;);</span>
-                }
-<span class="nc" id="L173">		    }</span>
-        }
-<span class="nc" id="L175">        availableActions = prunedList;</span>
-
-        // get player input -- needs lots of improvement
-<span class="nc" id="L178">        console.printf(&quot;________________________________________________\n&quot;);</span>
+        // player input &amp; action selection logic
+<span class="nc" id="L101">        console.printf(&quot;--------------------------------------------------\n&quot;);</span>
         
-<span class="nc" id="L180">        Boolean invalid = true;</span>
-<span class="nc" id="L181">        Boolean gameOver = false;</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">        while(invalid)</span>
+<span class="nc" id="L103">        Boolean invalid = true;</span>
+<span class="nc" id="L104">        Boolean gameOver = false;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        while(invalid)</span>
         {
-<span class="nc" id="L184">            String in = console.readLine(&quot;&gt; &quot;);</span>
-<span class="nc bnc" id="L185" title="All 4 branches missed.">            if(in.contains(&quot;north&quot;) &amp;&amp; player.currentRoom.doors[0] != null)</span>
+<span class="nc" id="L107">            String in = console.readLine(&quot;&gt; &quot;);</span>
+            // movement handling
+<span class="nc bnc" id="L109" title="All 4 branches missed.">            if(in.contains(&quot;north&quot;) &amp;&amp; player.currentRoom.doors[0] != null)</span>
             {
-<span class="nc" id="L187">                String effect = &quot;north&quot;;</span>
-<span class="nc" id="L188">                console.printf(&quot;You moved north.&quot;);</span>
-<span class="nc" id="L189">                player.addHistory(&quot;You moved north&quot;, effect);</span>
-<span class="nc" id="L190">                player.currentRoom = player.currentRoom.doors[0];</span>
-<span class="nc" id="L191">                invalid = false;</span>
-<span class="nc" id="L192">            }</span>
-<span class="nc bnc" id="L193" title="All 4 branches missed.">            else if(in.contains(&quot;east&quot;) &amp;&amp; player.currentRoom.doors[1] != null)</span>
+<span class="nc" id="L111">                String effect = &quot;north&quot;;</span>
+<span class="nc" id="L112">                console.printf(&quot;\nYou moved north.&quot;);</span>
+<span class="nc" id="L113">                player.addHistory(&quot;You moved north&quot;, effect);</span>
+<span class="nc" id="L114">                player.currentRoom = player.currentRoom.doors[0];</span>
+<span class="nc" id="L115">                invalid = false;</span>
+<span class="nc" id="L116">            }</span>
+<span class="nc bnc" id="L117" title="All 4 branches missed.">            else if(in.contains(&quot;east&quot;) &amp;&amp; player.currentRoom.doors[1] != null)</span>
             {
-<span class="nc" id="L195">                String effect = &quot;east&quot;;</span>
-<span class="nc" id="L196">                console.printf(&quot;You moved east&quot;);</span>
-<span class="nc" id="L197">                player.addHistory(&quot;You moved east&quot;, effect);</span>
-<span class="nc" id="L198">                player.currentRoom = player.currentRoom.doors[1];</span>
-<span class="nc" id="L199">                invalid = false;</span>
-<span class="nc" id="L200">            }</span>
-<span class="nc bnc" id="L201" title="All 4 branches missed.">            else if(in.contains(&quot;south&quot;) &amp;&amp; player.currentRoom.doors[2] != null)</span>
+<span class="nc" id="L119">                String effect = &quot;east&quot;;</span>
+<span class="nc" id="L120">                console.printf(&quot;\nYou moved east.&quot;);</span>
+<span class="nc" id="L121">                player.addHistory(&quot;You moved east&quot;, effect);</span>
+<span class="nc" id="L122">                player.currentRoom = player.currentRoom.doors[1];</span>
+<span class="nc" id="L123">                invalid = false;</span>
+<span class="nc" id="L124">            }</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">            else if(in.contains(&quot;south&quot;) &amp;&amp; player.currentRoom.doors[2] != null)</span>
             {
-<span class="nc" id="L203">                String effect = &quot;south&quot;;</span>
-<span class="nc" id="L204">                console.printf(&quot;You moved south&quot;);</span>
-<span class="nc" id="L205">                player.addHistory(&quot;You moved south&quot;, effect);</span>
-<span class="nc" id="L206">                player.currentRoom = player.currentRoom.doors[2];</span>
-<span class="nc" id="L207">                invalid = false;</span>
-<span class="nc" id="L208">            }</span>
-<span class="nc bnc" id="L209" title="All 4 branches missed.">            else if(in.contains(&quot;west&quot;) &amp;&amp; player.currentRoom.doors[3] != null)</span>
+<span class="nc" id="L127">                String effect = &quot;south&quot;;</span>
+<span class="nc" id="L128">                console.printf(&quot;\nYou moved south.&quot;);</span>
+<span class="nc" id="L129">                player.addHistory(&quot;You moved south&quot;, effect);</span>
+<span class="nc" id="L130">                player.currentRoom = player.currentRoom.doors[2];</span>
+<span class="nc" id="L131">                invalid = false;</span>
+<span class="nc" id="L132">            }</span>
+<span class="nc bnc" id="L133" title="All 4 branches missed.">            else if(in.contains(&quot;west&quot;) &amp;&amp; player.currentRoom.doors[3] != null)</span>
             {
-<span class="nc" id="L211">                String effect = &quot;west&quot;;</span>
-<span class="nc" id="L212">                console.printf(&quot;You moved west&quot;);</span>
-<span class="nc" id="L213">                player.addHistory(&quot;You moved west&quot;, effect);</span>
-<span class="nc" id="L214">                player.currentRoom = player.currentRoom.doors[3];</span>
-<span class="nc" id="L215">                invalid = false;</span>
-<span class="nc" id="L216">            }</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">            else if(in.contains(&quot;status&quot;))</span>
+<span class="nc" id="L135">                String effect = &quot;west&quot;;</span>
+<span class="nc" id="L136">                console.printf(&quot;\nYou moved west.&quot;);</span>
+<span class="nc" id="L137">                player.addHistory(&quot;You moved west&quot;, effect);</span>
+<span class="nc" id="L138">                player.currentRoom = player.currentRoom.doors[3];</span>
+<span class="nc" id="L139">                invalid = false;</span>
+<span class="nc" id="L140">            }</span>
+            // show hero status (health description)
+<span class="nc bnc" id="L142" title="All 2 branches missed.">            else if(in.contains(&quot;status&quot;))</span>
             {
-<span class="nc" id="L219">                formatMessage(player.getStatusDescription(testPrinting) + &quot;\n&quot;, console);</span>
-<span class="nc" id="L220">                invalid = false;</span>
+<span class="nc" id="L144">                formatMessage(player.getStatusDescription(testPrinting) + &quot;\n&quot;, console);</span>
+<span class="nc" id="L145">                invalid = false;</span>
             }
-<span class="nc bnc" id="L222" title="All 2 branches missed.">            else if(invalid)</span>
+            // show hero log (past actions, rooms)
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            else if(in.contains(&quot;log&quot;))</span>
             {
-<span class="nc bnc" id="L224" title="All 2 branches missed.">                for(Action action : availableActions)</span>
+<span class="nc" id="L150">                player.printHistory(console);</span>
+<span class="nc" id="L151">                invalid = false;</span>
+            }
+            // displays helpful info and available actions
+<span class="nc bnc" id="L154" title="All 2 branches missed.">            else if(in.contains(&quot;help&quot;))</span>
+            {
+<span class="nc" id="L156">                printHelpInfo(availableActions, console);</span>
+<span class="nc" id="L157">                invalid = false;</span>
+            }
+            // show inventory (player.items)
+<span class="nc bnc" id="L160" title="All 2 branches missed.">            else if (in.contains(&quot;inventory&quot;))</span>
+            {
+<span class="nc" id="L162">                player.printInventory(console);</span>
+<span class="nc" id="L163">                invalid = false;</span>
+            }
+            // toggle developer test printing
+<span class="nc bnc" id="L166" title="All 2 branches missed.">            else if (in.contains(&quot;dev&quot;))</span>
+            {
+<span class="nc" id="L168">                console.printf(&quot;[Dev] Toggling test printing...\n&quot;);          </span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">                if(testPrinting) testPrinting = false;</span>
+<span class="nc" id="L170">                else testPrinting = true;</span>
+<span class="nc" id="L171">                console.printf(&quot;[Dev] &gt; Test Printing = &quot; + testPrinting);</span>
+<span class="nc" id="L172">                invalid = false;</span>
+            }
+            // check input against available actions
+<span class="nc bnc" id="L175" title="All 2 branches missed.">            else if(invalid)</span>
+            {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">                for(Action action : availableActions)</span>
                 {
-<span class="nc bnc" id="L226" title="All 2 branches missed.">                    if(in.contains(action.name))</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">                    if(in.contains(action.name))</span>
                     {
-<span class="nc" id="L228">                        action.runAction(console, player);</span>
-<span class="nc" id="L229">                        invalid = false;</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">                        if(in.contains(&quot;go home&quot;))</span>
+<span class="nc" id="L181">                        formatMessage(action.description, console);</span>
+<span class="nc" id="L182">                        action.runAction(console, player);</span>
+<span class="nc" id="L183">                        invalid = false;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">                        if(in.contains(&quot;go home&quot;))</span>
                         {
-<span class="nc" id="L232">                            console.printf(&quot;\n&quot;);</span>
-<span class="nc" id="L233">                            gameOver = true;</span>
+<span class="nc" id="L186">                            console.printf(&quot;\n&quot;);</span>
+<span class="nc" id="L187">                            gameOver = true;</span>
                         }
-                    }
-                    
-<span class="nc" id="L237">                }</span>
-            }
-<span class="nc bnc" id="L239" title="All 2 branches missed.">            if(invalid)</span>
+                    }                
+<span class="nc" id="L190">                }</span>
+            }         
+            // check items for examiniation -- dead code now but might be used later
+            /* else if(in.contains(&quot;examine&quot;))
             {
-<span class="nc" id="L241">                console.printf(&quot;Please enter a valid action\n&quot;);</span>
+                String thing = in.substring(8, in.length() - 1);
+                if(!player.currentRoom.items.isEmpty())
+                for (Item i : player.currentRoom.items)
+                {
+                    if(i.name.contains(thing))
+                    {
+                        if(console != null)
+                        {
+                            formatMessage(&quot;\nYou examine the &quot; + i.name + &quot;:&quot;, console);
+                            formatMessage(i.description, console);
+                        }  
+                        invalid = false;                         
+                    }
+                }
+                if(!player.items.isEmpty())
+                for (Item i : player.items)
+                {
+                    if(i.name.contains(thing))
+                    {
+                        if(console != null)
+                        {
+                            formatMessage(&quot;\nYou examine the &quot; + i.name + &quot;:&quot;, console);
+                            formatMessage(i.description, console);                        
+                        }
+                        invalid = false;                           
+                    }
+                }
+            } */
+            // check items for taking
+            /* else if(in.contains(&quot;take&quot;))
+            {
+                String thing = in.substring(5, in.length() - 1);
+                ArrayList&lt;Item&gt; temp = new ArrayList&lt;Item&gt;();
+                for (Item i : player.currentRoom.items)
+                {
+                    temp.add(i);
+                    if(i.name.contains(thing) &amp;&amp; i.canTake)
+                    {
+                        player.items.add(i);
+                        temp.remove(i);
+                        if(!i.heroActionsAdd.isEmpty())
+                        {
+                            for(Action a : i.heroActionsAdd)
+                            {
+                                player.actions.add(a);
+                            }
+                        }
+                        if(console != null)
+                        {
+                            formatMessage(&quot;\nYou take the &quot; + i.name + &quot;.&quot;, console);
+                        }
+                        invalid = false;                 
+                    }
+                }
+                player.currentRoom.items = temp;
+            }   */        
+<span class="nc bnc" id="L251" title="All 2 branches missed.">            if(invalid)</span>
+            {
+<span class="nc" id="L253">                console.printf(&quot;Please enter a valid action, type 'help' for more info\n&quot;);</span>
             }
-<span class="nc" id="L243">        }</span>
-
-<span class="nc bnc" id="L245" title="All 4 branches missed.">        if(player.status &gt; 0 &amp;&amp; !gameOver)</span>
+<span class="nc" id="L255">        }</span>
+<span class="nc bnc" id="L256" title="All 4 branches missed.">        if(player.status &gt; 0 &amp;&amp; !gameOver)</span>
         {
-<span class="nc" id="L247">            actionHandler(console, player, testPrinting);</span>
+<span class="nc" id="L258">            actionHandler(console, player, testPrinting);</span>
         }
         else
         {
-<span class="nc" id="L251">            System.out.println(&quot;+++| Game Over |+++&quot;);</span>
+<span class="nc" id="L262">            console.printf(&quot;+++| Game Over |+++&quot;);</span>
         } 
-<span class="nc" id="L253">    }</span>
+<span class="nc" id="L264">    }</span>
+
+    public static ArrayList&lt;Action&gt; getAvailableActions(Room curRoom, Hero player, Boolean testPrinting, Console console)
+    {
+<span class="nc bnc" id="L268" title="All 2 branches missed.">        if(testPrinting)</span>
+<span class="nc" id="L269">            console.printf(&quot;[Dev] Gathering available actions...\n&quot;);</span>
+<span class="nc" id="L270">        ArrayList&lt;Action&gt; availableActions = new ArrayList&lt;Action&gt;();</span>
+<span class="nc" id="L271">        ArrayList&lt;Action&gt; prunedList = new ArrayList&lt;Action&gt;();</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        if(!player.actions.isEmpty())</span>
+        {
+<span class="nc" id="L274">            availableActions.addAll(player.actions);</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">            if(testPrinting)</span>
+            {
+<span class="nc" id="L277">                console.printf(&quot;[Dev] &gt; Found actions in hero: \n&quot;);</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">                for (Action action : player.actions) </span>
+                {
+<span class="nc" id="L280">                    console.printf(&quot;\t- &quot; + action.name + &quot;\n&quot;);</span>
+<span class="nc" id="L281">                }</span>
+            }       
+        }
+<span class="nc bnc" id="L284" title="All 2 branches missed.">        if(!player.currentRoom.actions.isEmpty())</span>
+        {
+<span class="nc" id="L286">            availableActions.addAll(player.currentRoom.actions);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">            if(testPrinting)</span>
+            {
+<span class="nc" id="L289">                console.printf(&quot;[Dev] &gt; Found actions in room: \n&quot;);</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">                for (Action action : player.currentRoom.actions) </span>
+                {
+<span class="nc" id="L292">                    console.printf(&quot;\t- &quot; + action.name + &quot;\n&quot;);</span>
+<span class="nc" id="L293">                }</span>
+            }
+        }
+<span class="nc bnc" id="L296" title="All 2 branches missed.">        if(testPrinting)</span>
+<span class="nc" id="L297">            console.printf(&quot;[Dev] Checking action requirements...\n&quot;);     </span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">        if(!availableActions.isEmpty())</span>
+        {
+<span class="nc bnc" id="L300" title="All 2 branches missed.">            for(Action action : availableActions)</span>
+            {
+<span class="nc bnc" id="L302" title="All 2 branches missed.">                if(testPrinting)</span>
+<span class="nc" id="L303">                    console.printf(&quot;[Dev] &gt; Checking: &quot; + action.name + &quot;\n&quot;);</span>
+<span class="nc" id="L304">                Boolean needsMet = false;</span>
+<span class="nc" id="L305">                Boolean restraintPresent = false;</span>
+
+<span class="nc bnc" id="L307" title="All 2 branches missed.">                for(Action checkAction : availableActions)</span>
+                {
+<span class="nc bnc" id="L309" title="All 2 branches missed.">                    if(action.requirementsPos.isEmpty())</span>
+                    {
+<span class="nc" id="L311">                        needsMet = true;</span>
+                    }
+                    else
+                    {
+<span class="nc bnc" id="L315" title="All 2 branches missed.">                        for(Action posReq : action.requirementsPos)</span>
+                        {
+<span class="nc bnc" id="L317" title="All 2 branches missed.">                            if(checkAction == posReq)</span>
+                            {
+<span class="nc" id="L319">                                needsMet = true; // doesnt account for more than one need right now</span>
+                            }
+<span class="nc" id="L321">                        }</span>
+                    }
+<span class="nc bnc" id="L323" title="All 2 branches missed.">                    for(Action negReq : action.requirementsNeg)</span>
+                    {
+<span class="nc bnc" id="L325" title="All 2 branches missed.">                        if(checkAction == negReq)</span>
+                        {
+<span class="nc" id="L327">                            restraintPresent = true;</span>
+                        }
+<span class="nc" id="L329">                    }</span>
+<span class="nc" id="L330">                }</span>
+
+<span class="nc bnc" id="L332" title="All 4 branches missed.">                if(!needsMet || restraintPresent)</span>
+			    {
+                    //availableActions.remove(action);
+<span class="nc bnc" id="L335" title="All 2 branches missed.">                    if(testPrinting)</span>
+<span class="nc" id="L336">                        console.printf(&quot;[Dev] &gt;&gt; Pruned &quot; + &quot;\n&quot;);</span>
+                }
+                else
+                {
+<span class="nc" id="L340">                    prunedList.add(action);</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">                    if(testPrinting)</span>
+<span class="nc" id="L342">                        console.printf(&quot;[Dev] &gt;&gt; Accepted &quot; + &quot;\n&quot;);</span>
+                }
+<span class="nc" id="L344">		    }</span>
+        }
+<span class="nc" id="L346">        availableActions = prunedList;</span>
+<span class="nc" id="L347">        return availableActions;</span>
+    }
+
+    public static void printHelpInfo(ArrayList&lt;Action&gt; availableActions, Console console)
+    {
+<span class="nc" id="L352">        formatMessage(&quot;Insert useful help info here, common action keywords and stuff&quot;, console);</span>
+<span class="nc" id="L353">        formatMessage(&quot;Listing actions available to you:&quot;, console);</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">        for(Action a : availableActions)</span>
+        {
+<span class="nc" id="L356">            console.printf(&quot;\t- &quot; + a.name + &quot;\n&quot;);</span>
+<span class="nc" id="L357">        }</span>
+<span class="nc" id="L358">        console.printf(&quot;\n&quot;);</span>
+        // print available actions
+<span class="nc" id="L360">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
