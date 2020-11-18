@@ -1,7 +1,7 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-maven,DodolsCastle,App,747,0,108,0,165,0,61,0,7,0
+maven,DodolsCastle,App,746,0,108,0,165,0,61,0,7,0
 maven,DodolsCastle,Item,0,35,0,0,0,12,0,2,0,2
 maven,DodolsCastle,Dungeon,103,1016,8,0,20,164,7,2,3,2
-maven,DodolsCastle,Room,6,21,0,0,4,7,4,2,4,2
-maven,DodolsCastle,Action,198,106,32,0,40,28,17,2,1,2
+maven,DodolsCastle,Room,0,40,0,0,0,14,0,6,0,6
+maven,DodolsCastle,Action,29,275,5,27,7,61,4,15,0,3
 maven,DodolsCastle,Hero,82,266,12,24,15,55,11,17,2,8

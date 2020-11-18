@@ -26,22 +26,22 @@ public class Room {
 
     public ArrayList&lt;Action&gt; getActions()
     {
-<span class="nc" id="L29">        return this.actions;</span>
+<span class="fc" id="L29">        return this.actions;</span>
     }
 
-    public void updateDescription()
+    public void updateDescription(String changes)
     {
-        //update the description after an event
-<span class="nc" id="L35">    }</span>
+<span class="fc" id="L34">        this.description = changes;</span>
+<span class="fc" id="L35">    }</span>
 
     public void addAction(Action x)
     {
-        //add an action to the list
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L39">        this.actions.add(x);</span>
+<span class="fc" id="L40">    }</span>
 
     public void removeAction(Action x)
     {
-        //remove an action from the list
-<span class="nc" id="L45">    }</span>
+<span class="fc" id="L44">        this.actions.remove(x);</span>
+<span class="fc" id="L45">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

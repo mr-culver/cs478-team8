@@ -1,7 +1,6 @@
 package DodolsCastle;
 
 import java.util.ArrayList;
-import java.io.*;
 
 public class Action 
 {
@@ -51,7 +50,7 @@ public class Action
         heroItemSub = null;
     }
 
-    public void runAction(Console console, Hero player)
+    public void runAction(Hero player)
     {
         //console.printf(this.name + "\n"); // might not be needed
         //console.printf(this.description + "\n");

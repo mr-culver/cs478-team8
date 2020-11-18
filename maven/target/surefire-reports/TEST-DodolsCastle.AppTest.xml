@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="DodolsCastle.AppTest" time="0.001" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="DodolsCastle.AppTest" time="0" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="14"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-14-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire/surefirebooter721688435742733245.jar /home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire 2020-11-13T21-49-45_206-jvmRun1 surefire9025628847606837627tmp surefire_04869667262527015714tmp"/>
+    <property name="sun.java.command" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire/surefirebooter4292765420357843189.jar /home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire 2020-11-17T22-35-02_827-jvmRun1 surefire397934009527608614tmp surefire_09207200269023919788tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/test-classes:/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/classes:/home/jarrett/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/jarrett/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -27,12 +27,12 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire/surefirebooter721688435742733245.jar"/>
+    <property name="surefire.real.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire/surefirebooter4292765420357843189.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="14.0.2+12-Ubuntu-120.04"/>
     <property name="user.name" value="jarrett"/>
     <property name="path.separator" value=":"/>
-    <property name="os.version" value="5.4.0-53-generic"/>
+    <property name="os.version" value="5.4.0-54-generic"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>

@@ -179,7 +179,7 @@ public class App
                     if(in.contains(action.name))
                     {
                         formatMessage(action.description, console);
-                        action.runAction(console, player);
+                        action.runAction(player);
                         invalid = false;
                         if(in.contains("go home"))
                         {
