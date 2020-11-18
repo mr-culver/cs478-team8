@@ -30,4 +30,72 @@ public class RoomTest {
 
         assertEquals("description", desc2, desc);
     }
+
+    @Test
+    public void testGetActions()
+    {
+        Room test = new Room("Test", "description");
+
+        ArrayList<Action> actions2 = new ArrayList<Action>();
+
+        Action testAction = new Action("test", "something");
+
+        test.actions.add(testAction);
+
+        actions2.add(testAction);
+
+        assertEquals(actions2, test.getActions());
+    }
+
+    @Test
+    public void testUpdateDescription()
+    {   
+        Room test = new Room("Test", "description");
+
+        String newDescription = "another description";
+
+        test.updateDescription("another description");
+
+        assertEquals(newDescription, test.getDescription());
+    }
+
+    @Test
+    public void addAction()
+    {
+        Room test = new Room("Test", "description");
+
+        ArrayList<Action> actions2 = new ArrayList<Action>();
+
+        Action testAction = new Action("test", "something");
+
+        actions2.add(testAction);
+
+        test.addAction(testAction);
+
+        assertEquals(actions2, test.getActions());
+    }
+
+    @Test
+    public void removeAction()
+    {
+        Room test = new Room("Test", "description");
+
+        ArrayList<Action> actions2 = new ArrayList<Action>();
+
+        Action testAction = new Action("test", "something");
+
+        actions2.add(testAction);
+
+        test.addAction(testAction);
+
+        Action testAction2 = new Action("test2", "yet another action");
+
+        actions2.add(testAction2);
+        test.addAction(testAction2);
+
+        actions2.remove(testAction);
+        test.removeAction(testAction);
+
+        assertEquals(actions2, test.getActions());
+    }
 }
