@@ -12,13 +12,7 @@ public class Dungeon {
         this.layout = new Room[4][4];
         //this.currentEntrance = this.layout[0][1];
     }
-
-    public void selectLayout(int select)
-    {
-        //selects a layout from predefined options.
-        //could add randomization later if there is time?
-    }
-
+    
     public void initializeLayout()
     {
         // I would call this method in the constructor personally
