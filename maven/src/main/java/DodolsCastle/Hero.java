@@ -100,7 +100,7 @@ public class Hero {
     {
         String desc = "";
         if(testPrinting)
-            desc = "[Dev] Status = " + status;
+            desc = "[Dev] Status = " + status + "\n";
         if(status >= 50)
         {
             desc += "You feel absolutely fantastic.";
@@ -132,7 +132,7 @@ public class Hero {
         }
         else
         {
-            System.out.println("You are carrying:\n");
+            System.out.println("You are carrying:");
             for(Item i : items)
             {
                 System.out.println("\t- " + i.name);

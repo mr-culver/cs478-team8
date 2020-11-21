@@ -108,6 +108,7 @@ public class App
         {
             System.out.println("Enter a command:");
             String in = input.nextLine();
+            System.out.print(String.format("\033[2J"));
             System.out.println();
             // movement handling
             if(in.contains("north") && player.currentRoom.doors[0] != null)
