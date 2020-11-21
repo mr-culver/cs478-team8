@@ -327,7 +327,7 @@ public class Dungeon {
     {
         String shortName;
 
-        System.out.println("\n[Dev] Printing room data structure...");
+        System.out.println("[Dev] Printing room data structure...");
         System.out.println("---------------------");
 
         for(int i = 0; i < 4; i++)
@@ -351,9 +351,10 @@ public class Dungeon {
             if(i != 3)
                 System.out.println("\n|----+----+----+----|");
             else
-                System.out.println("\n");
+                System.out.println("");
         }
-        System.out.println("---------------------\n");
+        System.out.println("---------------------");
+        System.out.println();
     }
 
     public Room getEntrance()

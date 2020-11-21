@@ -71,15 +71,15 @@ public class Hero {
 
     public void printHistory()
     {
-<span class="nc" id="L74">        System.out.println(&quot;You think about what you have done since you got to the castle...&quot;);</span>
-<span class="nc" id="L75">        System.out.println(&quot;-------------------- Log Book --------------------\n&quot;);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">        for (String x : history)</span>
+<span class="fc" id="L74">        System.out.println(&quot;You think about what you have done since you got to the castle...&quot;);</span>
+<span class="fc" id="L75">        System.out.println(&quot;-------------------- Log Book --------------------\n&quot;);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        for (String x : history)</span>
         {
-<span class="nc" id="L78">            System.out.println(x);</span>
-<span class="nc" id="L79">        }</span>
-<span class="nc" id="L80">        System.out.println();</span>
-<span class="nc" id="L81">        System.out.println(&quot;--------------------------------------------------\n&quot;);</span>
-<span class="nc" id="L82">    }</span>
+<span class="fc" id="L78">            System.out.println(x);</span>
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">        System.out.println();</span>
+<span class="fc" id="L81">        System.out.println(&quot;--------------------------------------------------\n&quot;);</span>
+<span class="fc" id="L82">    }</span>
 
     public ArrayList&lt;String&gt; getAvailableMoves() // unused
     {
@@ -126,20 +126,20 @@ public class Hero {
 
     public void printInventory()
     {
-<span class="nc bnc" id="L129" title="All 2 branches missed.">        if(items.isEmpty())</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if(items.isEmpty())</span>
         {
-<span class="nc" id="L131">            System.out.println(&quot;You are not carrying anything.&quot;);</span>
+<span class="fc" id="L131">            System.out.println(&quot;You are not carrying anything.&quot;);</span>
         }
         else
         {
-<span class="nc" id="L135">            System.out.println(&quot;You are carrying:\n&quot;);</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">            for(Item i : items)</span>
+<span class="fc" id="L135">            System.out.println(&quot;You are carrying:&quot;);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">            for(Item i : items)</span>
             {
-<span class="nc" id="L138">                System.out.println(&quot;\t- &quot; + i.name);</span>
-<span class="nc" id="L139">            }</span>
-<span class="nc" id="L140">            System.out.println();</span>
+<span class="fc" id="L138">                System.out.println(&quot;\t- &quot; + i.name);</span>
+<span class="fc" id="L139">            }</span>
+<span class="fc" id="L140">            System.out.println();</span>
         }   
-<span class="nc" id="L142">    }</span>
+<span class="fc" id="L142">    }</span>
 
     public ArrayList&lt;Action&gt; initStarterHeroActions()
     {

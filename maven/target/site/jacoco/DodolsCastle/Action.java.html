@@ -103,19 +103,19 @@ public class Action
 
 <span class="fc" id="L104">        player.status += heroStatusModifier;</span>
 
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (heroStatusModifier != 0)</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (heroStatusModifier != 0)</span>
         {
-<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (heroStatusModifier &lt; 0)</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (heroStatusModifier &lt; 0)</span>
             {
-<span class="nc" id="L110">                String effect = Integer.toString(heroStatusModifier);</span>
-<span class="nc" id="L111">                player.addHistory(&quot;You took &quot; + heroStatusModifier + &quot; damage from &quot; + this.name +&quot;!&quot;, effect);    </span>
-<span class="nc" id="L112">            }</span>
+<span class="fc" id="L110">                String effect = Integer.toString(heroStatusModifier);</span>
+<span class="fc" id="L111">                player.addHistory(&quot;You took &quot; + heroStatusModifier + &quot; damage from &quot; + this.name +&quot;!&quot;, effect);    </span>
+<span class="fc" id="L112">            }</span>
 
             else
             {
-<span class="nc" id="L116">                String effect = Integer.toString(heroStatusModifier);</span>
-<span class="nc" id="L117">                player.addHistory(&quot;You healed &quot; + heroStatusModifier + &quot; of health from &quot; + this.name + &quot;.&quot;, effect);</span>
-<span class="nc" id="L118">            }</span>
+<span class="fc" id="L116">                String effect = Integer.toString(heroStatusModifier);</span>
+<span class="fc" id="L117">                player.addHistory(&quot;You healed &quot; + heroStatusModifier + &quot; of health from &quot; + this.name + &quot;.&quot;, effect);</span>
+<span class="fc" id="L118">            }</span>
             
         }
         else
