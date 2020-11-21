@@ -1,7 +1,5 @@
 package DodolsCastle;
 
-import java.io.*;
-
 public class Dungeon {
     Room currentEntrance;
     //ArrayList<Room> altEntrances;
@@ -325,12 +323,12 @@ public class Dungeon {
 
     }
 
-    public void printDungeon(Console console)
+    public void printDungeon()
     {
         String shortName;
 
-        console.printf("\n[Dev] Printing room data structure...\n");
-        console.printf("---------------------\n");
+        System.out.println("\n[Dev] Printing room data structure...");
+        System.out.println("---------------------");
 
         for(int i = 0; i < 4; i++)
         {
@@ -348,14 +346,14 @@ public class Dungeon {
                 {
                     shortName = "Nl";
                 }
-                console.printf(" " + shortName + " |");
+                System.out.print(" " + shortName + " |");
             }
             if(i != 3)
-                console.printf("\n|----+----+----+----|\n");
+                System.out.println("\n|----+----+----+----|");
             else
-                console.printf("\n");
+                System.out.println("\n");
         }
-        console.printf("---------------------\n\n");
+        System.out.println("---------------------\n");
     }
 
     public Room getEntrance()

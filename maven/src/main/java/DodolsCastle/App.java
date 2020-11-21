@@ -1,36 +1,38 @@
 package DodolsCastle;
 
-import java.io.*;
 import java.util.*;
 
 public class App 
 {
     public static void main( String[] args )
     {
+        Scanner input = new Scanner(System.in);
         Boolean testPrinting = false; // allows test print blocks to execute for dev testing
-        Console console = System.console();
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
         Hero player = new Hero(dodolsCastle.currentEntrance);
         if(testPrinting)
-            dodolsCastle.printDungeon(console);
-        welcomeMessage(console);
-        actionHandler(console, player, testPrinting);
+            dodolsCastle.printDungeon();
+        welcomeMessage();
+        actionHandler(player, testPrinting, input, false);
+        input.close();
         // end game display stuff - credits and whatnot
     }
 
-    public static void welcomeMessage(Console console)
+    public static void welcomeMessage()
     {
         // big work in progress
-        formatMessage("----------+++| Dodol's Castle |+++----------", console);
+        System.out.println("----------+++| Dodol's Castle |+++----------");
+        System.out.println();
         //console.printf("\n\n");
-        formatMessage("Welcome to the text-based adventure game, Dodol's Castle!", console);
-        formatMessage("Version info and stuff goes here (>'.')>", console);
-        console.printf("\n\n");
-        formatMessage("Story intro placeholder -- puts you walking into the common room unexpectedly from your house", console);
+        System.out.println("Welcome to the text-based adventure game, Dodol's Castle!");
+        System.out.println("Version info and stuff goes here (>'.')>");
+        System.out.println();
+        System.out.println();
+        System.out.println("Story intro placeholder -- puts you walking into the common room unexpectedly from your house");
     }
 
-    public static void formatMessage(String message, Console console)
+    public static void formatMessage(String message)
     {
         ArrayList<String> messageArray = new ArrayList<String>();
 
@@ -83,33 +85,35 @@ public class App
 
         for (String x : messageArray)
         {
-            console.printf(x + "\n");
+            System.out.println(x);
         }
         //console.printf("\n");
     }
 
-    public static void actionHandler(Console console, Hero player, Boolean testPrinting)
+    public static void actionHandler(Hero player, Boolean testPrinting, Scanner input, Boolean appTest)
     {
         // print room name & description        
-        formatMessage("\n\n" + "+ " + player.currentRoom.name + " +", console);
-        formatMessage(player.currentRoom.description + "\n", console);
+        formatMessage("\n\n" + "+ " + player.currentRoom.name + " +");
+        formatMessage(player.currentRoom.description + "\n");
 
         // get available actions from player.actions & player.currentRoom.actions
-        ArrayList<Action> availableActions = getAvailableActions(player.currentRoom, player, testPrinting, console);
+        ArrayList<Action> availableActions = getAvailableActions(player.currentRoom, player, testPrinting);
 
         // player input & action selection logic
-        console.printf("--------------------------------------------------\n");
+        System.out.println("--------------------------------------------------\n");
         
         Boolean invalid = true;
         Boolean gameOver = false;
         while(invalid)
         {
-            String in = console.readLine("> ");
+            System.out.println("Enter a command:");
+            String in = input.nextLine();
+            System.out.println();
             // movement handling
             if(in.contains("north") && player.currentRoom.doors[0] != null)
             {
                 String effect = "north";
-                console.printf("\nYou moved north.");
+                System.out.println("You moved north.");
                 player.addHistory("You moved north", effect);
                 player.currentRoom = player.currentRoom.doors[0];
                 invalid = false;
@@ -117,7 +121,7 @@ public class App
             else if(in.contains("east") && player.currentRoom.doors[1] != null)
             {
                 String effect = "east";
-                console.printf("\nYou moved east.");
+                System.out.println("You moved east.");
                 player.addHistory("You moved east", effect);
                 player.currentRoom = player.currentRoom.doors[1];
                 invalid = false;
@@ -125,7 +129,7 @@ public class App
             else if(in.contains("south") && player.currentRoom.doors[2] != null)
             {
                 String effect = "south";
-                console.printf("\nYou moved south.");
+                System.out.println("You moved south.");
                 player.addHistory("You moved south", effect);
                 player.currentRoom = player.currentRoom.doors[2];
                 invalid = false;
@@ -133,7 +137,7 @@ public class App
             else if(in.contains("west") && player.currentRoom.doors[3] != null)
             {
                 String effect = "west";
-                console.printf("\nYou moved west.");
+                System.out.println("You moved west.");
                 player.addHistory("You moved west", effect);
                 player.currentRoom = player.currentRoom.doors[3];
                 invalid = false;
@@ -141,34 +145,34 @@ public class App
             // show hero status (health description)
             else if(in.contains("status"))
             {
-                formatMessage(player.getStatusDescription(testPrinting) + "\n", console);
+                formatMessage(player.getStatusDescription(testPrinting) + "\n");
                 invalid = false;
             }
             // show hero log (past actions, rooms)
             else if(in.contains("log"))
             {
-                player.printHistory(console);
+                player.printHistory();
                 invalid = false;
             }
             // displays helpful info and available actions
             else if(in.contains("help"))
             {
-                printHelpInfo(availableActions, console);
+                printHelpInfo(availableActions);
                 invalid = false;
             }
             // show inventory (player.items)
             else if (in.contains("inventory"))
             {
-                player.printInventory(console);
+                player.printInventory();
                 invalid = false;
             }
             // toggle developer test printing
             else if (in.contains("dev"))
             {
-                console.printf("[Dev] Toggling test printing...\n");          
+                System.out.println("[Dev] Toggling test printing...\n");          
                 if(testPrinting) testPrinting = false;
                 else testPrinting = true;
-                console.printf("[Dev] > Test Printing = " + testPrinting);
+                System.out.println("[Dev] > Test Printing = " + testPrinting);
                 invalid = false;
             }
             // check input against available actions
@@ -178,12 +182,12 @@ public class App
                 {
                     if(in.contains(action.name))
                     {
-                        formatMessage(action.description, console);
+                        formatMessage(action.description);
                         action.runAction(player);
                         invalid = false;
                         if(in.contains("go home"))
                         {
-                            console.printf("\n");
+                            System.out.println();
                             gameOver = true;
                         }
                     }                
@@ -250,23 +254,26 @@ public class App
             }   */        
             if(invalid)
             {
-                console.printf("Please enter a valid action, type 'help' for more info\n");
+                System.out.println("Please enter a valid action, type 'help' for more info\n");
             }
         }
         if(player.status > 0 && !gameOver)
         {
-            actionHandler(console, player, testPrinting);
+            if (appTest != true)
+            {
+                actionHandler(player, testPrinting, input, false);    
+            }    
         }
         else
         {
-            console.printf("+++| Game Over |+++");
+            System.out.println("+++| Game Over |+++");
         } 
     }
 
-    public static ArrayList<Action> getAvailableActions(Room curRoom, Hero player, Boolean testPrinting, Console console)
+    public static ArrayList<Action> getAvailableActions(Room curRoom, Hero player, Boolean testPrinting)
     {
         if(testPrinting)
-            console.printf("[Dev] Gathering available actions...\n");
+            System.out.println("[Dev] Gathering available actions...\n");
         ArrayList<Action> availableActions = new ArrayList<Action>();
         ArrayList<Action> prunedList = new ArrayList<Action>();
         if(!player.actions.isEmpty())
@@ -274,10 +281,10 @@ public class App
             availableActions.addAll(player.actions);
             if(testPrinting)
             {
-                console.printf("[Dev] > Found actions in hero: \n");
+                System.out.println("[Dev] > Found actions in hero: \n");
                 for (Action action : player.actions) 
                 {
-                    console.printf("\t- " + action.name + "\n");
+                    System.out.println("\t- " + action.name + "\n");
                 }
             }       
         }
@@ -286,21 +293,21 @@ public class App
             availableActions.addAll(player.currentRoom.actions);
             if(testPrinting)
             {
-                console.printf("[Dev] > Found actions in room: \n");
+                System.out.println("[Dev] > Found actions in room: \n");
                 for (Action action : player.currentRoom.actions) 
                 {
-                    console.printf("\t- " + action.name + "\n");
+                    System.out.println("\t- " + action.name + "\n");
                 }
             }
         }
         if(testPrinting)
-            console.printf("[Dev] Checking action requirements...\n");     
+            System.out.println("[Dev] Checking action requirements...\n");     
         if(!availableActions.isEmpty())
         {
             for(Action action : availableActions)
             {
                 if(testPrinting)
-                    console.printf("[Dev] > Checking: " + action.name + "\n");
+                    System.out.println("[Dev] > Checking: " + action.name + "\n");
                 Boolean needsMet = false;
                 Boolean restraintPresent = false;
 
@@ -333,13 +340,13 @@ public class App
 			    {
                     //availableActions.remove(action);
                     if(testPrinting)
-                        console.printf("[Dev] >> Pruned " + "\n");
+                        System.out.println("[Dev] >> Pruned " + "\n");
                 }
                 else
                 {
                     prunedList.add(action);
                     if(testPrinting)
-                        console.printf("[Dev] >> Accepted " + "\n");
+                        System.out.println("[Dev] >> Accepted " + "\n");
                 }
 		    }
         }
@@ -347,15 +354,15 @@ public class App
         return availableActions;
     }
 
-    public static void printHelpInfo(ArrayList<Action> availableActions, Console console)
+    public static void printHelpInfo(ArrayList<Action> availableActions)
     {
-        formatMessage("Insert useful help info here, common action keywords and stuff", console);
-        formatMessage("Listing actions available to you:", console);
+        formatMessage("Insert useful help info here, common action keywords and stuff");
+        formatMessage("Listing actions available to you:");
         for(Action a : availableActions)
         {
-            console.printf("\t- " + a.name + "\n");
+            System.out.println("\t- " + a.name + "\n");
         }
-        console.printf("\n");
+        System.out.println();
         // print available actions
     }
 }

@@ -1,6 +1,5 @@
 package DodolsCastle;
 
-import java.io.Console;
 import java.util.*;
 
 public class Hero {
@@ -70,15 +69,16 @@ public class Hero {
         return this.history;
     }
 
-    public void printHistory(Console console)
+    public void printHistory()
     {
-        console.printf("You think about what you have done since you got to the castle...\n");
-        console.printf("-------------------- Log Book --------------------\n\n");
+        System.out.println("You think about what you have done since you got to the castle...");
+        System.out.println("-------------------- Log Book --------------------\n");
         for (String x : history)
         {
-            console.printf(x + "\n");
+            System.out.println(x);
         }
-        console.printf("\n--------------------------------------------------\n");
+        System.out.println();
+        System.out.println("--------------------------------------------------\n");
     }
 
     public ArrayList<String> getAvailableMoves() // unused
@@ -100,7 +100,7 @@ public class Hero {
     {
         String desc = "";
         if(testPrinting)
-            desc = "[Dev] Status = " + status + "\n";
+            desc = "[Dev] Status = " + status;
         if(status >= 50)
         {
             desc += "You feel absolutely fantastic.";
@@ -124,20 +124,20 @@ public class Hero {
         return desc;
     }
 
-    public void printInventory(Console console)
+    public void printInventory()
     {
         if(items.isEmpty())
         {
-            console.printf("\nYou are not carrying anything.");
+            System.out.println("You are not carrying anything.");
         }
         else
         {
-            console.printf("\nYou are carrying:\n");
+            System.out.println("You are carrying:\n");
             for(Item i : items)
             {
-                console.printf("\t- " + i.name + "\n");
+                System.out.println("\t- " + i.name);
             }
-            console.printf("\n");
+            System.out.println();
         }   
     }
 
