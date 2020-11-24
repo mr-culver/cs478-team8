@@ -78,7 +78,7 @@ public class Hero {
 <span class="fc" id="L78">            System.out.println(x);</span>
 <span class="fc" id="L79">        }</span>
 <span class="fc" id="L80">        System.out.println();</span>
-<span class="fc" id="L81">        System.out.println(&quot;--------------------------------------------------\n&quot;);</span>
+<span class="fc" id="L81">        System.out.println(&quot;--------------------------------------------------&quot;);</span>
 <span class="fc" id="L82">    }</span>
 
     public ArrayList&lt;String&gt; getAvailableMoves() // unused
@@ -135,25 +135,24 @@ public class Hero {
 <span class="fc" id="L135">            System.out.println(&quot;You are carrying:&quot;);</span>
 <span class="fc bfc" id="L136" title="All 2 branches covered.">            for(Item i : items)</span>
             {
-<span class="fc" id="L138">                System.out.println(&quot;\t- &quot; + i.name);</span>
+<span class="fc" id="L138">                System.out.println(&quot;\t- &quot; + i.name + &quot;\n&quot;);</span>
 <span class="fc" id="L139">            }</span>
-<span class="fc" id="L140">            System.out.println();</span>
         }   
-<span class="fc" id="L142">    }</span>
+<span class="fc" id="L141">    }</span>
 
     public ArrayList&lt;Action&gt; initStarterHeroActions()
     {
-<span class="fc" id="L146">        ArrayList&lt;Action&gt; starterActions = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L145">        ArrayList&lt;Action&gt; starterActions = new ArrayList&lt;Action&gt;();</span>
         
         // &gt; Hero actions
         // &gt;&gt; Punch self - for testing
-<span class="fc" id="L150">        Action punchSelf = new Action();</span>
-<span class="fc" id="L151">        punchSelf.name = &quot;punch self&quot;;</span>
-<span class="fc" id="L152">        punchSelf.description = &quot;You punch yourself in the face. Ouch!&quot;;</span>
-<span class="fc" id="L153">        punchSelf.heroStatusModifier = -10;</span>
-<span class="fc" id="L154">        starterActions.add(punchSelf);</span>
+<span class="fc" id="L149">        Action punchSelf = new Action();</span>
+<span class="fc" id="L150">        punchSelf.name = &quot;punch self&quot;;</span>
+<span class="fc" id="L151">        punchSelf.description = &quot;You punch yourself in the face. Ouch!&quot;;</span>
+<span class="fc" id="L152">        punchSelf.heroStatusModifier = -10;</span>
+<span class="fc" id="L153">        starterActions.add(punchSelf);</span>
 
-<span class="fc" id="L156">        return starterActions;</span>
+<span class="fc" id="L155">        return starterActions;</span>
     }
 
     

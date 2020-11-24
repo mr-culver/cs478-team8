@@ -78,7 +78,7 @@ public class Hero {
             System.out.println(x);
         }
         System.out.println();
-        System.out.println("--------------------------------------------------\n");
+        System.out.println("--------------------------------------------------");
     }
 
     public ArrayList<String> getAvailableMoves() // unused
@@ -135,9 +135,8 @@ public class Hero {
             System.out.println("You are carrying:");
             for(Item i : items)
             {
-                System.out.println("\t- " + i.name);
+                System.out.println("\t- " + i.name + "\n");
             }
-            System.out.println();
         }   
     }
 

@@ -146,7 +146,7 @@ public class App
             // show hero status (health description)
             else if(in.contains("status"))
             {
-                formatMessage(player.getStatusDescription(testPrinting) + "\n");
+                formatMessage(player.getStatusDescription(testPrinting));
                 invalid = false;
             }
             // show hero log (past actions, rooms)
@@ -255,7 +255,16 @@ public class App
             }   */        
             if(invalid)
             {
-                System.out.println("Please enter a valid action, type 'help' for more info\n");
+                if (appTest != true)
+                {
+                    System.out.println("Please enter a valid action, type 'help' for more info\n");    
+                }
+                
+                else
+                {
+                    System.out.println("Please enter a valid action, type 'help' for more info\n");
+                    break;
+                }
             }
         }
         if(player.status > 0 && !gameOver)
@@ -363,7 +372,6 @@ public class App
         {
             System.out.println("\t- " + a.name + "\n");
         }
-        System.out.println();
         // print available actions
     }
 }

@@ -327,35 +327,35 @@ public class Dungeon {
     {
         String shortName;
 
-<span class="nc" id="L330">        System.out.println(&quot;[Dev] Printing room data structure...&quot;);</span>
-<span class="nc" id="L331">        System.out.println(&quot;---------------------&quot;);</span>
+<span class="fc" id="L330">        System.out.println(&quot;[Dev] Printing room data structure...&quot;);</span>
+<span class="fc" id="L331">        System.out.println(&quot;---------------------&quot;);</span>
 
-<span class="nc bnc" id="L333" title="All 2 branches missed.">        for(int i = 0; i &lt; 4; i++)</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        for(int i = 0; i &lt; 4; i++)</span>
         {
-<span class="nc" id="L335">            System.out.print(&quot;|&quot;);</span>
-<span class="nc bnc" id="L336" title="All 2 branches missed.">            for(int j = 0; j &lt; 4; j++)</span>
+<span class="fc" id="L335">            System.out.print(&quot;|&quot;);</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">            for(int j = 0; j &lt; 4; j++)</span>
             {
-<span class="nc bnc" id="L338" title="All 2 branches missed.">                if(layout[i][j] != null)</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">                if(layout[i][j] != null)</span>
                 {
-<span class="nc" id="L340">                    char letterOne = layout[i][j].name.toCharArray()[0];</span>
-<span class="nc" id="L341">                    char letterTwo = layout[i][j].name.toCharArray()[1];</span>
-<span class="nc" id="L342">                    shortName = Character.toString(letterOne);</span>
-<span class="nc" id="L343">                    shortName += Character.toString(letterTwo);</span>
-<span class="nc" id="L344">                }</span>
+<span class="fc" id="L340">                    char letterOne = layout[i][j].name.toCharArray()[0];</span>
+<span class="fc" id="L341">                    char letterTwo = layout[i][j].name.toCharArray()[1];</span>
+<span class="fc" id="L342">                    shortName = Character.toString(letterOne);</span>
+<span class="fc" id="L343">                    shortName += Character.toString(letterTwo);</span>
+<span class="fc" id="L344">                }</span>
                 else
                 {
-<span class="nc" id="L347">                    shortName = &quot;Nl&quot;;</span>
+<span class="fc" id="L347">                    shortName = &quot;Nl&quot;;</span>
                 }
-<span class="nc" id="L349">                System.out.print(&quot; &quot; + shortName + &quot; |&quot;);</span>
+<span class="fc" id="L349">                System.out.print(&quot; &quot; + shortName + &quot; |&quot;);</span>
             }
-<span class="nc bnc" id="L351" title="All 2 branches missed.">            if(i != 3)</span>
-<span class="nc" id="L352">                System.out.println(&quot;\n|----+----+----+----|&quot;);</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">            if(i != 3)</span>
+<span class="fc" id="L352">                System.out.println(&quot;\n|----+----+----+----|&quot;);</span>
             else
-<span class="nc" id="L354">                System.out.println(&quot;&quot;);</span>
+<span class="fc" id="L354">                System.out.println(&quot;&quot;);</span>
         }
-<span class="nc" id="L356">        System.out.println(&quot;---------------------&quot;);</span>
-<span class="nc" id="L357">        System.out.println();</span>
-<span class="nc" id="L358">    }</span>
+<span class="fc" id="L356">        System.out.println(&quot;---------------------&quot;);</span>
+<span class="fc" id="L357">        System.out.println();</span>
+<span class="fc" id="L358">    }</span>
 
     public Room getEntrance()
     {
