@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dungeon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">DodolsCastle</a> &gt; <span class="el_source">Dungeon.java</span></div><h1>Dungeon.java</h1><pre class="source lang-java linenums">package DodolsCastle;
 
-import java.io.*;
-
 public class Dungeon {
     Room currentEntrance;
     //ArrayList&lt;Room&gt; altEntrances;
     Room[][] layout;
 
     public Dungeon()
-<span class="fc" id="L11">    {</span>
-<span class="fc" id="L12">        this.layout = new Room[4][4];</span>
+<span class="fc" id="L9">    {</span>
+<span class="fc" id="L10">        this.layout = new Room[4][4];</span>
         //this.currentEntrance = this.layout[0][1];
-<span class="fc" id="L14">    }</span>
-
-    public void selectLayout(int select)
-    {
-        //selects a layout from predefined options.
-        //could add randomization later if there is time?
-<span class="nc" id="L20">    }</span>
-
+<span class="fc" id="L12">    }</span>
+    
     public void initializeLayout()
     {
         // I would call this method in the constructor personally
@@ -26,253 +18,348 @@ public class Dungeon {
 
         // Create objects first so each room can be added to throughout the method
         // &gt; Balcony [0,0]
-<span class="nc" id="L29">        String balconyDescription = &quot;The door opens into a small balcony with a panoramic mountaintop view above the clouds. &quot; +</span>
+<span class="fc" id="L21">        String balconyDescription = &quot;The door opens into a small balcony with a panoramic mountaintop view above the clouds. &quot; +</span>
         &quot;Though the wind howls around you, it seems to be reduced to no more than a gentle breeze here, and feels somewhat warm &quot; +
         &quot;despite the icy landscape all around.  A small wooden table with two chairs sits in the corner, atop it are two goblets &quot; +
-        &quot;and a simple chess set. \nThe only door leads back to the east.&quot;;
-<span class="nc" id="L33">        this.layout[0][0] = new Room(&quot;Balcony&quot;, balconyDescription);</span>
+        &quot;and a simple chess set. The only door leads back to the east.&quot;;
+<span class="fc" id="L25">        this.layout[0][0] = new Room(&quot;Balcony&quot;, balconyDescription);</span>
 
         // &gt; Common Room [0,1]
-<span class="nc" id="L36">        String crDescription = &quot;The room is dimly lit, a cracking fire sits in a great stone hearth on the far side of the room. &quot; +</span>
+<span class="fc" id="L28">        String crDescription = &quot;The room is dimly lit, a cracking fire sits in a great stone hearth on the far side of the room. &quot; +</span>
         &quot;The walls are lined with several tall bookshelves, while the floor is well worn bare flagstone. A table sits near the fire, &quot; +
         &quot;covered in various books, surrounded by three couches covered with pelts and cushions.  A mass of arcane machinery looms &quot; + 
         &quot;in the north-east corner of the room -- various levers and whirring mechanisms that you have never seen the like of before. &quot; +
-        &quot;A suit of old armor stands slightly hunched near the levers.\nThere are doors to the west, south, and east.&quot;;
-<span class="nc" id="L41">        this.layout[0][1] = new Room(&quot;Common Room&quot;, crDescription);</span>
-<span class="nc" id="L42">        this.currentEntrance = this.layout[0][1]; // set head pointer for the entrance</span>
+        &quot;A suit of old armor stands slightly hunched near the levers. &quot; + 
+        &quot;There are doors to the west, south, and east.&quot;;
+<span class="fc" id="L34">        this.layout[0][1] = new Room(&quot;Common Room&quot;, crDescription);</span>
+<span class="fc" id="L35">        this.currentEntrance = this.layout[0][1]; // set head pointer for the entrance</span>
         
         // &gt; Arboretum [0,2]
-<span class="nc" id="L45">        String arboretumDescription = &quot;Super huge arboretum that seems to be outdoors, some doctor who/narnia wizardry stuff&quot; + </span>
-        &quot;\nThere are doors to the east and west.&quot;;
-<span class="nc" id="L47">        this.layout[0][2] = new Room(&quot;Arboretum&quot;, arboretumDescription);</span>
+<span class="fc" id="L38">        String arboretumDescription = &quot;You are in a dense, lush forest. It feels as though it is a spring morning, birds sing in the distance. &quot; + </span>
+        &quot;There is a long dirt path running east to west, and you can see a clearing through the thicket to the south.&quot;;
+<span class="fc" id="L40">        this.layout[0][2] = new Room(&quot;Arboretum&quot;, arboretumDescription);</span>
 
         // &gt; Laboratory [0,3]
-<span class="nc" id="L50">        String laboratoryDescription = &quot;Dodol's old lab, everything is dusty and some stuff is broken, maybe some&quot; +</span>
+<span class="fc" id="L43">        String laboratoryDescription = &quot;Dodol's old lab, everything is dusty and some stuff is broken, maybe some&quot; +</span>
         &quot; explanation as to who dodol is and a hint that hes the inactive suit of armor in the common room, as well as&quot; +
-        &quot; perhaps needing the hat back&quot; + 
-        &quot;\nThe only door leads back to the west.&quot;;
-<span class="nc" id="L54">        this.layout[0][3] = new Room(&quot;Laboratory&quot;, laboratoryDescription);</span>
+        &quot; perhaps needing the hat back &quot; + 
+        &quot;The only door leads back to the west.&quot;;
+<span class="fc" id="L47">        this.layout[0][3] = new Room(&quot;Laboratory&quot;, laboratoryDescription);</span>
 
         // &gt; Blank [1,0]
         // south of the balcony
-<span class="nc" id="L58">        this.layout[1][0] = null;</span>
+<span class="fc" id="L51">        this.layout[1][0] = null;</span>
 
         // &gt; Hallway [1,1]
-<span class="nc" id="L61">        String northHallDescription = &quot;North hallway portion, connects to the common room and the hall below, have a rug attack or something maybe&quot; + </span>
-        &quot;\nThere are doors to the north and south.&quot;;
-<span class="nc" id="L63">        this.layout[1][1] = new Room(&quot;North Hall&quot;, northHallDescription);</span>
+<span class="fc" id="L54">        String northHallDescription = &quot;A long hallway stretches north to south with doors on either side. The way is lit by &quot; +</span>
+        &quot;torches hanging from sconces in the walls, a locked and shuttered window is in the middle, through it you look down on a bustling &quot; +
+        &quot;medieval town on a river. &quot; +  
+        &quot;There are doors to the north and south.&quot;;
+<span class="fc" id="L58">        this.layout[1][1] = new Room(&quot;North Hall&quot;, northHallDescription);</span>
 
-        // &gt; Blank [1,2]
+        // &gt; Clearing with fountain [1,2]
         // south of the arboretum
-<span class="nc" id="L67">        this.layout[1][2] = null;</span>
+<span class="fc" id="L62">        String clearingDescription = &quot;After trudging through the dense forest you enter a small clearing, &quot; + </span>
+        &quot;a small pond fed by a spring is in the center. &quot; +
+        &quot;You can see the path through the trees back to the north, the rest of the wood is too thick to traverse.&quot;;
+<span class="fc" id="L65">        this.layout[1][2] = new Room(&quot;Clearing&quot;, clearingDescription);</span>
 
         // &gt; Blank [1,3]
         // branch off lab?
-<span class="nc" id="L71">        this.layout[1][3] = null;</span>
+<span class="fc" id="L69">        this.layout[1][3] = null;</span>
 
         // &gt; Kitchen [2,0]
-<span class="nc" id="L74">        String kitchenDescription = &quot;Large medieval kitchen with unseen servants doing some cleaning and whatnot&quot; +</span>
-        &quot; some appliances from our world can be seen as well&quot; + 
-        &quot;\nThe only door leads back to the east.&quot;;
-<span class="nc" id="L77">        this.layout[2][0] = new Room(&quot;Kitchen&quot;, kitchenDescription);</span>
+<span class="fc" id="L72">        String kitchenDescription = &quot;Large medieval kitchen with unseen servants doing some cleaning and whatnot&quot; +</span>
+        &quot; some appliances from our world can be seen as well &quot; + 
+        &quot;The only door leads back to the east.&quot;;
+<span class="fc" id="L75">        this.layout[2][0] = new Room(&quot;Kitchen&quot;, kitchenDescription);</span>
 
         // &gt; Hallway [2,1]
-<span class="nc" id="L80">        String middleHallDescription = &quot;Middle hall portion, connects to the hall above, kitchen to the west, &quot; +</span>
-        &quot; Dawnelle's room to the east, and the south hall to the south.&quot; + 
-        &quot;\nThere are doors to the north, south, east, and west.&quot;;
-<span class="nc" id="L83">        this.layout[2][1] = new Room(&quot;Middle Hall&quot;, middleHallDescription);</span>
+<span class="fc" id="L78">        String middleHallDescription = &quot;Middle hall portion, connects to the hall above, kitchen to the west, &quot; +</span>
+        &quot; Dawnelle's room to the east, and the south hall to the south. &quot; + 
+        &quot;There are doors to the north, south, east, and west.&quot;;
+<span class="fc" id="L81">        this.layout[2][1] = new Room(&quot;Middle Hall&quot;, middleHallDescription);</span>
 
         // &gt; Bedroom - Dawnelle math cat [2,2]
-<span class="nc" id="L86">        String bedroomDawnelleDescription = &quot;Room with a cat on a desk over a book holding a quill, scurries off&quot; + </span>
-        &quot;\nThe only door leads back to the west.&quot;;
-<span class="nc" id="L88">        this.layout[2][2] = new Room(&quot;Cat's Room&quot;, bedroomDawnelleDescription);</span>
+<span class="fc" id="L84">        String bedroomDawnelleDescription = &quot;Room with a cat on a desk over a book holding a quill, scurries off &quot; + </span>
+        &quot;The only door leads back to the west.&quot;;
+<span class="fc" id="L86">        this.layout[2][2] = new Room(&quot;Cat's Room&quot;, bedroomDawnelleDescription);</span>
 
         // &gt; Blank [2,3]
-<span class="nc" id="L91">        this.layout[2][3] = null;</span>
+<span class="fc" id="L89">        this.layout[2][3] = null;</span>
 
         // &gt; Bedroom - Aurum [3,0]
-<span class="nc" id="L94">        String bedroomAurumDescription = &quot;Wizardy room, maybe a magic defense, hint to hat solution&quot; + </span>
-        &quot;\nThe only door leads back to the east.&quot;;
-<span class="nc" id="L96">        this.layout[3][0] = new Room(&quot;Aurum's Room&quot;, bedroomAurumDescription);</span>
+<span class="fc" id="L92">        String bedroomAurumDescription = &quot;Wizardy room, maybe a magic defense, hint to hat solution &quot; + </span>
+        &quot;The only door leads back to the east.&quot;;
+<span class="fc" id="L94">        this.layout[3][0] = new Room(&quot;Aurum's Room&quot;, bedroomAurumDescription);</span>
 
         // &gt; Hallway [3,1]
-<span class="nc" id="L99">        String southHallDescription = &quot;South hall portion, connects to stuff&quot; + </span>
-        &quot;\nTHere are doors to the north, west, and east.&quot;;
-<span class="nc" id="L101">        this.layout[3][1] = new Room(&quot;South Hall&quot;, southHallDescription);</span>
+<span class="fc" id="L97">        String southHallDescription = &quot;South hall portion, connects to stuff &quot; + </span>
+        &quot;THere are doors to the north, west, and east.&quot;;
+<span class="fc" id="L99">        this.layout[3][1] = new Room(&quot;South Hall&quot;, southHallDescription);</span>
 
         // &gt; Bedroom - Jondar [3,2]
-<span class="nc" id="L104">        String bedroomJondarDescription = &quot;Cleric's room, devoted to martial training and prayer, sparse, other hint&quot; + </span>
-        &quot;\nThe only door leads back to the east.&quot;; // maybe door home too
-<span class="nc" id="L106">        this.layout[3][2] = new Room(&quot;Jondar's Room&quot;, bedroomJondarDescription);</span>
+<span class="fc" id="L102">        String bedroomJondarDescription = &quot;Cleric's room, devoted to martial training and prayer, sparse, other hint &quot; + </span>
+        &quot;The only door leads back to the east.&quot;; // maybe door home too
+<span class="fc" id="L104">        this.layout[3][2] = new Room(&quot;Jondar's Room&quot;, bedroomJondarDescription);</span>
 
         // &gt; Blank [3,3]
         // door back to your bathroom and home? If you leave without returning dodol's hat different ending
-<span class="nc" id="L110">        this.layout[3][3] = null;</span>
+<span class="fc" id="L108">        this.layout[3][3] = null;</span>
 
 
         // After the basic rooms are created, they need to be linked together through their
         //  Room[] &quot;doors&quot;, this probably should be done through a method but they can also be linked manually
         // 0 = North | 1 = East | 2 = South | 3 = West | Like a clock
         // &gt; Balcony [0,0]
-<span class="nc" id="L117">        this.layout[0][0].doors[1] = this.layout[0][1];</span>
+<span class="fc" id="L115">        this.layout[0][0].doors[1] = this.layout[0][1];</span>
         // &gt; Common Room [0,1]
-<span class="nc" id="L119">        this.layout[0][1].doors[1] = this.layout[0][2];</span>
-<span class="nc" id="L120">        this.layout[0][1].doors[2] = this.layout[1][1];</span>
-<span class="nc" id="L121">        this.layout[0][1].doors[3] = this.layout[0][0];</span>
+<span class="fc" id="L117">        this.layout[0][1].doors[1] = this.layout[0][2];</span>
+<span class="fc" id="L118">        this.layout[0][1].doors[2] = this.layout[1][1];</span>
+<span class="fc" id="L119">        this.layout[0][1].doors[3] = this.layout[0][0];</span>
         // &gt; Arboretum [0,2]
-<span class="nc" id="L123">        this.layout[0][2].doors[1] = this.layout[0][3];</span>
-<span class="nc" id="L124">        this.layout[0][2].doors[3] = this.layout[0][1];</span>
+<span class="fc" id="L121">        this.layout[0][2].doors[1] = this.layout[0][3];</span>
+<span class="fc" id="L122">        this.layout[0][2].doors[2] = this.layout[1][2];</span>
+<span class="fc" id="L123">        this.layout[0][2].doors[3] = this.layout[0][1];</span>
         // &gt; Laboratory [0,3]
-<span class="nc" id="L126">        this.layout[0][3].doors[3] = this.layout[0][2];</span>
+<span class="fc" id="L125">        this.layout[0][3].doors[3] = this.layout[0][2];</span>
         // &gt; Blank [1,0]
         // &gt; Hallway [1,1]
-<span class="nc" id="L129">        this.layout[1][1].doors[0] = this.layout[0][1];</span>
-<span class="nc" id="L130">        this.layout[1][1].doors[2] = this.layout[2][1];</span>
-        // &gt; Blank [1,2]
+<span class="fc" id="L128">        this.layout[1][1].doors[0] = this.layout[0][1];</span>
+<span class="fc" id="L129">        this.layout[1][1].doors[2] = this.layout[2][1];</span>
+        // &gt; Clearing [1,2]
+<span class="fc" id="L131">        this.layout[1][2].doors[0] = this.layout[0][2];</span>
         // &gt; Blank [1,3]
         // &gt; Kitchen [2,0]
-<span class="nc" id="L134">        this.layout[2][0].doors[1] = this.layout[2][1];</span>
+<span class="fc" id="L134">        this.layout[2][0].doors[1] = this.layout[2][1];</span>
         // &gt; Hallway [2,1]
-<span class="nc" id="L136">        this.layout[2][1].doors[0] = this.layout[1][1];</span>
-<span class="nc" id="L137">        this.layout[2][1].doors[1] = this.layout[2][2];</span>
-<span class="nc" id="L138">        this.layout[2][1].doors[2] = this.layout[3][1];</span>
-<span class="nc" id="L139">        this.layout[2][1].doors[3] = this.layout[2][0];</span>
+<span class="fc" id="L136">        this.layout[2][1].doors[0] = this.layout[1][1];</span>
+<span class="fc" id="L137">        this.layout[2][1].doors[1] = this.layout[2][2];</span>
+<span class="fc" id="L138">        this.layout[2][1].doors[2] = this.layout[3][1];</span>
+<span class="fc" id="L139">        this.layout[2][1].doors[3] = this.layout[2][0];</span>
         // &gt; Bedroom - Dawnelle math cat [2,2]
-<span class="nc" id="L141">        this.layout[2][2].doors[3] = this.layout[2][1];</span>
+<span class="fc" id="L141">        this.layout[2][2].doors[3] = this.layout[2][1];</span>
         // &gt; Blank [2,3]
         // &gt; Bedroom - Aurum [3,0]
-<span class="nc" id="L144">        this.layout[3][0].doors[1] = this.layout[3][1];</span>
+<span class="fc" id="L144">        this.layout[3][0].doors[1] = this.layout[3][1];</span>
         // &gt; Hallway [3,1]
-<span class="nc" id="L146">        this.layout[3][1].doors[0] = this.layout[2][1];</span>
-<span class="nc" id="L147">        this.layout[3][1].doors[1] = this.layout[3][2];</span>
-<span class="nc" id="L148">        this.layout[3][1].doors[3] = this.layout[3][0];</span>
+<span class="fc" id="L146">        this.layout[3][1].doors[0] = this.layout[2][1];</span>
+<span class="fc" id="L147">        this.layout[3][1].doors[1] = this.layout[3][2];</span>
+<span class="fc" id="L148">        this.layout[3][1].doors[3] = this.layout[3][0];</span>
         // &gt; Bedroom - Jondar [3,2]
-<span class="nc" id="L150">        this.layout[3][2].doors[3] = this.layout[3][1];</span>
+<span class="fc" id="L150">        this.layout[3][2].doors[3] = this.layout[3][1];</span>
         // &gt; Blank [3,3]
 
 
-        // actions are now created and stuff
-        
+        // actions are now created and stuff   
 
         // &gt;&gt; bookshelves -&gt; common room
-<span class="nc" id="L158">        Action coBookshelves = new Action();</span>
-<span class="nc" id="L159">        coBookshelves.name = &quot;examine bookshelves&quot;;</span>
-<span class="nc" id="L160">        coBookshelves.description = &quot;You examine the bookshelves - placeholder&quot;;</span>
-<span class="nc" id="L161">        this.layout[0][1].actions.add(coBookshelves);</span>
+<span class="fc" id="L157">        Action coBookshelves = new Action();</span>
+<span class="fc" id="L158">        coBookshelves.name = &quot;examine bookshelves&quot;;</span>
+<span class="fc" id="L159">        coBookshelves.description = &quot;You examine the bookshelves - placeholder&quot;;</span>
+<span class="fc" id="L160">        this.layout[0][1].actions.add(coBookshelves);</span>
         // &gt;&gt; ex table -&gt; common room
-<span class="nc" id="L163">        Action coTable = new Action();</span>
-<span class="nc" id="L164">        coTable.name = &quot;examine table&quot;;</span>
-<span class="nc" id="L165">        coTable.description = &quot;You examine the table, there is a  - placeholder&quot;;</span>
-        // &gt;&gt;&gt; take potion
-<span class="nc" id="L167">        Action takePotion = new Action();</span>
-<span class="nc" id="L168">        takePotion.name = &quot;take potion&quot;;</span>
-<span class="nc" id="L169">        takePotion.description = &quot;You pick the potion up, &quot;;</span>
-<span class="nc" id="L170">        takePotion.roomActionsSub.add(takePotion);</span>
-        
-        // &gt;&gt;&gt;&gt; drink potion
-<span class="nc" id="L173">        Action drinkPotion = new Action();</span>
-<span class="nc" id="L174">        drinkPotion.name = &quot;drink potion&quot;;</span>
-<span class="nc" id="L175">        drinkPotion.description = &quot;You drink the potion, stuff happens - placeholder&quot;;</span>
-<span class="nc" id="L176">        drinkPotion.heroStatusModifier = 20;</span>
-<span class="nc" id="L177">        drinkPotion.heroActionsSub.add(drinkPotion);</span>
-<span class="nc" id="L178">        takePotion.heroActionsAdd.add(drinkPotion);</span>
-<span class="nc" id="L179">        coTable.roomActionsAdd.add(takePotion);</span>
-<span class="nc" id="L180">        this.layout[0][1].actions.add(coTable);</span>
+<span class="fc" id="L162">        Action coTable = new Action();</span>
+<span class="fc" id="L163">        coTable.name = &quot;examine table&quot;;</span>
+<span class="fc" id="L164">        coTable.description = &quot;You examine the table, among the old books scattered around you see a small red potion.&quot;;</span>
+
+        // &gt;&gt;&gt; ex table no potion -&gt; common room
+<span class="fc" id="L167">        Action coTableNP = new Action();</span>
+<span class="fc" id="L168">        coTableNP.name = &quot;examine table&quot;;</span>
+<span class="fc" id="L169">        coTableNP.description = &quot;You examine the table, there are old books you cant read the titles of scattered about the surface.&quot;;</span>
+
+        // &gt;&gt;&gt; drink potion
+<span class="fc" id="L172">        Action drinkPotion = new Action();</span>
+<span class="fc" id="L173">        drinkPotion.name = &quot;drink potion&quot;;</span>
+<span class="fc" id="L174">        drinkPotion.description = &quot;You drink the potion, bubbly warmth spreads throughout your body, you feel extremely refreshed.&quot;;</span>
+<span class="fc" id="L175">        drinkPotion.heroStatusModifier = 20;</span>
+
+        // &gt;&gt;&gt; potion item
+<span class="fc" id="L178">        Item potion = new Item();</span>
+<span class="fc" id="L179">        potion.name = &quot;potion&quot;;</span>
+<span class="fc" id="L180">        potion.description = &quot;A small red phial filled with a viscous red liquid that bubbles slightly.&quot;;</span>
+<span class="fc" id="L181">        drinkPotion.heroItemSub = potion;</span>
+<span class="fc" id="L182">        potion.heroActionsAdd.add(drinkPotion);</span>
+
+        // &gt;&gt; take potion
+<span class="fc" id="L185">        Action takePotion = new Action();</span>
+<span class="fc" id="L186">        takePotion.name = &quot;take potion&quot;;</span>
+<span class="fc" id="L187">        takePotion.description = &quot;You pick the potion up, its contents fizz slightly.&quot;;</span>
+<span class="fc" id="L188">        takePotion.roomActionsSub.add(takePotion);</span>
+<span class="fc" id="L189">        takePotion.roomActionsSub.add(coTable); </span>
+<span class="fc" id="L190">        takePotion.roomActionsAdd.add(coTableNP);</span>
+<span class="fc" id="L191">        takePotion.heroItemAdd = potion;</span>
+<span class="fc" id="L192">        coTable.roomActionsAdd.add(takePotion);</span>
+<span class="fc" id="L193">        this.layout[0][1].actions.add(coTable); </span>
 
         // &gt;&gt; machinery -&gt; common room
-<span class="nc" id="L183">        Action coMachinery = new Action();</span>
-<span class="nc" id="L184">        coMachinery.name = &quot;examine machinery&quot;;</span>
-<span class="nc" id="L185">        coMachinery.description = &quot;You examine the arcane machinery in the corner - placeholder&quot;;</span>
-<span class="nc" id="L186">        this.layout[0][1].actions.add(coMachinery);</span>
+<span class="fc" id="L196">        Action coMachinery = new Action();</span>
+<span class="fc" id="L197">        coMachinery.name = &quot;examine machinery&quot;;</span>
+<span class="fc" id="L198">        coMachinery.description = &quot;You examine the arcane machinery in the corner - placeholder&quot;;</span>
+<span class="fc" id="L199">        this.layout[0][1].actions.add(coMachinery);</span>
 
         // &gt;&gt; ex armor -&gt; common room
-<span class="nc" id="L189">        Action coArmor = new Action();</span>
-<span class="nc" id="L190">        coArmor.name = &quot;examine armor&quot;;</span>
-<span class="nc" id="L191">        coArmor.description = &quot;You examine the suit of armor in the corner, it appears to be held up without any supports - placeholder&quot;;</span>
-<span class="nc" id="L192">        this.layout[0][1].actions.add(coArmor);</span>
+<span class="fc" id="L202">        Action coArmor = new Action();</span>
+<span class="fc" id="L203">        coArmor.name = &quot;examine armor&quot;;</span>
+<span class="fc" id="L204">        coArmor.description = &quot;You examine the suit of armor in the corner, it appears to be held up without any supports - placeholder&quot;;</span>
+<span class="fc" id="L205">        this.layout[0][1].actions.add(coArmor);</span>
 
         // &gt;&gt; wear old hat
-<span class="nc" id="L195">        Action wOldHat = new Action();</span>
-<span class="nc" id="L196">        wOldHat.name = &quot;wear old hat&quot;;</span>
-<span class="nc" id="L197">        wOldHat.description = &quot;You attempt to wear the old hat but it doesnt seem to fit on your head.&quot;;</span>
+<span class="fc" id="L208">        Action wOldHat = new Action();</span>
+<span class="fc" id="L209">        wOldHat.name = &quot;wear old hat&quot;;</span>
+<span class="fc" id="L210">        wOldHat.description = &quot;You attempt to wear the old hat but it doesnt seem to fit on your head.&quot;;</span>
 
         // &gt;&gt; examine old hat -&gt; cat room
-<span class="nc" id="L200">        Action caXOldHat = new Action();</span>
-<span class="nc" id="L201">        caXOldHat.name = &quot;examine hat&quot;;</span>
-<span class="nc" id="L202">        caXOldHat.description = &quot;You examine the old hat on the desk, yadda yadda - placeholder&quot;;</span>
-<span class="nc" id="L203">        this.layout[2][2].actions.add(caXOldHat);</span>
+<span class="fc" id="L213">        Action caXOldHat = new Action();</span>
+<span class="fc" id="L214">        caXOldHat.name = &quot;examine hat&quot;;</span>
+<span class="fc" id="L215">        caXOldHat.description = &quot;You examine the old hat on the desk, yadda yadda - placeholder&quot;;</span>
+<span class="fc" id="L216">        this.layout[2][2].actions.add(caXOldHat);</span>
 
         // &gt;&gt; take old hat -&gt; cat room
-<span class="nc" id="L206">        Action caTOldHat = new Action();</span>
-<span class="nc" id="L207">        caTOldHat.name = &quot;take hat&quot;;</span>
-<span class="nc" id="L208">        caTOldHat.description = &quot;You take the old hat&quot;;</span>
-<span class="nc" id="L209">        caTOldHat.heroActionsAdd.add(wOldHat);</span>
-<span class="nc" id="L210">        caTOldHat.roomActionsSub.add(caTOldHat);</span>
-<span class="nc" id="L211">        caTOldHat.roomActionsSub.add(caXOldHat);</span>
+<span class="fc" id="L219">        Action caTOldHat = new Action();</span>
+<span class="fc" id="L220">        caTOldHat.name = &quot;take hat&quot;;</span>
+<span class="fc" id="L221">        caTOldHat.description = &quot;You take the old hat&quot;;</span>
+<span class="fc" id="L222">        caTOldHat.heroActionsAdd.add(wOldHat);</span>
+<span class="fc" id="L223">        caTOldHat.roomActionsSub.add(caTOldHat);</span>
+<span class="fc" id="L224">        caTOldHat.roomActionsSub.add(caXOldHat);</span>
         //caTOldHat.modifiedDescription = &quot;&quot;; // description without hat
-<span class="nc" id="L213">        this.layout[2][2].actions.add(caTOldHat);</span>
+<span class="fc" id="L226">        this.layout[2][2].actions.add(caTOldHat);</span>
 
         // &gt;&gt; go home -&gt; common room
-<span class="nc" id="L216">        Action goHome = new Action();</span>
-<span class="nc" id="L217">        goHome.name = &quot;go home&quot;;</span>
-<span class="nc" id="L218">        goHome.description = &quot;You step through your bathroom door back into your house... - placeholder&quot;;</span>
+<span class="fc" id="L229">        Action goHome = new Action();</span>
+<span class="fc" id="L230">        goHome.name = &quot;go home&quot;;</span>
+<span class="fc" id="L231">        goHome.description = &quot;You step through your bathroom door back into your house... - placeholder&quot;;</span>
 
         // &gt;&gt; place old hat -&gt; common room
-<span class="nc" id="L221">        Action coPlaceOldHat = new Action();</span>
-<span class="nc" id="L222">        coPlaceOldHat.name = &quot;place old hat&quot;;</span>
-<span class="nc" id="L223">        coPlaceOldHat.description = &quot;You place the old worn hat on the suit of armor... your bathroom door appears - placeholder&quot;;</span>
-<span class="nc" id="L224">        coPlaceOldHat.heroActionsSub.add(wOldHat);</span>
-<span class="nc" id="L225">        coPlaceOldHat.requirementsPos.add(wOldHat);</span>
-<span class="nc" id="L226">        coPlaceOldHat.roomActionsAdd.add(goHome);</span>
+<span class="fc" id="L234">        Action coPlaceOldHat = new Action();</span>
+<span class="fc" id="L235">        coPlaceOldHat.name = &quot;place old hat&quot;;</span>
+<span class="fc" id="L236">        coPlaceOldHat.description = &quot;You place the old worn hat on the suit of armor... your bathroom door appears - placeholder&quot;;</span>
+<span class="fc" id="L237">        coPlaceOldHat.heroActionsSub.add(wOldHat);</span>
+<span class="fc" id="L238">        coPlaceOldHat.requirementsPos.add(wOldHat);</span>
+<span class="fc" id="L239">        coPlaceOldHat.roomActionsAdd.add(goHome);</span>
         //coPlaceOldHat.modifiedDescription = &quot;&quot;; // adds hat to armor in description, as well as new door home
-<span class="nc" id="L228">        this.layout[0][1].actions.add(coPlaceOldHat);</span>
+<span class="fc" id="L241">        this.layout[0][1].actions.add(coPlaceOldHat);</span>
 
-        // &gt;&gt; pull lever -&gt; common room
-<span class="nc" id="L231">        Action coLever = new Action();</span>
-<span class="nc" id="L232">        coLever.name = &quot;pull lever&quot;;</span>
-<span class="nc" id="L233">        coLever.description = &quot;You pull the lever, maybe stuff happens, maybe it doesnt - placeholder&quot;;</span>
+        // &gt;&gt; examine lever -&gt; common room
+<span class="fc" id="L244">        Action coXLever = new Action();</span>
+<span class="fc" id="L245">        coXLever.name = &quot;examine lever&quot;;</span>
+<span class="fc" id="L246">        coXLever.description = &quot;There are many levers attached to the arcane machinery but the one nearest the suit of armor &quot; + </span>
+        &quot;catches your eye.  It is the only one without a layer of dust and seems to move easily -- you could pull it and see what happens&quot;;
         // id like this to have several other nested lever pulls with different descriptions to give the illusion of stuff happening
         // not planned to actually have any affect on the game other than being a red herring and described in hints about dodol
-<span class="nc" id="L236">        this.layout[0][1].actions.add(coLever);</span>
+<span class="fc" id="L250">        this.layout[0][1].actions.add(coXLever);</span>
 
-<span class="nc" id="L238">    }</span>
+        // &gt;&gt; pull lever -&gt; common room
+<span class="fc" id="L253">        Action coLever = new Action();</span>
+<span class="fc" id="L254">        coLever.name = &quot;pull lever&quot;;</span>
+<span class="fc" id="L255">        coLever.description = &quot;You pull the lever, it has no effect that you can discern.&quot;;</span>
+        // id like this to have several other nested lever pulls with different descriptions to give the illusion of stuff happening
+        // not planned to actually have any affect on the game other than being a red herring and described in hints about dodol
+<span class="fc" id="L258">        this.layout[0][1].actions.add(coLever);</span>
 
-    public void printDungeon(Console console)
+
+        // item object creation
+        // &gt; examine pond -&gt; clearing
+<span class="fc" id="L263">        Action clXPond = new Action();</span>
+<span class="fc" id="L264">        clXPond.name = &quot;examine pond&quot;;</span>
+<span class="fc" id="L265">        clXPond.description = &quot;The small pond is crystal clear, rippling slightly from the water fed into it by the spring. &quot; + </span>
+        &quot;Resting nearby is an empty scabbard, its well worn leather gilded with silver.&quot;;
+<span class="fc" id="L267">        this.layout[1][2].actions.add(clXPond);</span>
+
+<span class="fc" id="L269">        Action clXPondNS = new Action();</span>
+<span class="fc" id="L270">        clXPondNS.name = &quot;examine pond&quot;;</span>
+<span class="fc" id="L271">        clXPondNS.description = &quot;The small pond is crystal clear, rippling slightly from the water fed into it by the spring.&quot;;</span>
+
+        // &gt; examine sword scabbard -&gt; clearing
+<span class="fc" id="L274">        Action clXScabbard = new Action();</span>
+<span class="fc" id="L275">        clXScabbard.name = &quot;examine empty scabbard&quot;;</span>
+<span class="fc" id="L276">        clXScabbard.description = &quot;The scabbard is empty, its well worn leather gilded with an intricate silver design.&quot;;</span>
+<span class="fc" id="L277">        this.layout[1][2].actions.add(clXScabbard);</span>
+
+        // &gt; take sword scabbard -&gt; clearing
+<span class="fc" id="L280">        Action clTScabbard = new Action();</span>
+<span class="fc" id="L281">        clTScabbard.name = &quot;take empty scabbard&quot;;</span>
+<span class="fc" id="L282">        clTScabbard.description = &quot;You take the empty scabbard from the ground&quot;;</span>
+
+<span class="fc" id="L284">        Item clScabbard = new Item();</span>
+<span class="fc" id="L285">        clScabbard.name = &quot;empty scabbard&quot;;</span>
+<span class="fc" id="L286">        clScabbard.description = &quot;The scabbard is empty, its well worn leather gilded with an intricate silver design.  It is warm to the touch&quot;;</span>
+<span class="fc" id="L287">        clTScabbard.roomActionsSub.add(clXScabbard);</span>
+<span class="fc" id="L288">        clTScabbard.roomActionsSub.add(clTScabbard);</span>
+<span class="fc" id="L289">        clTScabbard.roomActionsSub.add(clXPond);</span>
+<span class="fc" id="L290">        clTScabbard.roomActionsAdd.add(clXPondNS);</span>
+<span class="fc" id="L291">        clTScabbard.heroItemAdd = clScabbard;</span>
+<span class="fc" id="L292">        this.layout[1][2].actions.add(clTScabbard);</span>
+
+        // &gt; examine new hat -&gt; Aurum's room
+<span class="fc" id="L295">        Action auXNewHat = new Action();</span>
+<span class="fc" id="L296">        auXNewHat.name = &quot;examine new hat&quot;;</span>
+<span class="fc" id="L297">        auXNewHat.description = &quot;It is a new an expensive wizard hat, with the leather barely broken in and no crooks in its point &quot; +</span>
+        &quot;There is a note attached that you find quite impossible to remove, it reads: 'Aurum, every wizard needs a hat - From Dodol'&quot;;
+<span class="fc" id="L299">        this.layout[3][0].actions.add(auXNewHat);</span>
+
+        // &gt; take new hat -&gt; Aurum's room
+<span class="fc" id="L302">        Action auTNewHat = new Action();</span>
+<span class="fc" id="L303">        auTNewHat.name = &quot;take new hat&quot;;</span>
+<span class="fc" id="L304">        auTNewHat.description = &quot;You take the new hat from the desk.&quot;;</span>
+        //auTNewHat.roomActionsSub.add(auXDesk);
+        //auTNewHat.roomActionsAdd.add(auXDeskNH);
+<span class="fc" id="L307">        auTNewHat.roomActionsSub.add(auTNewHat);</span>
+<span class="fc" id="L308">        auTNewHat.roomActionsSub.add(auXNewHat);</span>
+
+<span class="fc" id="L310">        Item auNewHat = new Item();</span>
+<span class="fc" id="L311">        auNewHat.name = &quot;new hat&quot;;</span>
+<span class="fc" id="L312">        auNewHat.description = &quot;It is a new an expensive wizard hat, with the leather barely broken in and no crooks in its point &quot; +</span>
+        &quot;There is a note attached that you find quite impossible to remove, it reads: 'Aurum, every wizard needs a hat - From Dodol'&quot;;
+
+<span class="fc" id="L315">        Action wNewHat = new Action();</span>
+<span class="fc" id="L316">        wNewHat.name = &quot;wear new hat&quot;;</span>
+<span class="fc" id="L317">        wNewHat.description = &quot;As you attempt to wear the new hat it seems to shrink to avoid being placed on your head.&quot;;</span>
+
+<span class="fc" id="L319">        auNewHat.heroActionsAdd.add(wNewHat);</span>
+<span class="fc" id="L320">        auTNewHat.heroItemAdd = auNewHat;</span>
+
+<span class="fc" id="L322">        this.layout[3][0].actions.add(auTNewHat);</span>
+
+<span class="fc" id="L324">    }</span>
+
+    public void printDungeon()
     {
         String shortName;
 
-<span class="nc" id="L244">        console.printf(&quot;\n[Dev] Printing room data structure...\n&quot;);</span>
-<span class="nc" id="L245">        console.printf(&quot;---------------------\n&quot;);</span>
+<span class="fc" id="L330">        System.out.println(&quot;[Dev] Printing room data structure...&quot;);</span>
+<span class="fc" id="L331">        System.out.println(&quot;---------------------&quot;);</span>
 
-<span class="nc bnc" id="L247" title="All 2 branches missed.">        for(int i = 0; i &lt; 4; i++)</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        for(int i = 0; i &lt; 4; i++)</span>
         {
-<span class="nc" id="L249">            System.out.print(&quot;|&quot;);</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">            for(int j = 0; j &lt; 4; j++)</span>
+<span class="fc" id="L335">            System.out.print(&quot;|&quot;);</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">            for(int j = 0; j &lt; 4; j++)</span>
             {
-<span class="nc bnc" id="L252" title="All 2 branches missed.">                if(layout[i][j] != null)</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">                if(layout[i][j] != null)</span>
                 {
-<span class="nc" id="L254">                    char letterOne = layout[i][j].name.toCharArray()[0];</span>
-<span class="nc" id="L255">                    char letterTwo = layout[i][j].name.toCharArray()[1];</span>
-<span class="nc" id="L256">                    shortName = Character.toString(letterOne);</span>
-<span class="nc" id="L257">                    shortName += Character.toString(letterTwo);</span>
-<span class="nc" id="L258">                }</span>
+<span class="fc" id="L340">                    char letterOne = layout[i][j].name.toCharArray()[0];</span>
+<span class="fc" id="L341">                    char letterTwo = layout[i][j].name.toCharArray()[1];</span>
+<span class="fc" id="L342">                    shortName = Character.toString(letterOne);</span>
+<span class="fc" id="L343">                    shortName += Character.toString(letterTwo);</span>
+<span class="fc" id="L344">                }</span>
                 else
                 {
-<span class="nc" id="L261">                    shortName = &quot;Nl&quot;;</span>
+<span class="fc" id="L347">                    shortName = &quot;Nl&quot;;</span>
                 }
-<span class="nc" id="L263">                console.printf(&quot; &quot; + shortName + &quot; |&quot;);</span>
+<span class="fc" id="L349">                System.out.print(&quot; &quot; + shortName + &quot; |&quot;);</span>
             }
-<span class="nc bnc" id="L265" title="All 2 branches missed.">            if(i != 3)</span>
-<span class="nc" id="L266">                console.printf(&quot;\n|----+----+----+----|\n&quot;);</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">            if(i != 3)</span>
+<span class="fc" id="L352">                System.out.println(&quot;\n|----+----+----+----|&quot;);</span>
             else
-<span class="nc" id="L268">                console.printf(&quot;\n&quot;);</span>
+<span class="fc" id="L354">                System.out.println(&quot;&quot;);</span>
         }
-<span class="nc" id="L270">        console.printf(&quot;---------------------\n&quot;);</span>
-<span class="nc" id="L271">    }</span>
+<span class="fc" id="L356">        System.out.println(&quot;---------------------&quot;);</span>
+<span class="fc" id="L357">        System.out.println();</span>
+<span class="fc" id="L358">    }</span>
 
     public Room getEntrance()
     {
-<span class="nc" id="L275">        return this.currentEntrance;</span>
+<span class="fc" id="L362">        return this.currentEntrance;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

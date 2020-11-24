@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="DodolsCastle.DungeonTest" time="0.001" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="DodolsCastle.DungeonTest" time="0.002" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="14"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Project/maven/target/test-classes:/home/jarrett/Documents/Java_Code/CS_478_Project/maven/target/classes:/home/jarrett/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/jarrett/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="java.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/test-classes:/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/classes:/home/jarrett/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/jarrett/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="java.vm.vendor" value="Private Build"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="Unknown"/>
@@ -12,9 +12,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-14-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/jarrett/Documents/Java_Code/CS_478_Project/maven/target/surefire/surefirebooter14797440689639060124.jar /home/jarrett/Documents/Java_Code/CS_478_Project/maven/target/surefire 2020-10-29T20-06-41_723-jvmRun1 surefire5293656521716707574tmp surefire_0356135357597116751tmp"/>
+    <property name="sun.java.command" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire/surefirebooter4994717717332749232.jar /home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire 2020-11-23T19-14-19_147-jvmRun1 surefire2560551684335773113tmp surefire_02114907730655205076tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Project/maven/target/test-classes:/home/jarrett/Documents/Java_Code/CS_478_Project/maven/target/classes:/home/jarrett/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/jarrett/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="surefire.test.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/test-classes:/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/classes:/home/jarrett/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/jarrett/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/jarrett"/>
     <property name="user.language" value="en"/>
@@ -22,17 +22,17 @@
     <property name="java.version.date" value="2020-07-14"/>
     <property name="java.home" value="/usr/lib/jvm/java-14-openjdk-amd64"/>
     <property name="file.separator" value="/"/>
-    <property name="basedir" value="/home/jarrett/Documents/Java_Code/CS_478_Project/maven"/>
+    <property name="basedir" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Project/maven/target/surefire/surefirebooter14797440689639060124.jar"/>
+    <property name="surefire.real.class.path" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven/target/surefire/surefirebooter4994717717332749232.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="14.0.2+12-Ubuntu-120.04"/>
     <property name="user.name" value="jarrett"/>
     <property name="path.separator" value=":"/>
-    <property name="os.version" value="5.4.0-52-generic"/>
+    <property name="os.version" value="5.4.0-54-generic"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
@@ -40,7 +40,7 @@
     <property name="java.vendor.url.bug" value="Unknown"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="java.version" value="14.0.2"/>
-    <property name="user.dir" value="/home/jarrett/Documents/Java_Code/CS_478_Project/maven"/>
+    <property name="user.dir" value="/home/jarrett/Documents/Java_Code/CS_478_Team8/cs478-team8/maven"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
@@ -50,5 +50,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="58.0"/>
   </properties>
+  <testcase name="testDoors" classname="DodolsCastle.DungeonTest" time="0"/>
+  <testcase name="testGetEntrance" classname="DodolsCastle.DungeonTest" time="0"/>
+  <testcase name="testInitializeArray" classname="DodolsCastle.DungeonTest" time="0"/>
   <testcase name="testDungeonLayout" classname="DodolsCastle.DungeonTest" time="0"/>
 </testsuite>

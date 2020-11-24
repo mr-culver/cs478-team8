@@ -1,7 +1,5 @@
 package DodolsCastle;
 
-import java.io.*;
-
 public class Dungeon {
     Room currentEntrance;
     //ArrayList<Room> altEntrances;
@@ -12,13 +10,7 @@ public class Dungeon {
         this.layout = new Room[4][4];
         //this.currentEntrance = this.layout[0][1];
     }
-
-    public void selectLayout(int select)
-    {
-        //selects a layout from predefined options.
-        //could add randomization later if there is time?
-    }
-
+    
     public void initializeLayout()
     {
         // I would call this method in the constructor personally
@@ -331,12 +323,12 @@ public class Dungeon {
 
     }
 
-    public void printDungeon(Console console)
+    public void printDungeon()
     {
         String shortName;
 
-        console.printf("\n[Dev] Printing room data structure...\n");
-        console.printf("---------------------\n");
+        System.out.println("[Dev] Printing room data structure...");
+        System.out.println("---------------------");
 
         for(int i = 0; i < 4; i++)
         {
@@ -354,14 +346,15 @@ public class Dungeon {
                 {
                     shortName = "Nl";
                 }
-                console.printf(" " + shortName + " |");
+                System.out.print(" " + shortName + " |");
             }
             if(i != 3)
-                console.printf("\n|----+----+----+----|\n");
+                System.out.println("\n|----+----+----+----|");
             else
-                console.printf("\n");
+                System.out.println("");
         }
-        console.printf("---------------------\n\n");
+        System.out.println("---------------------");
+        System.out.println();
     }
 
     public Room getEntrance()

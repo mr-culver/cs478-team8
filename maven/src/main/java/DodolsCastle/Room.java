@@ -29,18 +29,18 @@ public class Room {
         return this.actions;
     }
 
-    public void updateDescription()
+    public void updateDescription(String changes)
     {
-        //update the description after an event
+        this.description = changes;
     }
 
     public void addAction(Action x)
     {
-        //add an action to the list
+        this.actions.add(x);
     }
 
     public void removeAction(Action x)
     {
-        //remove an action from the list
+        this.actions.remove(x);
     }
 }

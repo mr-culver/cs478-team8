@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Action.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">maven</a> &gt; <a href="index.source.html" class="el_package">DodolsCastle</a> &gt; <span class="el_source">Action.java</span></div><h1>Action.java</h1><pre class="source lang-java linenums">package DodolsCastle;
 
-import java.util.*;
-import java.io.*;
+import java.util.ArrayList;
 
 public class Action 
 {
@@ -15,99 +14,115 @@ public class Action
     ArrayList&lt;Action&gt; roomActionsSub; // actions to be removed from the room
     ArrayList&lt;Action&gt; requirementsPos; // looked at by actionChecker()
     ArrayList&lt;Action&gt; requirementsNeg; // ^^
+    ArrayList&lt;Action&gt; itemRequirements; // added to accomodate new item class
+    Item heroItemAdd;
+    Item heroItemSub;
 
     public Action()
-<span class="fc" id="L20">    {</span>
-<span class="fc" id="L21">        this.name = null;</span>
-<span class="fc" id="L22">        this.description = null;</span>
-<span class="fc" id="L23">        this.heroStatusModifier = 0;</span>
-<span class="fc" id="L24">        heroActionsAdd = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L25">        heroActionsSub = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L26">        roomActionsAdd = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L27">        roomActionsSub = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L28">        requirementsPos = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L29">        requirementsNeg = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L22">    {</span>
+<span class="fc" id="L23">        this.name = null;</span>
+<span class="fc" id="L24">        this.description = null;</span>
+<span class="fc" id="L25">        this.heroStatusModifier = 0;</span>
+<span class="fc" id="L26">        heroActionsAdd = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L27">        heroActionsSub = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L28">        roomActionsAdd = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L29">        roomActionsSub = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L30">        requirementsPos = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L31">        requirementsNeg = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L32">        itemRequirements = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L33">        heroItemAdd = null;</span>
+<span class="fc" id="L34">        heroItemSub = null;</span>
+<span class="fc" id="L35">    }</span>
 
     public Action(String inputName, String inputDescription)
-<span class="fc" id="L33">    {</span>
-<span class="fc" id="L34">        this.name = inputName;</span>
-<span class="fc" id="L35">        this.description = inputDescription;</span>
-<span class="fc" id="L36">        this.heroStatusModifier = 0;</span>
-<span class="fc" id="L37">        heroActionsAdd = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L38">        heroActionsSub = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L39">        roomActionsAdd = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L40">        roomActionsSub = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L41">        requirementsPos = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L42">        requirementsNeg = new ArrayList&lt;Action&gt;();</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L38">    {</span>
+<span class="fc" id="L39">        this.name = inputName;</span>
+<span class="fc" id="L40">        this.description = inputDescription;</span>
+<span class="fc" id="L41">        this.heroStatusModifier = 0;</span>
+<span class="fc" id="L42">        heroActionsAdd = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L43">        heroActionsSub = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L44">        roomActionsAdd = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L45">        roomActionsSub = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L46">        requirementsPos = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L47">        requirementsNeg = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L48">        itemRequirements = new ArrayList&lt;Action&gt;();</span>
+<span class="fc" id="L49">        heroItemAdd = null;</span>
+<span class="fc" id="L50">        heroItemSub = null;</span>
+<span class="fc" id="L51">    }</span>
 
-    public void runAction(Console console, Hero player)
+    public void runAction(Hero player)
     {
         //console.printf(this.name + &quot;\n&quot;); // might not be needed
-<span class="nc" id="L48">        console.printf(this.description + &quot;\n&quot;);</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (!heroActionsAdd.isEmpty())</span>
+        //console.printf(this.description + &quot;\n&quot;);
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (!heroActionsAdd.isEmpty())</span>
 		{
-<span class="nc bnc" id="L51" title="All 2 branches missed.">            for(Action a : this.heroActionsAdd)</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            for(Action a : this.heroActionsAdd)</span>
             {   
-<span class="nc" id="L53">                player.actions.add(a);</span>
-<span class="nc" id="L54">            }			</span>
+<span class="fc" id="L61">                player.actions.add(a);</span>
+<span class="fc" id="L62">            }			</span>
 		}
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (!heroActionsSub.isEmpty())</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (!heroActionsSub.isEmpty())</span>
 		{
-<span class="nc bnc" id="L58" title="All 2 branches missed.">			for(Action a : this.heroActionsSub)</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">			for(Action a : this.heroActionsSub)</span>
             {   
-<span class="nc" id="L60">                player.actions.remove(a);</span>
-<span class="nc" id="L61">            }</span>
+<span class="fc" id="L68">                player.actions.remove(a);</span>
+<span class="fc" id="L69">            }</span>
 		}
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (!roomActionsAdd.isEmpty())</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (!roomActionsAdd.isEmpty())</span>
 		{
-<span class="nc bnc" id="L65" title="All 2 branches missed.">			for(Action a : this.roomActionsAdd)</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			for(Action a : this.roomActionsAdd)</span>
             {   
-<span class="nc" id="L67">                player.currentRoom.actions.add(a);</span>
-<span class="nc" id="L68">            }</span>
+<span class="fc" id="L75">                player.currentRoom.actions.add(a);</span>
+<span class="fc" id="L76">            }</span>
 		}
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (!roomActionsSub.isEmpty())</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (!roomActionsSub.isEmpty())</span>
 		{
-<span class="nc bnc" id="L72" title="All 2 branches missed.">			for(Action a : this.roomActionsSub)</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			for(Action a : this.roomActionsSub)</span>
             {   
-<span class="nc" id="L74">                player.currentRoom.actions.remove(a);</span>
-<span class="nc" id="L75">            }</span>
+<span class="fc" id="L82">                player.currentRoom.actions.remove(a);</span>
+<span class="fc" id="L83">            }</span>
+        }
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if(heroItemAdd != null)</span>
+        {
+<span class="fc" id="L87">            player.items.add(heroItemAdd);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">            if(!heroItemAdd.heroActionsAdd.isEmpty())</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            for(Action a : this.heroItemAdd.heroActionsAdd)</span>
+            {   
+<span class="fc" id="L91">                player.actions.add(a);</span>
+<span class="fc" id="L92">            }</span>
+        }
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if(heroItemSub != null)</span>
+        {
+<span class="fc" id="L96">            player.items.remove(heroItemSub);</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if(!heroItemSub.heroActionsAdd.isEmpty())</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            for(Action a : this.heroItemSub.heroActionsAdd)</span>
+            {   
+<span class="fc" id="L100">                player.actions.remove(a);</span>
+<span class="fc" id="L101">            }</span>
         }
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (this.name == &quot;check log&quot;)</span>
-        {
-<span class="nc" id="L80">            console.printf(&quot;-------------------- Log Book --------------------\n\n&quot;);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">            for (String x : player.history)</span>
-            {
-<span class="nc" id="L83">                console.printf(x + &quot;\n&quot;);</span>
-<span class="nc" id="L84">            }</span>
-<span class="nc" id="L85">            console.printf(&quot;\n--------------------------------------------------\n&quot;);</span>
-        }
+<span class="fc" id="L104">        player.status += heroStatusModifier;</span>
 
-<span class="nc" id="L88">        player.status += heroStatusModifier;</span>
-
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (heroStatusModifier != 0)</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (heroStatusModifier != 0)</span>
         {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">            if (heroStatusModifier &lt; 0)</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (heroStatusModifier &lt; 0)</span>
             {
-<span class="nc" id="L94">                String effect = Integer.toString(heroStatusModifier);</span>
-<span class="nc" id="L95">                player.addHistory(&quot;You took &quot; + heroStatusModifier + &quot; damage from &quot; + this.name +&quot;!&quot;, effect);    </span>
-<span class="nc" id="L96">            }</span>
+<span class="fc" id="L110">                String effect = Integer.toString(heroStatusModifier);</span>
+<span class="fc" id="L111">                player.addHistory(&quot;You took &quot; + heroStatusModifier + &quot; damage from &quot; + this.name +&quot;!&quot;, effect);    </span>
+<span class="fc" id="L112">            }</span>
 
             else
             {
-<span class="nc" id="L100">                String effect = Integer.toString(heroStatusModifier);</span>
-<span class="nc" id="L101">                player.addHistory(&quot;You healed &quot; + heroStatusModifier + &quot; of health from &quot; + this.name + &quot;.&quot;, effect);</span>
-<span class="nc" id="L102">            }</span>
+<span class="fc" id="L116">                String effect = Integer.toString(heroStatusModifier);</span>
+<span class="fc" id="L117">                player.addHistory(&quot;You healed &quot; + heroStatusModifier + &quot; of health from &quot; + this.name + &quot;.&quot;, effect);</span>
+<span class="fc" id="L118">            }</span>
             
         }
-
         else
         {
-<span class="nc" id="L108">            String effect = this.name;</span>
-<span class="nc" id="L109">            player.addHistory(this.description, effect);</span>
+<span class="fc" id="L123">            String effect = this.name;</span>
+<span class="fc" id="L124">            player.addHistory(this.description, effect);</span>
         }
-<span class="nc" id="L111">    }</span>
+<span class="fc" id="L126">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
