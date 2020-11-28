@@ -1,19 +1,25 @@
 package DodolsCastle;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class Hero {
     Room currentRoom;
     ArrayList<Action> actions;
     int status;
+    int turnCounter;
     ArrayList<String> history;
+    ArrayList<Item> items;
 
     public Hero(Room start)
     {
         this.currentRoom = start;
         this.status = 30; //start with some initial hp value
-        this.history.add("The hero has entered the castle.");
-        //maybe add beginning actions here like movement and pickup?
+        this.turnCounter = 0; 
+        this.history = new ArrayList<String>();
+        this.actions = new ArrayList<Action>();
+        this.actions.addAll(initStarterHeroActions());
+        this.items = new ArrayList<Item>();
     }
 
     public Room getRoom()
@@ -21,33 +27,158 @@ public class Hero {
         return this.currentRoom;
     }
 
-    public void moveRoom()
+    public void moveRoom(int direction)
     {
-        //move to another room
+        if(direction >= 0 && direction <= 4)
+        {
+            currentRoom = currentRoom.doors[direction];
+        }
     }
 
-    public void updateStatus(int[] range)
+    public void addHistory(String event, String effect)
     {
-        //do some calculation on hero status
+        this.turnCounter++;
+
+        if (effect == "north")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[0].name + " | Turn: " + this.turnCounter);
+        }
+
+        else if (effect == "east")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[1].name + " | Turn: " + this.turnCounter);
+        }
+
+        else if (effect == "south")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[2].name + " | Turn: " + this.turnCounter);
+        }
+
+        else if (effect == "west")
+        {
+            history.add(event + " from " + this.currentRoom.name + " to " + this.currentRoom.doors[3].name + " | Turn: " + this.turnCounter);
+        }
+
+        else
+        {
+            history.add(effect + " | Turn: " + this.turnCounter);
+        }
     }
 
-    public ArrayList<Action> geActions()
+    public ArrayList<String> getHistory()
     {
-        return this.actions;
+        return this.history;
     }
 
-    public ArrayList<Action> getActions()
+    public void printHistory()
     {
-        return this.actions;
+        System.out.println("You think about what you have done since you got to the castle...");
+        System.out.println("-------------------- Log Book --------------------\n");
+        for (String x : history)
+        {
+            System.out.println(x);
+        }
+        System.out.println();
+        System.out.println("--------------------------------------------------");
     }
 
-    public void addAction(Action x)
+    public ArrayList<String> getAvailableMoves() // unused
     {
-        //add an action to the list
+        ArrayList<String> availableMoves = new ArrayList<String>();
+        if(currentRoom.doors[0] != null)
+            availableMoves.add("north");
+        if(currentRoom.doors[1] != null)
+            availableMoves.add("east");
+        if(currentRoom.doors[2] != null)
+            availableMoves.add("south") ;
+        if(currentRoom.doors[3] != null)
+            availableMoves.add("west");
+
+        return availableMoves;
+    }
+    
+    public String getStatusDescription(Boolean testPrinting)
+    {
+        String desc = "";
+        if(testPrinting)
+            desc = "[Dev] Status = " + status + "\n";
+        if(status >= 50)
+        {
+            desc += "You feel absolutely fantastic.";
+        }
+        else if(status >= 30)
+        {
+            desc += "You're feeling pretty well";
+        }
+        else if(status >= 15)
+        {
+            desc += "You arent feeling very well";
+        }
+        else if(status >= 1)
+        {
+            desc += "You feel very poorly";
+        }
+        else
+        {
+            desc += "You are incapacitated.";
+        }
+        return desc;
     }
 
-    public void removeAction(Action x)
+    public void printInventory()
     {
-        //remove an action from the list
+        if(items.isEmpty())
+        {
+            System.out.println("You are not carrying anything.");
+        }
+        else
+        {
+            System.out.println("You are carrying:");
+            for(Item i : items)
+            {
+                System.out.println("\t- " + i.name + "\n");
+            }
+        }   
     }
+
+    public ArrayList<Action> initStarterHeroActions()
+    {
+        ArrayList<Action> starterActions = new ArrayList<Action>();
+        
+        // > Hero actions
+        // >> Punch self - for testing
+        Action punchSelf = new Action();
+        punchSelf.name = "punch self";
+        punchSelf.description = "You punch yourself in the face. Ouch!";
+        punchSelf.heroStatusModifier = -10;
+        starterActions.add(punchSelf);
+
+        return starterActions;
+    }
+    public void savegame() 
+    {
+        ArrayList<String> Saveinfo = new ArrayList<String>();
+        System.out.println("");
+        String convert;
+        String pathname;
+        System.out.println("Saving game do not close application");
+        try 
+        {
+            Path fileName = Path.of("Saved Game Data.txt");
+            for(int i =0; i < history.size(); i++)
+            {
+                Saveinfo.add(history.get(i));
+
+
+            }
+            Files.write(fileName, Saveinfo);
+            String actual = Files.readString(fileName);
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Falied To Save");
+        }
+            System.out.println("Save Completed! Gamed saved at file path: "+Path.of("Saved Game Data.txt").toAbsolutePath());
+    }
+    
 }
