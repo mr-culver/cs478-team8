@@ -1,5 +1,7 @@
 package DodolsCastle;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class Hero {
@@ -155,5 +157,29 @@ public class Hero {
         return starterActions;
     }
 
-    
+    public void savegame() 
+    {
+        ArrayList<String> Saveinfo = new ArrayList<String>();
+        System.out.println("");
+        //String convert;
+        //String pathname;
+        System.out.println("Saving game do not close application");
+        try 
+        {
+            Path fileName = Path.of("Saved_Game_Data.txt");
+            for(int i =0; i < history.size(); i++)
+            {
+                Saveinfo.add(history.get(i));
+
+
+            }
+            Files.write(fileName, Saveinfo);
+            //String actual = Files.readString(fileName);
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Falied To Save");
+        }
+            System.out.println("Save Completed! Gamed saved at file path: "+Path.of("Saved_Game_Data.txt").toAbsolutePath());
+    }
 }
