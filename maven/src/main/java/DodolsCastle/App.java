@@ -1,9 +1,19 @@
 package DodolsCastle;
 
+//import java.nio.file.Files;
+import java.nio.file.Path;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.*;
+//import javax.lang.model.util.ElementScanner14;
+import java.io.*;
 
 public class App 
 {
+    public static String loadgame = "no";
+    public static int count = 0;
+    public static ArrayList<String> moves = new ArrayList<String>();
     public static void main( String[] args )
     {
         Scanner input = new Scanner(System.in);
@@ -11,6 +21,7 @@ public class App
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
         Hero player = new Hero(dodolsCastle.currentEntrance);
+        readinsave();
         if(testPrinting)
             dodolsCastle.printDungeon();
         welcomeMessage();
@@ -101,6 +112,13 @@ public class App
 
         // player input & action selection logic
         System.out.println("--------------------------------------------------\n");
+
+        if (loadgame == "yes" && count == 0)
+        {
+            System.out.println("Save found. Please hit enter to load save.");
+            System.out.println();
+            System.out.println("--------------------------------------------------");
+        }
         
         Boolean invalid = true;
         Boolean gameOver = false;
@@ -108,6 +126,27 @@ public class App
         {
             System.out.println("Enter a command:");
             String in = input.nextLine();
+
+            if (loadgame == "yes" && count < moves.size())
+            {
+                in = moves.get(count);
+                count++;
+
+                if (count < (moves.size()))
+                {
+                    try 
+                    {
+                        Robot r = new Robot();
+                        r.keyPress(KeyEvent.VK_ENTER);
+                        r.keyRelease(KeyEvent.VK_ENTER);
+                    } 
+                    catch (AWTException e) 
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
             System.out.print(String.format("\033[2J"));
             System.out.println();
             // movement handling
@@ -176,6 +215,15 @@ public class App
                 System.out.println("[Dev] > Test Printing = " + testPrinting);
                 invalid = false;
             }
+            // save the game using savegame() from hero.java
+            else if (in.contains("save game"))
+            {
+                String effect = "You saved the game.";
+                player.savegame();
+                player.addHistory("", effect);
+                invalid = false;
+            }
+
             // check input against available actions
             else if(invalid)
             {
@@ -373,5 +421,103 @@ public class App
             System.out.println("\t- " + a.name + "\n");
         }
         // print available actions
+    }
+
+    public static void readinsave()
+    {
+        Path pathname;
+        //Path fileName = Path.of("Saved Game Data.txt");
+        pathname = Path.of("Saved_Game_Data.txt").toAbsolutePath();
+        String pathna = pathname.toString();
+        BufferedReader reader;
+        ArrayList<String> search = new ArrayList<String>();
+        search.add("north");
+        search.add("east");
+        search.add("south");
+        search.add("west");
+        search.add("bookshelves");
+        search.add("table");
+        search.add("lever");
+        search.add("armor");
+        search.add("machinery");
+        search.add("hat");
+        search.add("pond");
+        search.add("empty scabbard");
+        search.add("new hat");
+        search.add("potion");
+        search.add("self");
+        try 
+        {
+            reader = new BufferedReader(new FileReader(pathna));
+            String line = reader.readLine();
+            System.out.print("Load Previous Game yes/no? ");
+            BufferedReader obj = new BufferedReader(new InputStreamReader(System.in));   
+            String answer2; 
+            answer2 = obj.readLine();
+        if(answer2.toLowerCase().contains("yes"))
+        {
+            System.out.println("loading saved game....");
+            loadgame ="yes";
+            while(line != null)
+            {            
+            //System.out.println("line "+i+" says "+ line);
+            for(int k =0; k<search.size();k++)
+            {
+            if ( line.toLowerCase().indexOf("moved "+search.get(k).toLowerCase()) != -1 ) 
+            {
+                moves.add(search.get(k));
+            } 
+            else if ( line.toLowerCase().indexOf("examine "+search.get(k).toLowerCase()) != -1 ) 
+            {
+                moves.add("examine "+search.get(k));
+            }
+            else if ( line.toLowerCase().indexOf("take "+search.get(k).toLowerCase()) != -1 ) 
+            {
+                moves.add("take "+search.get(k));
+            }  
+            else if ( line.toLowerCase().indexOf("wear old "+search.get(k).toLowerCase()) != -1 ) 
+            {
+                moves.add("wear old hat "+search.get(k));
+            }
+            else if ( line.toLowerCase().indexOf("place old "+search.get(k).toLowerCase()) != -1 ) 
+            {
+                moves.add("place old hat "+search.get(k));
+            }
+            else if ( line.toLowerCase().indexOf("pull "+search.get(k).toLowerCase()) != -1 ) 
+            {
+                moves.add("pull "+search.get(k));
+            }
+            else if ( line.toLowerCase().indexOf("wear "+search.get(k).toLowerCase()) != -1 ) 
+            {
+                moves.add("wear "+search.get(k));
+            }
+            else if ( line.toLowerCase().indexOf("-10") != -1 ) 
+            {
+                moves.add("punch self");
+                k = search.size();
+            }
+            else if ( line.toLowerCase().indexOf("20 |") != -1 ) 
+            {
+                moves.add("drink potion");
+                k = search.size();
+            }
+            }
+            line = reader.readLine();
+            }
+        }
+            else if(answer2.toLowerCase().contains("no"))
+            {
+                System.out.println("Starting new game....");
+            }
+            reader.close();
+           // String actual = Files.readString(fileName);
+            //System.out.println(actual);
+
+        } catch (Exception e) 
+        {
+            System.out.println("No saved data found. Starting a new game.");
+        }
+        
+        
     }
 }
