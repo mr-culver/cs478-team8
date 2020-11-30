@@ -21,6 +21,7 @@ public class App
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
         Hero player = new Hero(dodolsCastle.currentEntrance);
+        clearConsole();
         readinsave();
         if(testPrinting)
             dodolsCastle.printDungeon();
@@ -111,7 +112,7 @@ public class App
         ArrayList<Action> availableActions = getAvailableActions(player.currentRoom, player, testPrinting);
 
         // player input & action selection logic
-        System.out.println("--------------------------------------------------\n");
+        System.out.println("--------------------------------------------------");
 
         if (loadgame == "yes" && count == 0)
         {
@@ -147,11 +148,12 @@ public class App
                 }
             }
 
-            System.out.print(String.format("\033[2J"));
-            System.out.println();
+            //System.out.print(String.format("\033[2J")); // Jarrett's clear code
+            // clearing moved to after accepting a valid command
             // movement handling
             if(in.contains("north") && player.currentRoom.doors[0] != null)
             {
+                clearConsole();
                 String effect = "north";
                 System.out.println("You moved north.");
                 player.addHistory("You moved north", effect);
@@ -160,6 +162,7 @@ public class App
             }
             else if(in.contains("east") && player.currentRoom.doors[1] != null)
             {
+                clearConsole();
                 String effect = "east";
                 System.out.println("You moved east.");
                 player.addHistory("You moved east", effect);
@@ -168,6 +171,7 @@ public class App
             }
             else if(in.contains("south") && player.currentRoom.doors[2] != null)
             {
+                clearConsole();
                 String effect = "south";
                 System.out.println("You moved south.");
                 player.addHistory("You moved south", effect);
@@ -176,6 +180,7 @@ public class App
             }
             else if(in.contains("west") && player.currentRoom.doors[3] != null)
             {
+                clearConsole();
                 String effect = "west";
                 System.out.println("You moved west.");
                 player.addHistory("You moved west", effect);
@@ -223,7 +228,13 @@ public class App
                 player.addHistory("", effect);
                 invalid = false;
             }
-
+            // exit game
+            else if (in.contains("exit game"))
+            {
+                clearConsole();
+                System.out.println("\nExiting game...");
+                System.exit(0);
+            }
             // check input against available actions
             else if(invalid)
             {
@@ -231,6 +242,7 @@ public class App
                 {
                     if(in.contains(action.name))
                     {
+                        clearConsole();
                         formatMessage(action.description);
                         action.runAction(player);
                         invalid = false;
@@ -422,6 +434,13 @@ public class App
         }
         // print available actions
     }
+    
+    public static void clearConsole()
+    {
+        System.out.print("\033[H\033[2J"); // Mitch's clear code
+        System.out.flush(); 
+        System.out.println();
+    }
 
     public static void readinsave()
     {
@@ -515,7 +534,7 @@ public class App
 
         } catch (Exception e) 
         {
-            System.out.println("No saved data found. Starting a new game.");
+            System.out.println("No saved data found. Starting a new game...\n");
         }
         
         

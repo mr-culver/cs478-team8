@@ -279,11 +279,11 @@ public class Dungeon {
         // > take sword scabbard -> clearing
         Action clTScabbard = new Action();
         clTScabbard.name = "take empty scabbard";
-        clTScabbard.description = "You take the empty scabbard from the ground";
+        clTScabbard.description = "You take the empty scabbard from the ground. It is warm to the touch.";
 
         Item clScabbard = new Item();
         clScabbard.name = "empty scabbard";
-        clScabbard.description = "The scabbard is empty, its well worn leather gilded with an intricate silver design.  It is warm to the touch";
+        clScabbard.description = "The scabbard is empty, its well worn leather gilded with an intricate silver design.  It is warm to the touch.";
         clTScabbard.roomActionsSub.add(clXScabbard);
         clTScabbard.roomActionsSub.add(clTScabbard);
         clTScabbard.roomActionsSub.add(clXPond);
