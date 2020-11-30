@@ -6,6 +6,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.*;
+
 //import javax.lang.model.util.ElementScanner14;
 import java.io.*;
 
@@ -16,7 +17,6 @@ public class App
     public static ArrayList<String> moves = new ArrayList<String>();
     public static void main( String[] args )
     {
-        Scanner input = new Scanner(System.in);
         Boolean testPrinting = false; // allows test print blocks to execute for dev testing
         Dungeon dodolsCastle = new Dungeon();
         dodolsCastle.initializeLayout();
@@ -25,7 +25,10 @@ public class App
         readinsave();
         if(testPrinting)
             dodolsCastle.printDungeon();
-        welcomeMessage();
+        // welcome message stuff moved inside Dylan's readinsave()
+        Scanner input = new Scanner(System.in);
+        formatMessage("\n\n" + "+ " + player.currentRoom.name + " +");
+        formatMessage(player.currentRoom.description + "\n");
         actionHandler(player, testPrinting, input, false);
         input.close();
         // end game display stuff - credits and whatnot
@@ -38,10 +41,11 @@ public class App
         System.out.println();
         //console.printf("\n\n");
         System.out.println("Welcome to the text-based adventure game, Dodol's Castle!");
-        System.out.println("Version info and stuff goes here (>'.')>");
+        System.out.println("Version: yes");
         System.out.println();
         System.out.println();
-        System.out.println("Story intro placeholder -- puts you walking into the common room unexpectedly from your house");
+        formatMessage("On one quiet summer night you find yourself stumbling through a strange door on your way back from the bathroom, " +
+        "you feel the door close behind you, and as you glance over your shoulder you see it disappear into a stone wall...");
     }
 
     public static void formatMessage(String message)
@@ -57,7 +61,7 @@ public class App
             if (x == ' ')
             {
 
-                if (i - prev >= 90 && i - prev <= 100)
+                if (i - prev >= 105 && i - prev <= 115)
                 {
                     if (prev == 0)
                     {
@@ -105,8 +109,8 @@ public class App
     public static void actionHandler(Hero player, Boolean testPrinting, Scanner input, Boolean appTest)
     {
         // print room name & description        
-        formatMessage("\n\n" + "+ " + player.currentRoom.name + " +");
-        formatMessage(player.currentRoom.description + "\n");
+        //formatMessage("\n\n" + "+ " + player.currentRoom.name + " +");
+        //formatMessage(player.currentRoom.description + "\n");
 
         // get available actions from player.actions & player.currentRoom.actions
         ArrayList<Action> availableActions = getAvailableActions(player.currentRoom, player, testPrinting);
@@ -153,67 +157,92 @@ public class App
             // movement handling
             if(in.contains("north") && player.currentRoom.doors[0] != null)
             {
-                clearConsole();
                 String effect = "north";
-                System.out.println("You moved north.");
                 player.addHistory("You moved north", effect);
                 player.currentRoom = player.currentRoom.doors[0];
+                clearConsole();
+                System.out.println("You moved north.");
+                System.out.println("\n+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
+                
+                
                 invalid = false;
             }
             else if(in.contains("east") && player.currentRoom.doors[1] != null)
             {
-                clearConsole();
                 String effect = "east";
-                System.out.println("You moved east.");
                 player.addHistory("You moved east", effect);
                 player.currentRoom = player.currentRoom.doors[1];
+                clearConsole();
+                System.out.println("You moved east.");
+                System.out.println("\n+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 invalid = false;
             }
             else if(in.contains("south") && player.currentRoom.doors[2] != null)
             {
-                clearConsole();
                 String effect = "south";
-                System.out.println("You moved south.");
                 player.addHistory("You moved south", effect);
                 player.currentRoom = player.currentRoom.doors[2];
+                clearConsole();
+                System.out.println("You moved south.");
+                System.out.println("\n+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 invalid = false;
             }
             else if(in.contains("west") && player.currentRoom.doors[3] != null)
             {
-                clearConsole();
                 String effect = "west";
-                System.out.println("You moved west.");
                 player.addHistory("You moved west", effect);
                 player.currentRoom = player.currentRoom.doors[3];
+                clearConsole();
+                System.out.println("You moved west.");
+                System.out.println("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 invalid = false;
             }
             // show hero status (health description)
             else if(in.contains("status"))
             {
+                clearConsole();
+                System.out.println("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 formatMessage(player.getStatusDescription(testPrinting));
                 invalid = false;
             }
             // show hero log (past actions, rooms)
             else if(in.contains("log"))
             {
+                clearConsole();
+                System.out.println("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 player.printHistory();
                 invalid = false;
             }
             // displays helpful info and available actions
             else if(in.contains("help"))
             {
+                clearConsole();
+                System.out.println("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 printHelpInfo(availableActions);
                 invalid = false;
             }
             // show inventory (player.items)
             else if (in.contains("inventory"))
             {
+                clearConsole();
+                System.out.println("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 player.printInventory();
                 invalid = false;
             }
             // toggle developer test printing
             else if (in.contains("dev"))
             {
+                clearConsole();
+                System.out.println("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 System.out.println("[Dev] Toggling test printing...\n");          
                 if(testPrinting) testPrinting = false;
                 else testPrinting = true;
@@ -223,6 +252,9 @@ public class App
             // save the game using savegame() from hero.java
             else if (in.contains("save game"))
             {
+                clearConsole();
+                System.out.println("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
                 String effect = "You saved the game.";
                 player.savegame();
                 player.addHistory("", effect);
@@ -235,6 +267,13 @@ public class App
                 System.out.println("\nExiting game...");
                 System.exit(0);
             }
+            else if (in.contains("refresh"))
+            {
+                clearConsole();
+                formatMessage("+ " + player.currentRoom.name + " +");
+                formatMessage(player.currentRoom.description + "\n");
+                invalid = false;
+            }
             // check input against available actions
             else if(invalid)
             {
@@ -243,6 +282,8 @@ public class App
                     if(in.contains(action.name))
                     {
                         clearConsole();
+                        System.out.println("+ " + player.currentRoom.name + " +");
+                        formatMessage(player.currentRoom.description + "\n");
                         formatMessage(action.description);
                         action.runAction(player);
                         invalid = false;
@@ -426,8 +467,8 @@ public class App
 
     public static void printHelpInfo(ArrayList<Action> availableActions)
     {
-        formatMessage("Insert useful help info here, common action keywords and stuff");
-        formatMessage("Listing actions available to you:");
+        formatMessage("Common actions: move (any direction) | examine | take | status | log | inventory");
+        formatMessage("Listing actions currently available to you:");
         for(Action a : availableActions)
         {
             System.out.println("\t- " + a.name + "\n");
@@ -438,8 +479,7 @@ public class App
     public static void clearConsole()
     {
         System.out.print("\033[H\033[2J"); // Mitch's clear code
-        System.out.flush(); 
-        System.out.println();
+        //System.out.flush();
     }
 
     public static void readinsave()
@@ -469,74 +509,76 @@ public class App
         {
             reader = new BufferedReader(new FileReader(pathna));
             String line = reader.readLine();
-            System.out.print("Load Previous Game yes/no? ");
+            System.out.print("Load Previous Game (yes/no)? ");
             BufferedReader obj = new BufferedReader(new InputStreamReader(System.in));   
             String answer2; 
             answer2 = obj.readLine();
-        if(answer2.toLowerCase().contains("yes"))
-        {
-            System.out.println("loading saved game....");
-            loadgame ="yes";
-            while(line != null)
-            {            
-            //System.out.println("line "+i+" says "+ line);
-            for(int k =0; k<search.size();k++)
+
+            if(answer2.toLowerCase().contains("yes"))
             {
-            if ( line.toLowerCase().indexOf("moved "+search.get(k).toLowerCase()) != -1 ) 
-            {
-                moves.add(search.get(k));
-            } 
-            else if ( line.toLowerCase().indexOf("examine "+search.get(k).toLowerCase()) != -1 ) 
-            {
-                moves.add("examine "+search.get(k));
+                System.out.println("Loading saved game...");
+                loadgame ="yes";
+                while(line != null)
+                {            
+                    //System.out.println("line "+i+" says "+ line);
+                    for(int k =0; k<search.size();k++)
+                    {
+                        if ( line.toLowerCase().indexOf("moved "+search.get(k).toLowerCase()) != -1 ) 
+                        {
+                            moves.add(search.get(k));
+                        }
+                        else if ( line.toLowerCase().indexOf("examine "+search.get(k).toLowerCase()) != -1 ) 
+                        {
+                            moves.add("examine "+search.get(k));
+                        }
+                        else if ( line.toLowerCase().indexOf("take "+search.get(k).toLowerCase()) != -1 ) 
+                        {
+                            moves.add("take "+search.get(k));
+                        }  
+                        else if ( line.toLowerCase().indexOf("wear old "+search.get(k).toLowerCase()) != -1 ) 
+                        {
+                            moves.add("wear old hat "+search.get(k));
+                        }
+                        else if ( line.toLowerCase().indexOf("place old "+search.get(k).toLowerCase()) != -1 ) 
+                        {
+                            moves.add("place old hat "+search.get(k));
+                        }
+                        else if ( line.toLowerCase().indexOf("pull "+search.get(k).toLowerCase()) != -1 ) 
+                        {
+                            moves.add("pull "+search.get(k));
+                        }
+                        else if ( line.toLowerCase().indexOf("wear "+search.get(k).toLowerCase()) != -1 ) 
+                        {
+                            moves.add("wear "+search.get(k));
+                        }
+                        else if ( line.toLowerCase().indexOf("-10") != -1 ) 
+                        {
+                            moves.add("punch self");
+                            k = search.size();
+                        }
+                        else if ( line.toLowerCase().indexOf("20 |") != -1 ) 
+                        {
+                            moves.add("drink potion");
+                            k = search.size();
+                        }
+                    }
+                    line = reader.readLine();
+                }
             }
-            else if ( line.toLowerCase().indexOf("take "+search.get(k).toLowerCase()) != -1 ) 
-            {
-                moves.add("take "+search.get(k));
-            }  
-            else if ( line.toLowerCase().indexOf("wear old "+search.get(k).toLowerCase()) != -1 ) 
-            {
-                moves.add("wear old hat "+search.get(k));
-            }
-            else if ( line.toLowerCase().indexOf("place old "+search.get(k).toLowerCase()) != -1 ) 
-            {
-                moves.add("place old hat "+search.get(k));
-            }
-            else if ( line.toLowerCase().indexOf("pull "+search.get(k).toLowerCase()) != -1 ) 
-            {
-                moves.add("pull "+search.get(k));
-            }
-            else if ( line.toLowerCase().indexOf("wear "+search.get(k).toLowerCase()) != -1 ) 
-            {
-                moves.add("wear "+search.get(k));
-            }
-            else if ( line.toLowerCase().indexOf("-10") != -1 ) 
-            {
-                moves.add("punch self");
-                k = search.size();
-            }
-            else if ( line.toLowerCase().indexOf("20 |") != -1 ) 
-            {
-                moves.add("drink potion");
-                k = search.size();
-            }
-            }
-            line = reader.readLine();
-            }
-        }
             else if(answer2.toLowerCase().contains("no"))
             {
-                System.out.println("Starting new game....");
+                System.out.println("Starting new game...\n");
+                welcomeMessage();
             }
             reader.close();
-           // String actual = Files.readString(fileName);
+            // String actual = Files.readString(fileName);
             //System.out.println(actual);
 
-        } catch (Exception e) 
+        } 
+        catch (Exception e) 
         {
             System.out.println("No saved data found. Starting a new game...\n");
+            welcomeMessage();
         }
-        
-        
     }
 }
