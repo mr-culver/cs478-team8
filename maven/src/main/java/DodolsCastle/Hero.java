@@ -163,15 +163,13 @@ public class Hero {
         System.out.println("");
         //String convert;
         //String pathname;
-        System.out.println("Saving game do not close application");
+        System.out.println("Saving game, please do not close application...");
         try 
         {
             Path fileName = Path.of("Saved_Game_Data.txt");
             for(int i =0; i < history.size(); i++)
             {
                 Saveinfo.add(history.get(i));
-
-
             }
             Files.write(fileName, Saveinfo);
             //String actual = Files.readString(fileName);
@@ -180,6 +178,6 @@ public class Hero {
         {
             System.out.println("Falied To Save");
         }
-            System.out.println("Save Completed! Gamed saved at file path: "+Path.of("Saved_Game_Data.txt").toAbsolutePath());
+        System.out.println("Save Completed! Gamed saved at file path: "+Path.of("Saved_Game_Data.txt").toAbsolutePath());
     }
 }
